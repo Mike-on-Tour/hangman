@@ -2,13 +2,15 @@
 /*
 *
 * @package Hangman game
-* @author dmzx (www.dmzx-web.net)
+* @author Mike-on-Tour
+* @copyright (c) 2021 by Mike-on-Tour (www.mike-on-tour.com)
+* @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-namespace dmzx\hangman\controller;
+namespace mot\hangman\controller;
 
 class main
 {
@@ -27,10 +29,10 @@ class main
 	/**
 	* Constructor
 	*
-	* @param \phpbb\config\config		$config
+	* @param \phpbb\config\config	$config
 	* @param \phpbb\controller\helper	$helper
 	* @param \phpbb\template\template	$template
-	* @param \phpbb\user				$user
+	* @param \phpbb\user			$user
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\controller\helper $helper, \phpbb\template\template $template, \phpbb\user $user)
 	{
@@ -42,6 +44,6 @@ class main
 
 	public function display()
 	{
-	return $this->helper->render('hangman.html', $this->user->lang('HANGMAN'));
+		return $this->helper->render('hangman.html', $this->user->lang('HANGMAN'));
 	}
 }

@@ -156,7 +156,7 @@ function new_word(form)
 		advise("{LA_HANGMAN_QUOTE_ALREADY}");
 
 	document.frm.res.disabled=false;
-	document.frm.hm.src="../ext/dmzx/hangman/styles/all/theme/images/hmstart3.gif";
+	document.frm.hm.src="../ext/mot/hangman/styles/all/theme/images/hmstart3.gif";
 
 	for(var i=65; i<=90; i++)
 		document.getElementById(String.fromCharCode(i)).style.backgroundColor='#D3D3D3';
@@ -178,7 +178,7 @@ function restart(form)
 	bravo[1]=words[index].charAt(words[index].length-1);
 	bravo_index=1;
 	pick();
-	document.frm.hm.src="../ext/dmzx/hangman/styles/all/theme/images/hmstart3.gif";
+	document.frm.hm.src="../ext/mot/hangman/styles/all/theme/images/hmstart3.gif";
 
 	for(var i=65; i<=90; i++)
 		document.getElementById(String.fromCharCode(i)).style.backgroundColor='#D3D3D3';
@@ -213,7 +213,7 @@ function seek(letter)
 			{
 				failnum++;
 				document.frm.tried.value+=letter+" ";
-				eval("document.hm.src=\"../ext/dmzx/hangman/styles/all/theme/images/hm" + failnum + ".gif\"");
+				eval("document.hm.src=\"../ext/mot/hangman/styles/all/theme/images/hm" + failnum + ".gif\"");
 						document.getElementById(letter).style.backgroundColor='#CCD8FF';
 			}
 

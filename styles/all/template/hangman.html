@@ -1,5 +1,6 @@
-<!-- INCLUDECSS @dmzx_hangman/hangman.css -->
-<!-- INCLUDE overall_header.html -->
+{% include 'overall_header.html' %}
+{% INCLUDECSS '@mot_hangman/hangman.css' %}
+{# {% INCLUDEJS '@mot_hangman/hangman.js' %} #}
 
 <form name="frm">
  <div style="forabg">
@@ -8,7 +9,7 @@
 	<tr>
 	 <td></td>
 	 <td>
-		<p><img src="{ROOT_PATH}ext/dmzx/hangman/styles/all/theme/images/hmstart3.gif" height="150" width="150" name="hm" alt=""></p>
+		<p><img src="{ROOT_PATH}ext/mot/hangman/styles/all/theme/images/hmstart3.gif" height="150" width="150" name="hm" alt=""></p>
 	 </td>
 
 		<td>
@@ -83,4 +84,5 @@
 	</table>
 	</div>
  </form>
-<!-- INCLUDE overall_footer.html -->
+
+{% include 'overall_footer.html' %}

@@ -2,13 +2,15 @@
 /*
 *
 * @package Hangman game
-* @author dmzx (www.dmzx-web.net)
+* @author Mike-on-Tour
+* @copyright (c) 2021 by Mike-on-Tour (www.mike-on-tour.com)
+* @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-namespace dmzx\hangman\event;
+namespace mot\hangman\event;
 
 /**
 * @ignore
@@ -38,8 +40,8 @@ class listener implements EventSubscriberInterface
 	/**
 	* Constructor
 	*
-	* @param \phpbb\controller\helper	$helper		Controller helper object
-	* @param \phpbb\template			$template	Template object
+	* @param \phpbb\controller\helper	$helper	Controller helper object
+	* @param \phpbb\template		$template	Template object
 	*/
 	public function __construct(\phpbb\controller\helper $helper, \phpbb\template\template $template)
 	{
@@ -51,7 +53,7 @@ class listener implements EventSubscriberInterface
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'dmzx/hangman',
+			'ext_name' => 'mot/hangman',
 			'lang_set' => 'common',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
@@ -60,7 +62,7 @@ class listener implements EventSubscriberInterface
 	public function add_page_header_link($event)
 	{
 		$this->template->assign_vars(array(
-			'U_HANGMAN'	=> $this->helper->route('dmzx_hangman_main_controller'),
+			'U_HANGMAN'	=> $this->helper->route('mot_hangman_main_controller'),
 		));
 	}
 }

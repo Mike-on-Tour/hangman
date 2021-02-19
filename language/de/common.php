@@ -2,7 +2,9 @@
 /*
 *
 * @package Hangman game
-* @author dmzx (www.dmzx-web.net)
+* @author Mike-on-Tour
+* @copyright (c) 2021 by Mike-on-Tour (www.mike-on-tour.com)
+* @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -38,20 +40,20 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'HANGMAN'	=> 'Hangman',
-	'HANGMAN_TITLE'	=> 'Hangman Spiel',
-	'HANGMAN_TENLIVES'	=> 'Du hast 10 Leben zum Spielen.',
-	'HANGMAN_SCORE'	=> 'Score',
-	'HANGMAN_LIVES_USED'	=> 'Verbrauchte Leben',
-	'HANGMAN_NEW_QUOTE'	=> 'Neuer Begriff',
-	'HANGMAN_RESTART'	=> 'Restart',
-	'HANGMAN_NEW_QUOTE_START'	=> 'Click New Quote to start Hangman Game',
-	'HANGMAN_FAILED_TRIES'	=> 'Failed Versuche',
-	'HANGMAN_CORRECT_TRIES'	=> 'Erfolgreiche Versuche',
-	'HANGMAN_YOUWIN'	=> 'Du hast gewonen!',
-	'HANGMAN_QUOTE_ALREADY'	=> 'Quote already in play!',
-	'HANGMAN_NEW_QUOTE_TO'	=> 'Click New Quote to start !',
-	'HANGMAN_YOU_LOSE'	=> 'Du hast verloren - Neuer Versuch!',
-	'HANGMAN_LETTER'	=> 'Buchstabe',
-	'HANGMAN_ALREADY_USED'	=> 'wurde bereits benutzt!',
+	'HANGMAN'					=> 'Hangman',
+	'HANGMAN_TITLE'				=> 'Hangman Spiel',
+	'HANGMAN_TENLIVES'			=> 'Du hast in diesem Spiel zehn Leben.',
+	'HANGMAN_SCORE'				=> 'Spielstand',
+	'HANGMAN_LIVES_USED'		=> 'Benutzte Leben',
+	'HANGMAN_NEW_QUOTE'			=> 'Neues Zitat',
+	'HANGMAN_RESTART'			=> 'Restart',
+	'HANGMAN_NEW_QUOTE_START'	=> 'Klicke auf ´Neues Zitat´, um das Hangman Spiel zu starten',
+	'HANGMAN_FAILED_TRIES'		=> 'Falsche Versuche',
+	'HANGMAN_CORRECT_TRIES'		=> 'Richtige Versuche',
+	'HANGMAN_YOUWIN'			=> 'Du hast gewonnen!',
+	'HANGMAN_QUOTE_ALREADY'		=> 'Zitat wird bereits genutzt!',
+	'HANGMAN_NEW_QUOTE_TO'		=> 'Klicke auf ´Neues Zitat´ zum Start!',
+	'HANGMAN_YOU_LOSE'			=> 'Du hast verloren - Neuer Versuch!',
+	'HANGMAN_LETTER'			=> 'Buchstabe',
+	'HANGMAN_ALREADY_USED'		=> 'wird schon benutzt!',
 ));

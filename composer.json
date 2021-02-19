@@ -1,18 +1,24 @@
 {
-	"name": "dmzx/hangman",
+	"name": "mot/hangman",
 	"type": "phpbb-extension",
 	"description": "This extension will add hangman game",
-	"homepage": "http://www.dmzx-web.net",
-	"version": "0.0.3",
-	"time": "2015-02-07",
+	"homepage": "http://www.mike-on-tour.com",
+	"version": "0.1.0",
+	"time": "2021-02-14",
 	"keywords": ["phpbb", "extension", "hangman"],
 	"license": "GPL-2.0",
 	"authors": [
 		{
+			"name": "Michael Vormwald",
+			"homepage": "http://www.mike-on-tour.com",
+			"email": "webmaster@mike-on-tour.de",
+			"role": "Developer"
+		},
+		{
 			"name": "dmzx",
 			"homepage": "http://www.dmzx-web.net",
 			"email": "info@dmzx-web.net",
-			"role": "Developer"
+			"role": "Former Developer"
 		},
 		{
 			"name": "hscripts",
@@ -21,17 +27,19 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.3"
+        "php": ">=5.4",
+        "phpbb/phpbb": ">=3.2",
+        "composer/installers": "~1.0.0"
 	},
 	"extra": {
 		"display-name": "Hangman Game",
 		"soft-require": {
-			"phpbb/phpbb": "3.1.*"
+			"phpbb/phpbb": ">=3.2"
 		},
 		"version-check": {
-			"host": "www.dmzx-web.net",
-			"directory": "/versions",
-			"filename": "hangman_version.json"
+			"host": "www.mike-on-tour.com",
+			"directory": "/mot",
+			"filename": "hangman.json"
 		}
 	}
 }

@@ -1,13 +1,14 @@
 services:
-    dmzx.hangman.controller:
-        class: dmzx\hangman\controller\main
+    mot.hangman.controller:
+        class: mot\hangman\controller\main
         arguments:
             - '@config'
             - '@controller.helper'
             - '@template'
             - '@user'
-    dmzx.hangman.listener:
-        class: dmzx\hangman\event\listener
+
+    mot.hangman.listener:
+        class: mot\hangman\event\listener
         arguments:
             - '@controller.helper'
             - '@template'

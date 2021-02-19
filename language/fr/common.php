@@ -2,7 +2,9 @@
 /*
 *
 * @package Hangman game
-* @author dmzx (www.dmzx-web.net)
+* @author Mike-on-Tour
+* @copyright (c) 2021 by Mike-on-Tour (www.mike-on-tour.com)
+* @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 * @translated into French by Galixte (http://www.galixte.com)
@@ -39,20 +41,20 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'HANGMAN'	=> 'Le pendu',
-	'HANGMAN_TITLE'	=> 'Jeu du pendu',
-	'HANGMAN_TENLIVES'	=> 'Vous avez dix vies pour jouer.',
-	'HANGMAN_SCORE'	=> 'Score',
-	'HANGMAN_LIVES_USED'	=> 'Vies utilisées',
-	'HANGMAN_NEW_QUOTE'	=> 'Nouvelle citation',
-	'HANGMAN_RESTART'	=> 'Recommencer',
+	'HANGMAN'					=> 'Le pendu',
+	'HANGMAN_TITLE'				=> 'Jeu du pendu',
+	'HANGMAN_TENLIVES'			=> 'Vous avez dix vies pour jouer.',
+	'HANGMAN_SCORE'				=> 'Score',
+	'HANGMAN_LIVES_USED'		=> 'Vies utilisées',
+	'HANGMAN_NEW_QUOTE'			=> 'Nouvelle citation',
+	'HANGMAN_RESTART'			=> 'Recommencer',
 	'HANGMAN_NEW_QUOTE_START'	=> 'Cliquer sur « Nouvelle citation » pour démarrer le jeu du pendu',
-	'HANGMAN_FAILED_TRIES'	=> 'Essais échoués',
-	'HANGMAN_CORRECT_TRIES'	=> 'Essais corrects',
-	'HANGMAN_YOUWIN'	=> 'Vous gagnez !',
-	'HANGMAN_QUOTE_ALREADY'	=> 'Citation déjà jouée !',
-	'HANGMAN_NEW_QUOTE_TO'	=> 'Cliquer sur « Nouvelle citation » pour démarrer !',
-	'HANGMAN_YOU_LOSE'	=> 'Vous perdez - réessayez !',
-	'HANGMAN_LETTER'	=> 'La lettre',
-	'HANGMAN_ALREADY_USED'	=> 'est déjà utilisée !',
+	'HANGMAN_FAILED_TRIES'		=> 'Essais échoués',
+	'HANGMAN_CORRECT_TRIES'		=> 'Essais corrects',
+	'HANGMAN_YOUWIN'			=> 'Vous gagnez !',
+	'HANGMAN_QUOTE_ALREADY'		=> 'Citation déjà jouée !',
+	'HANGMAN_NEW_QUOTE_TO'		=> 'Cliquer sur « Nouvelle citation » pour démarrer !',
+	'HANGMAN_YOU_LOSE'			=> 'Vous perdez - réessayez !',
+	'HANGMAN_LETTER'			=> 'La lettre',
+	'HANGMAN_ALREADY_USED'		=> 'est déjà utilisée !',
 ));
