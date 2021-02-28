@@ -1,12 +1,12 @@
 <?php
 /*
 *
-* @package Hangman game
+* @package Hangman v0.1..0
 * @author Mike-on-Tour
-* @copyright (c) 2021 by Mike-on-Tour (www.mike-on-tour.com)
+* @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
 

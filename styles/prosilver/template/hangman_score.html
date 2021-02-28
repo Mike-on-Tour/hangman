@@ -1,0 +1,46 @@
+<div class="centered_text">
+	<h2>{{ lang('HANGMAN_RANKING_TABLE') }}</h2>
+</div>
+
+{% if pagination %}
+	<div class="pagination">
+		{% include 'pagination.html' %}
+	</div>
+	<div><p>&nbsp;</p></div>
+{% endif %}
+
+<table class="table1 zebra-table fixed-width-table">
+	<thead>
+		<tr>
+			<th style="text-align: center; width: 15%;">{{ lang('RANK') }}</th>
+			<th style="text-align: center; width: 25%;">{{ lang('USERNAME') }}</th>
+			<th style="text-align: center;">{{ lang('TOTAL_POINTS') }}</th>
+			<th style="text-align: center;">{{ lang('GAME_POINTS') }}</th>
+			<th style="text-align: center;">{{ lang('WORD_POINTS') }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for ranking in rankings %}
+		<tr>
+			<td style="text-align: center;">{{ ranking.RANK }}</td>
+			<td {% if ranking.USER_COLOUR %}style="color: #{{ ranking.USER_COLOUR }}; font-weight: bold;"{% endif %}>{{ ranking.USERNAME }}</td>
+{#			<td><a href="{{ SERVER_CONFIG }}{{ MEMBERLIST }}{{ ranking.USER_ID }}" target="_blank" {% if ranking.USER_COLOUR %}style="color: #{{ ranking.USER_COLOUR }};" class="username-coloured"{% endif %}>{{ ranking.USERNAME }}</a></td> #}
+			<td style="text-align: center;">{{ ranking.TOTAL_POINTS }}</td>
+			<td style="text-align: center;">{{ ranking.GAME_POINTS }}</td>
+			<td style="text-align: center;">{{ ranking.WORD_POINTS }}</td>
+		</tr>
+	{% else %}
+	<tr>
+		<td colspan="5" style="text-align: center;">{{ lang('NO_ENTRIES') }}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+{% if pagination %}
+	<div>&nbsp;</div>
+	<div class="pagination">
+		{% include 'pagination.html' %}
+	</div>
+	<div><p>&nbsp;</p></div>
+{% endif %}

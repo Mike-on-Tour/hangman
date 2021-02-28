@@ -1,0 +1,51 @@
+{% include 'overall_header.html' %}
+{% INCLUDEJS '@mot_hangman/admin_mot_hangman.js' %}
+{% INCLUDECSS '@mot_hangman/mot_hangman_acp.css' %}
+
+<h1>{{ lang('ACP_HANGMAN_SETTINGS') }}</h1>
+<p>{{ lang('ACP_HANGMAN_SETTINGS_EXPLAIN') }}</p>
+
+<form id="acp_hangman_settings" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
+	<fieldset>
+		<dl>
+			<dt><label for="acp_hangman_lives">{{ lang('ACP_HANGMAN_LIVES') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_LIVES_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_lives" type="number" min="4" max="10" name="acp_hangman_lives" onblur="chkInput('acp_hangman_lives', twoDigits, 10, 4, 10)" value="{{ ACP_HANGMAN_LIVES }}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="acp_hangman_points_win">{{ lang('ACP_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_WIN_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_win" type="text" size="3" maxlength="3" name="acp_hangman_points_win" onblur="chkInput('acp_hangman_points_win', twoDigits, 15, 1, 99)" value="{{ ACP_HANGMAN_POINTS_WIN }}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="acp_hangman_points_loose">{{ lang('ACP_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_LOOSE_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_loose" type="text" size="3" maxlength="3" name="acp_hangman_points_loose" onblur="chkInput('acp_hangman_points_loose', negativeNumber, -5, -99, 0)" value="{{ ACP_HANGMAN_POINTS_LOOSE }}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="acp^_hangman_points_letter">{{ lang('ACP_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_LETTER_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_letter" type="text" size="3" maxlength="3" name="acp_hangman_points_letter" onblur="chkInput('acp_hangman_points_letter', twoDigits, 1, 0, 99)" value="{{ ACP_HANGMAN_POINTS_LETTER }}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="acp_hangman_points_word">{{ lang('ACP_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_word" type="text" size="3" maxlength="3" name="acp_hangman_points_word" onblur="chkInput('acp_hangman_points_word', twoDigits, 8, 0, 99)" value="{{ ACP_HANGMAN_POINTS_WORD }}" /></dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+		</p>
+	{{ S_FORM_TOKEN }}
+	</fieldset>
+
+</form>
+
+<p class="centered_text">
+Hangman ver {{ HANGMAN_VERSION }} &copy; 2021 - {{ HANGMAN_YEAR }} by Mike-on-Tour
+</p>
+
+<p class="centered_text">
+{{ lang('SUPPORT_HANGMAN') }}
+<a href="https://paypal.me/MichaelVormwald?locale.x=de_DE" target="_blank" rel="noopener noreferrer">{{ ICON_PAYPAL }}</a>
+</p>
+
+{% include 'overall_footer.html' %}

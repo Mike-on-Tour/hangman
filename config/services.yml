@@ -3,9 +3,15 @@ services:
         class: mot\hangman\controller\main
         arguments:
             - '@config'
+            - '@dbal.conn'
             - '@controller.helper'
+            - '@language'
+            - '@request'
             - '@template'
             - '@user'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%core.table_prefix%'
 
     mot.hangman.listener:
         class: mot\hangman\event\listener

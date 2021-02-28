@@ -1,0 +1,22 @@
+<div class="centered_text">
+	<h2>{{ lang('HANGMAN_QUOTE_INPUT_HEAD') }}</h2>
+</div>
+
+<p>{{ HANGMAN_QUOTE_INPUT_EXPL }}</p>
+
+<form id="hangman_quote_input" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}" onsubmit="cleanQuoteInput('hangman_quote_text')">
+	<fieldset>
+		<dl>
+			<dt><label for="hangman_quote_text">{{ lang('HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
+			<dd><input id="hangman_quote_text" type="text" size="100" maxlength="255" name="hangman_quote_text" value="{{ HANGMAN_QUOTE_TEXT }}" /></dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+        <p class="submit-buttons">
+            <input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />{# &nbsp;
+            <input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" /> #}
+        </p>
+	{{ S_FORM_TOKEN }}
+	</fieldset>
+</form>

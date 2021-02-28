@@ -1,0 +1,77 @@
+<form id="hangman_quote_input" name="frm" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
+	<div class="centered_text">
+		<h2>{{ lang('HANGMAN_TITLE') }}</h2>
+	</div>
+
+	<p>{{ GAME_DESC }}<br></p>
+
+	<div id="game_content">
+		<div id="status">
+			<div id="hm_picture">
+				<img src="{{ ROOT_PATH }}{{ IMAGE_PATH }}hmstart3.gif">
+			</div>
+			<div>
+				<p>{{ HANGMAN_LIVES }}</p>
+				<fieldset>
+					<dl>
+						<dt><label>{{ lang('HANGMAN_LIVES_USED') }}</label></dt>
+						<dd><input type="text" size="2" onfocus="lives.blur();" value="0" name="lives"></dd>
+					</dl>
+					<dl>
+						<dt><label>{{ lang('HANGMAN_SCORE') }}</label></dt>
+						<dd><input type="text" size="2" onfocus="score.blur();" value="0" name="score"></dd>
+					</dl>
+				</fieldset>
+			</div>
+		</div>
+
+		<div id="game_div">
+			<fieldset>
+				<dl>
+					<textarea class="tarea" onfocus="word.blur();" name="word" cols="100" rows="2">	{L_HANGMAN_NEW_QUOTE_START}</textarea>
+				</dl>
+				<dl>
+					<dt><label>{{ lang('HANGMAN_FAILED_TRIES') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="text" size="30" onfocus="tried.blur();" value="" name="tried"></dd>
+				</dl>
+				<dl>
+					<dt><label>{{ lang('HANGMAN_CORRECT_TRIES') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="text" size="30" onfocus="tried.blur();" value="" name="correct"></dd>
+				<dl>
+			</fieldset>
+		</div>
+
+		<div id="submit_button_div">
+			<p><input id="start_button" class="nq" type="button" value="{{ lang('HANGMAN_NEW_QUOTE') }}" onclick="hangman_start();"></p>
+		</div>
+	</div>
+
+	<div class="letter_table">
+		<table align="center">
+			<tr id="row1"></tr>
+			<tr id="row2"></tr>
+		</table>
+	</div>
+	
+	<fieldset>
+		<input type="text" size="10" value="0" id="word_id" name="word_id" hidden="true">
+		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden="true" />
+	{{ S_FORM_TOKEN }}
+	</fieldset>
+ </form>
+ 
+<script>
+	jsHangmanLetters = {{ HANGMAN_LETTERS }};
+	jsHangmanTotalLetters = {{ HANGMAN_TOTAL_LETTERS }};
+	jsLetterRow = {{ HANGMAN_LETTER_ROW }};
+	jsClickStart = '{{ CLICK_START_FIRST }}';
+	jsNumberOfLives = {{ HANGMAN_NUMBER_OF_LIVES }};
+	jsQuotes = {{ HANGMAN_QUOTES }};
+	jsNoQuote = '{{ lang('HANGMAN_NO_QUOTE') }}';
+	jsLetterPoints = {{ LETTER_POINTS }};
+	jsWinPoints = {{ WIN_POINTS }};
+	jsWinString = '{{ lang('HANGMAN_YOUWIN') }}';
+	jsLoosePoints = {{ LOOSE_POINTS }};
+	jsLooseString = '{{ lang('HANGMAN_YOU_LOSE') }}';
+	jsAction = '{{ U_ACTION }}';
+</script>
