@@ -165,19 +165,6 @@ form fieldset dd {
 	width: 20%;
 }
 
-#submit_button_div {
-	float: left;
-	position: relative;
-	bottom: 35px;
-	left: 120px;
-}
-
-/* #submit_button_div {
-	position: absolute;
-	bottom: 140px;
-	right: 210px;
-} */
-
 #game_content:after {
 	content: '';
 	clear: both;

@@ -22,6 +22,12 @@ var points = 0;
 // Variable to count used lives
 var livesUsed = 0;
 
+// Variable to hold used lettters in order to prevent them from being used more than once through keyboard input
+var usedLetters = new Array();
+
+/*
+* Ajax function to call the php script (not working as of today)
+*/
 function jumpToPhp() {
 	$.ajax({
 		url: jsAction,
@@ -31,6 +37,20 @@ function jumpToPhp() {
 			'points': points
 		}
 	});
+}
+
+/*
+* Event handler to get keyboard input
+*
+* @params	event
+*/
+function keyPressed(event) {
+	var key = event.key;
+	key = key.toLocaleUpperCase();
+	if (key == 'SS') {
+		key = 'ß';
+	}
+	seek(key);
 }
 
 /*
@@ -113,10 +133,14 @@ function seek(letter)
 
 	} else {
 
-		// Letter has been used, hide it so it can't be used again
+		// If this letter has already been used leave this  (necessary to avoid redundant count when using keyboard)
+		if (usedLetters.includes(letter)) {
+			return;
+		}
+		// Add this letter to Used Letters Array
+		usedLetters.push(letter)
+		//and hide it so it can't be used again (with mouse)
 		document.getElementById(letter).style.visibility = 'hidden';
-//		document.getElementById(letter).hidden = true;
-//		document.getElementById(letter).style.backgroundColor = '#FFF8DC';
 
 		// Check if this letter is contained in quote
 		for(i = 0; i < quoteLength; i++) {
@@ -178,3 +202,5 @@ function seek(letter)
 
 // Start immediately with displaying the letter table
 fillLetterTable(jsHangmanLetters, jsHangmanTotalLetters, jsLetterRow);
+// and inserting an event handler for keyboard input
+document.addEventListener('keypress', keyPressed );

@@ -1,49 +1,47 @@
 {% include 'overall_header.html' %}
 {% INCLUDECSS '@mot_hangman/hangman.css' %}
 
-<div id="page-body" class="page-body">
-	<div class="forabg">
-		<div class="inner">
-			<ul class="topiclist">
-				<li class="header">
-					<dl class="row-item">
-						<dt>
-							<div class="list-inner">
-								{{ lang('HANGMAN') }}
-							</div>
-						</dt>
-					</dl>
-				</li>
-			</ul>
-		</div>
-		<div class="panel bg1">
-			<div id="hangman_wrap" class="hangman_wrap">
-				<div id="hangman_tab_menu">
-					<ul>
-						<li id="hangman_tab_1" class="hangman_tab"><a href="{{ TAB_1 }}">{{ lang('TAB_GAME') }}</a></li>
-						<li id="hangman_tab_2" class="hangman_tab"><a href="{{ TAB_2 }}">{{ lang('TAB_WORD') }}</a></li>
-						<li id="hangman_tab_3" class="hangman_tab"><a href="{{ TAB_3 }}">{{ lang('TAB_SCORE') }}</a></li>
-					</ul>
-				</div>
-				<div class="hangman_content">
-					<div id="hangman_box_1" class="hangman_box">
-						{% include 'hangman_game.html' %}
+{% if not S_IS_BOT and S_USER_LOGGED_IN %}
+	<div id="page-body" class="page-body">
+		<div class="forabg">
+			<div class="inner">
+				<ul class="topiclist">
+					<li class="header">
+						<dl class="row-item">
+							<dt>
+								<div class="list-inner">
+									{{ lang('HANGMAN') }}
+								</div>
+							</dt>
+						</dl>
+					</li>
+				</ul>
+			</div>
+			<div class="panel bg1">
+				<div id="hangman_wrap" class="hangman_wrap">
+					<div id="hangman_tab_menu">
+						<ul>
+							<li id="hangman_tab_1" class="hangman_tab"><a href="{{ TAB_1 }}">{{ lang('TAB_GAME') }}</a></li>
+							<li id="hangman_tab_2" class="hangman_tab"><a href="{{ TAB_2 }}">{{ lang('TAB_WORD') }}</a></li>
+							<li id="hangman_tab_3" class="hangman_tab"><a href="{{ TAB_3 }}">{{ lang('TAB_SCORE') }}</a></li>
+						</ul>
 					</div>
-					<div id="hangman_box_2" class="hangman_box">
-						{% include 'hangman_input_word.html' %}
-					</div>
-					<div id="hangman_box_3" class="hangman_box">
-						{% include 'hangman_score.html' %}
+					<div class="hangman_content">
+						<div id="hangman_box_1" class="hangman_box">
+							{% include 'hangman_game.html' %}
+						</div>
+						<div id="hangman_box_2" class="hangman_box">
+							{% include 'hangman_input_word.html' %}
+						</div>
+						<div id="hangman_box_3" class="hangman_box">
+							{% include 'hangman_score.html' %}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
-{# Handover of all necessary data to the js script #}
-<script>
-</script>
+{% endif %}
 
 {% include 'overall_footer.html' %}
 

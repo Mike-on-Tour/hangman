@@ -21,6 +21,10 @@
 						<dt><label>{{ lang('HANGMAN_SCORE') }}</label></dt>
 						<dd><input type="text" size="2" onfocus="score.blur();" value="0" name="score"></dd>
 					</dl>
+					<dl>
+						<dt></dt>
+						<dd><input id="start_button" class="nq" type="button" value="{{ lang('HANGMAN_NEW_QUOTE') }}" onclick="hangman_start();"></dd>
+					</dl>
 				</fieldset>
 			</div>
 		</div>
@@ -42,7 +46,7 @@
 		</div>
 
 		<div id="submit_button_div">
-			<p><input id="start_button" class="nq" type="button" value="{{ lang('HANGMAN_NEW_QUOTE') }}" onclick="hangman_start();"></p>
+			<p></p>
 		</div>
 	</div>
 
