@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 									you have won, losing will cost you %3$s points.<br>
 									ATTENTION: Terms used in a game turn will be deleted from the database after that turn. Please enter a term after you
 									concluded a game turn in order to enable others to play, too.',
-	// List all letters of this language as uppercase letters seperated by comma. If this language contains lowercase letters without an uppercase equivalent list them here, too. If your language uses special characters and you have put them in
+	// List all letters of this language as uppercase letters separated by comma. If this language contains lowercase letters without an uppercase equivalent list them here, too. If your language uses special characters and you have put them in
 	//	the following variable please consider mentioning them in the 'HANGMAN_QUOTE_INPUT_EXPL' variable
 	'HANGMAN_LETTERS'			=> 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z',
 	'HANGMAN_LIVES'				=> 'You have %1$s lives to play with.',
@@ -79,7 +79,7 @@ $lang = array_merge($lang, array(
 	// Term definition
 	'HANGMAN_QUOTE_INPUT_HEAD'	=> 'Enter a new term',
 	'HANGMAN_QUOTE_INPUT_EXPL'	=> 'You can enter a new term in this form. This term may contain spaces but must not contain punctuation marks, special
-									characters and digits. Therefore you are not limmited to single words and you can enter quotes as well.<br>
+									characters and digits. Therefore you are not limited to single words and you can enter quotes as well.<br>
 									Terms entered by yourself will not be displayed to you during game turns!<br>
 									According to the current settings your game account will be credited with %1$s points for entering a term.',
 	'HANGMAN_QUOTE_INPUT'		=> 'New term',
