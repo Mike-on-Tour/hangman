@@ -54,4 +54,7 @@ $lang = array_merge($lang, array(
 										(integer greater than or equal to zero)',
 	'ACP_HANGMAN_SETTING_SAVED'		=> 'Settings for the Hangman Game successfully saved.',
 	'SUPPORT_HANGMAN'				=> 'If you want to support Hangman´s development please use this link to donate:<br>',
+	'RESET_HIGHSCORE'				=> 'Reset Highscore',
+	'LOG_HANGMAN_HIGHSCORE_TABLE_CLEARED'	=> 'Hangman Highscore table cleared',
+	'HIGHSCORE_TABLE_CLEARED'		=> 'Highscore table cleared',
 ));
