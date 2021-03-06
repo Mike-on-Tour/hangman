@@ -15,7 +15,7 @@ class settings_module
 
 	public function main()
 	{
-		global $config, $phpbb_container, $request, $template, $phpbb_root_path;
+		global $config, $db, $phpbb_container, $phpbb_log, $request, $template, $user, $phpbb_root_path, $table_prefix;
 
 		$language = $phpbb_container->get('language');
 		$this->tpl_name = 'acp_hangman_settings';
@@ -40,13 +40,26 @@ class settings_module
 			trigger_error($language->lang('ACP_HANGMAN_SETTING_SAVED') . adm_back_link($this->u_action));
 		}
 
+		if ($request->is_set_post('reset_highscore'))
+		{
+			define ('HANGMAN_SCORE_TABLE', $table_prefix . 'hangman_score');
+
+			$db->sql_query('TRUNCATE TABLE ' . HANGMAN_SCORE_TABLE);
+
+			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_HANGMAN_HIGHSCORE_TABLE_CLEARED');
+
+			if ($request->is_ajax())
+			{
+				trigger_error('HIGHSCORE_TABLE_CLEARED');
+			}
+		}
 		$template->assign_vars(array(
 			'ACP_HANGMAN_LIVES'					=> $config['mot_hangman_lives'],
 			'ACP_HANGMAN_POINTS_LETTER'			=> $config['mot_hangman_points_letter'],
 			'ACP_HANGMAN_POINTS_LOOSE'			=> $config['mot_hangman_points_loose'],
 			'ACP_HANGMAN_POINTS_WIN'			=> $config['mot_hangman_points_win'],
 			'ACP_HANGMAN_POINTS_WORD'			=> $config['mot_hangman_points_word'],
-			'U_ACTION'							=> $this->u_action . '&amp;action=submit',
+			'U_ACTION'							=> $this->u_action,
 			'HANGMAN_VERSION'					=> $config['mot_hangman_version'],
 			'HANGMAN_YEAR'						=> date('Y'),
 			'ICON_PAYPAL'						=> '<img src="' . $phpbb_root_path . 'ext/mot/hangman/adm/images/Paypal.svg" />',

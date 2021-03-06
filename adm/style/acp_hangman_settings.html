@@ -39,6 +39,15 @@
 
 </form>
 
+<fieldset>
+	<form id="reset_highscore_action" method="post" action="{U_ACTION}" data-ajax="true">
+		<dl>
+			<dt><label for="reset_highscore">{{ lang('RESET_HIGHSCORE') }}</label><br /><span>&nbsp;</span></dt>
+			<dd><input type="hidden" name="reset_highscore" value="online" /><input class="button2" type="submit" id="reset_highscore" name="reset_highscore" value="{L_RUN}" /></dd>
+		</dl>
+	</form>
+</fieldset>
+
 <p class="centered_text">
 Hangman ver {{ HANGMAN_VERSION }} &copy; 2021 - {{ HANGMAN_YEAR }} by Mike-on-Tour
 </p>
