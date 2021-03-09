@@ -15,15 +15,15 @@
 				<fieldset>
 					<dl>
 						<dt><label>{{ lang('HANGMAN_LIVES_USED') }}</label></dt>
-						<dd><input type="text" size="2" onfocus="lives.blur();" value="0" name="lives"></dd>
+						<dd><input class="bg2" type="text" size="2" onfocus="lives.blur();" value="0" name="lives"></dd>
 					</dl>
 					<dl>
 						<dt><label>{{ lang('HANGMAN_SCORE') }}</label></dt>
-						<dd><input type="text" size="2" onfocus="score.blur();" value="0" name="score"></dd>
+						<dd><input class="bg2" type="text" size="2" onfocus="score.blur();" value="0" name="score"></dd>
 					</dl>
 					<dl>
 						<dt></dt>
-						<dd><input id="start_button" class="nq" type="button" value="{{ lang('HANGMAN_NEW_QUOTE') }}" onclick="hangman_start();"></dd>
+						<dd><input id="start_button" class="bg2 nq" type="button" value="{{ lang('HANGMAN_NEW_QUOTE') }}" onclick="hangman_start();"></dd>
 					</dl>
 				</fieldset>
 			</div>
@@ -32,15 +32,15 @@
 		<div id="game_div">
 			<fieldset>
 				<dl>
-					<textarea class="tarea" onfocus="word.blur();" name="word" cols="100" rows="2">	{L_HANGMAN_NEW_QUOTE_START}</textarea>
+					<textarea class="bg2 tarea" onfocus="word.blur();" name="word" cols="100" rows="2">	{L_HANGMAN_NEW_QUOTE_START}</textarea>
 				</dl>
 				<dl>
 					<dt><label>{{ lang('HANGMAN_FAILED_TRIES') }}{{ lang('COLON') }}</label></dt>
-					<dd><input type="text" size="30" onfocus="tried.blur();" value="" name="tried"></dd>
+					<dd><input class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="tried"></dd>
 				</dl>
 				<dl>
 					<dt><label>{{ lang('HANGMAN_CORRECT_TRIES') }}{{ lang('COLON') }}</label></dt>
-					<dd><input type="text" size="30" onfocus="tried.blur();" value="" name="correct"></dd>
+					<dd><input class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="correct"></dd>
 				<dl>
 			</fieldset>
 		</div>

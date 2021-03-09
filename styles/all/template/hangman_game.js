@@ -67,11 +67,11 @@ function fillLetterTable(letters, letterCount, letterRow) {
 	var i = 0;
 
 	for (i = 0; i < letterRow; i++) {
-		row1.innerHTML = row1.innerHTML + '<td><input type="button" class="letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
+		row1.innerHTML = row1.innerHTML + '<td><input type="button" class="bg2 letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
 	}
 
 	for (i = letterRow; i < letterCount; i++) {
-		row2.innerHTML = row2.innerHTML + '<td><input type="button" class="letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
+		row2.innerHTML = row2.innerHTML + '<td><input type="button" class="bg2 letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
 	}
 }
 
