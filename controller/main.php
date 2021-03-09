@@ -79,9 +79,9 @@ class main
 	{
 		$pagination = $this->phpbb_container->get('pagination');
 
-		$this->game_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=1");
-		$this->word_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=2");
-		$this->rank_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=3");
+		$this->game_action = append_sid("{$this->root_path}hangman", "tab=1");
+		$this->word_action = append_sid("{$this->root_path}hangman", "tab=2");
+		$this->rank_action = append_sid("{$this->root_path}hangman", "tab=3");
 
 		// Get the possible letters from the default language file
 		$lang_arr = array();
@@ -96,8 +96,9 @@ class main
 		{
 			case 0:
 			case 1:
+			default:
 				add_form_key('hangman_game_frm');
-				$this->u_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=1");
+				$this->u_action = append_sid("{$this->root_path}hangman", "tab=1");
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -194,7 +195,7 @@ class main
 				$input_points = $this->config['mot_hangman_points_word'];
 				add_form_key('hangman_quote_input');
 
-				$this->u_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=2");
+				$this->u_action = append_sid("{$this->root_path}hangman", "tab=2");
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -325,7 +326,7 @@ class main
 
 				//base url for pagination, filtering and sorting
 //				$base_url = $this->u_action . "&amp;tab=3";
-				$base_url = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=3");
+				$base_url = append_sid("{$this->root_path}hangman", "tab=3");
 
 				// Load pagination
 				$start = $pagination->validate_start($start, $limit, $count_rankings);
@@ -334,16 +335,13 @@ class main
 				$selected_tab = 3;
 				break;
 
-			default:
-				break;
-
 		}
 
 		$this->template->assign_vars(array(
 			'SELECTED_TAB'		=> $selected_tab,
-			'TAB_1'				=> append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=1"),
-			'TAB_2'				=> append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=2"),
-			'TAB_3'				=> append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=3"),
+			'TAB_1'				=> append_sid("{$this->root_path}hangman", "tab=1"),
+			'TAB_2'				=> append_sid("{$this->root_path}hangman", "tab=2"),
+			'TAB_3'				=> append_sid("{$this->root_path}hangman", "tab=3"),
 		));
 		return $this->helper->render('hangman.html', $this->language->lang('HANGMAN'));
 	}
