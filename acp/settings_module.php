@@ -44,7 +44,17 @@ class settings_module
 		{
 			define ('HANGMAN_SCORE_TABLE', $table_prefix . 'hangman_score');
 
-			$db->sql_query('DELETE FROM ' . HANGMAN_SCORE_TABLE);	// We have to use 'DELETE FROM ' since SQLite doesn't have a TRUNCATE command
+			// Correctly handle empty table
+			switch ($db->get_sql_layer())
+			{
+				case 'sqlite3':
+					$db->sql_query('DELETE FROM ' . HANGMAN_SCORE_TABLE);
+				break;
+
+				default:
+					$db->sql_query('TRUNCATE TABLE ' . HANGMAN_SCORE_TABLE);
+				break;
+			}
 
 			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'HANGMAN_SCORE_TABLE_CLEARED');
 
