@@ -4,6 +4,26 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.2.3] - 2021-03-14
+
+### Added
+-	A migration file `v_0_2_3.php` to update config version number
+-	New hangman images (SVG files)
+-	An ACP function to clear the highscore table, affected files are `acp/settings_module.php`, `adm/style/acp_hangman_settings.html`,
+	`adm/style/acp_hangman_acp.css` and all `info_acp_hangman.php` language files
+
+### Changed
+-	Layout of tabs and panels to meet prosilver criteria and enable customisation with styles inherited from prosilver
+-	Some minor code changes to clean up the code
+
+### Fixed
+-	Two misspellings in English language pack
+-	Hangman tabs obscuring drop down menu (Quick links)
+
+### Removed
+-	Hangman images (GIF files)
+  
+  
 ## [0.2.2] - 2021-03-02
 
 ### Added

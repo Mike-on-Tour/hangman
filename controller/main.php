@@ -12,6 +12,8 @@
 
 namespace mot\hangman\controller;
 
+use phpbb\language\language_file_loader;
+
 class main
 {
 	/* @var \phpbb\config\config */
@@ -19,6 +21,9 @@ class main
 
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
+
+	/** @var \phpbb\extension\manager */
+	protected $phpbb_extension_manager;
 
 	/* @var \phpbb\controller\helper */
 	protected $helper;
@@ -49,9 +54,9 @@ class main
 	/**
 	* Constructor
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\controller\helper $helper,
-								\phpbb\language\language $language, \phpbb\request\request_interface $request, \phpbb\template\template $template,
-								\phpbb\user $user, $root_path, $php_ext, $table_prefix)
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\extension\manager $phpbb_extension_manager,
+								\phpbb\controller\helper $helper, \phpbb\language\language $language, \phpbb\request\request_interface $request,
+								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext, $table_prefix)
 	{
 		define ('HANGMAN_SCORE_TABLE', $table_prefix . 'hangman_score');
 		define ('HANGMAN_WORDS_TABLE', $table_prefix . 'hangman_words');
@@ -59,6 +64,7 @@ class main
 
 		$this->config = $config;
 		$this->db = $db;
+		$this->phpbb_extension_manager 	= $phpbb_extension_manager;
 		$this->helper = $helper;
 		$this->language = $language;
 		$this->request = $request;
@@ -76,6 +82,14 @@ class main
 		$this->game_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=1");
 		$this->word_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=2");
 		$this->rank_action = append_sid("{$this->root_path}app.$this->php_ext/hangman", "tab=3");
+
+		// Get the possible letters from the default language file
+		$lang_arr = array();
+		$default_lang = new language_file_loader($this->root_path, $this->php_ext);
+		$default_lang->set_extension_manager($this->phpbb_extension_manager);
+		$default_lang->load_extension('mot/hangman', 'common', array($this->config['default_lang'], 'en'), $lang_arr);
+		$letters = explode(',', $lang_arr['HANGMAN_LETTERS']);
+		$lc_letters = mb_strtolower($lang_arr['HANGMAN_LETTERS'], 'UTF-8');
 
 		$tab = $this->request->variable('tab', 0);
 		switch ($tab)
@@ -139,8 +153,6 @@ class main
 											. $this->back_link($this->rank_action, $this->language->lang('TO_SCORE_TABLE')), E_USER_NOTICE);
 				}
 
-				// Get the possible letters from language file
-				$letters = explode(',', $this->language->lang('HANGMAN_LETTERS'));
 				// and calculate the length of the rows to display them
 				$total_letters = count ($letters);
 				$letter_row = $total_letters/2;
@@ -192,9 +204,6 @@ class main
 					}
 
 					$quote = $this->request->variable('hangman_quote_text', '', true);
-					$quote = preg_replace("/[,;\:\._\-\<\>\#'\+\*^°\!\"§\$%&\/()\=\?\|\{\}\[\]~]/", '', $quote);
-					$quote = preg_replace("/\d/", '', $quote);
-					$quote = preg_replace("/ {2,}/", ' ', $quote);
 					$hash = $this->get_hash($quote);
 					$sql_arr = array(
 						'hangman_word_hash'	=> $hash,
@@ -211,7 +220,6 @@ class main
 						$sql_arr = array(
 							'creator_id'			=> $this->user->data['user_id'],
 							'hangman_word'			=> $quote,
-//							'hangman_word_clean'	=> strtolower($quote),
 							'hangman_word_hash'		=> $hash,
 						);
 						$sql = 'INSERT INTO ' . HANGMAN_WORDS_TABLE . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
@@ -264,8 +272,10 @@ class main
 					}
 				}
 
+				$lc_letters = explode(',', $lc_letters);
 				$this->template->assign_vars(array(
 					'HANGMAN_QUOTE_INPUT_EXPL'	=> $this->language->lang('HANGMAN_QUOTE_INPUT_EXPL', $input_points),
+					'HANGMAN_LC_LETTERS'		=> json_encode($lc_letters),
 					'U_ACTION'					=> $this->u_action . '&amp;action=submit',
 				));
 				$selected_tab = 2;

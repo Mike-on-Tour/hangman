@@ -9,8 +9,8 @@
 	<div><p>&nbsp;</p></div>
 {% endif %}
 
-<table class="table1 zebra-table fixed-width-table">
-	<thead>
+<table class="table1 zebra-list">
+	<tbody>
 		<tr>
 			<th style="text-align: center; width: 15%;">{{ lang('RANK') }}</th>
 			<th style="text-align: center; width: 25%;">{{ lang('USERNAME') }}</th>
@@ -18,8 +18,6 @@
 			<th style="text-align: center;">{{ lang('GAME_POINTS') }}</th>
 			<th style="text-align: center;">{{ lang('WORD_POINTS') }}</th>
 		</tr>
-	</thead>
-	<tbody>
 	{% for ranking in rankings %}
 		<tr>
 			<td style="text-align: center;">{{ ranking.RANK }}</td>

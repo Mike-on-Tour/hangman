@@ -4,6 +4,7 @@ services:
         arguments:
             - '@config'
             - '@dbal.conn'
+            - '@ext.manager'
             - '@controller.helper'
             - '@language'
             - '@request'

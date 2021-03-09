@@ -21,7 +21,7 @@ function selectTab(index) {
 	}
 
 	var tab = document.getElementById('hangman_tab_' + index);
-	tab.setAttribute('class','hangman_tab activetab');
+	tab.setAttribute('class','tab activetab');
 	var box = document.getElementById('hangman_box_' + index);
 	box.hidden = false;
 }

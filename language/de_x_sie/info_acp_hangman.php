@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.2..0
+* @package Hangman v0.2.3
 * @copyright (c) 2021 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -53,5 +53,9 @@ $lang = array_merge($lang, array(
 	'ACP_HANGMAN_POINTS_WORD_EXP'	=> 'Anzahl der Punkte, die einem Spieler für das Erstellen eines Suchbegriffes auf seinem Spielekonto gutgeschrieben werden<br>
 										(ganze Zahl größer oder gleich Null)',
 	'ACP_HANGMAN_SETTING_SAVED'		=> 'Die Einstellungen für das Hangman Spiel wurden erfolgreich gesichert.',
+	'RESET_HIGHSCORE'				=> 'Rangliste löschen',
+	'RESET_HIGHSCORE_CAUTION'		=> '<strong>ACHTUNG:</strong> Dieser Vorgang kann nicht rückgängig gemacht werden!',
+	'HANGMAN_SCORE_TABLE_CLEARED'	=> 'Hangman Rangliste gelöscht',
+	'HIGHSCORE_TABLE_CLEARED'		=> 'Rangliste wurde gelöscht',
 	'SUPPORT_HANGMAN'				=> 'Wenn Sie die Entwicklung des Hangman Spiels unterstützen möchtest, können Sie das hier tun:<br>',
 ));

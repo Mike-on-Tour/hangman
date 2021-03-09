@@ -13,7 +13,7 @@ var running = false;
 // Variables to enable the display of hangman images
 var imageElement = document.getElementById('hm_picture');
 var imagePath = '<img src="../ext/mot/hangman/styles/all/theme/images/hm';
-var imageExt = '.gif">';
+var imageExt = '.svg" width="75" height="125">';
 var imageNumber = 10 - jsNumberOfLives;
 
 // Variable to count points
@@ -67,11 +67,11 @@ function fillLetterTable(letters, letterCount, letterRow) {
 	var i = 0;
 
 	for (i = 0; i < letterRow; i++) {
-		row1.innerHTML = row1.innerHTML + '<td><input type=button id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
+		row1.innerHTML = row1.innerHTML + '<td><input type="button" class="letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
 	}
 
 	for (i = letterRow; i < letterCount; i++) {
-		row2.innerHTML = row2.innerHTML + '<td><input type=button id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
+		row2.innerHTML = row2.innerHTML + '<td><input type="button" class="letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt"></td>';
 	}
 }
 
@@ -175,7 +175,7 @@ function seek(letter)
 			if (matches === null) {
 				points += jsWinPoints;
 				document.frm.score.value = points;
-				alert(jsWinString + points);
+				alert(jsWinString + points);				// alert( {{ lang('HANGMAN_YOU_WIN')|e('js') }} + points);
 				document.getElementById('submit').click();
 //				jumpToPhp();
 			}

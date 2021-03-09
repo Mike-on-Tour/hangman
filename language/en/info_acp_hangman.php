@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.2..0
+* @package Hangman v0.2.3
 * @copyright (c) 2021 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -53,8 +53,9 @@ $lang = array_merge($lang, array(
 	'ACP_HANGMAN_POINTS_WORD_EXP'	=> 'Number of points to gain by entering a term or quote into the database<br>
 										(integer greater than or equal to zero)',
 	'ACP_HANGMAN_SETTING_SAVED'		=> 'Settings for the Hangman Game successfully saved.',
-	'SUPPORT_HANGMAN'				=> 'If you want to support Hangman´s development please use this link to donate:<br>',
 	'RESET_HIGHSCORE'				=> 'Reset Highscore',
-	'LOG_HANGMAN_HIGHSCORE_TABLE_CLEARED'	=> 'Hangman Highscore table cleared',
+	'RESET_HIGHSCORE_CAUTION'		=> '<strong>CAUTION:</strong> This action is irreversible!',
+	'HANGMAN_SCORE_TABLE_CLEARED'	=> 'Hangman Highscore table cleared',
 	'HIGHSCORE_TABLE_CLEARED'		=> 'Highscore table cleared',
+	'SUPPORT_HANGMAN'				=> 'If you want to support Hangman´s development please use this link to donate:<br>',
 ));

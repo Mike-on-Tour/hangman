@@ -1,6 +1,6 @@
 /*
 *
-* @package Hangman Game v0.2.0
+* @package Hangman Game v0.2.3
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -9,120 +9,26 @@
 *
 */
 
-.hangman_wrap {
-	padding: 10px;
-}
-
-/*
-* Menu tabs
-*/
-#hangman_tab_menu {
-	padding-left: 8px;
-}
-
-#hangman_tab_menu .ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#hangman_tab_menu .hangman_tab {
-	display: inline-block;
-	float: left;
-	font-size: 0.85em;
-	font-weight: bold;
-	line-height: 14px;
-}
-
-.rtl #hangman_tab_menu .hangman_tab {
-	float: right;
-}
-
-#hangman_tab_menu .hangman_tab > a {
-	background: #D4D6DA;
-	background: -moz-linear-gradient(top, #CACBCF 0%, #D4D6DA 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CACBCF), color-stop(100%, #D4D6DA));
-	background: -webkit-linear-gradient(top, #CACBCF 0%, #D4D6DA 100%);
-	background: -o-linear-gradient(top, #CACBCF 0%, #D4D6DA 100%);
-	background: -ms-linear-gradient(top, #CACBCF 0%, #D4D6DA 100%);
-	background: linear-gradient(to bottom, #CACBCF 0%, #D4D6DA 100%);
-	border: 1px solid #BBB;
-	border-bottom-width: 0;
-	border-radius: 5px 5px 0 0;
-	color: #606060;
-/*	color: #767676;*/
-	display: block;
-	font-weight: bold;
-	margin: 1px 1px 2px 0;
-	padding: 6px 9px 4px;
-	position: relative;
-	text-decoration: none;
-	text-transform: uppercase;
-	white-space: nowrap;
-	cursor: pointer;
-	z-index: 2;
-}
-
-#hangman_tab_menu .hangman_tab > a:hover {
-	background: #F1F1EE;
-	border-color: #C0BFBB;
-	color: #BC2A4D;
-}
-
-#hangman_tab_menu .activetab > a,
-#hangman_tab_menu .activetab > a:hover {
-	background: #DCDEE2;
-	background: -moz-linear-gradient(top, #F2F2F2 0%, #DCDEE2 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #F2F2F2), color-stop(100%, #DCDEE2));
-	background: -webkit-linear-gradient(top, #F2F2F2 0%, #DCDEE2 100%);
-	background: -o-linear-gradient(top, #F2F2F2 0%, #DCDEE2 100%);
-	background: -ms-linear-gradient(top, #F2F2F2 0%, #DCDEE2 100%);
-	background: linear-gradient(to bottom, #F2F2F2 0%, #DCDEE2 100%);
-	border-color: #999;
-	border-bottom: 2px solid #DCDEE2;
-	box-shadow: 0 1px 1px #FFF inset;
-	color: #23649F;
-	margin: 0 1px 0 0;
-	padding: 7px 10px 4px;
-}
-
-#hangman_tab_menu .activetab > a:hover {
-	color: #115098;
-}
-
-#hangman_tab_menu:after,
-#hangman_tab_menu > ul:after,
-#hangman_tab_menu li:after,
-#content:after {
-	content: '';
-	clear: both;
-	display: block;
-}
-
 /*
 * Formatting the content div holding the content boxes
 */
-.hangman_content {
+.panel {
 	position: relative;
 	top: -2px;
 	margin: 0 0 2px;
 	padding: 10px;
 	min-width: 550px;
-	background: #DCDEE2;
-	border: 1px #999999 solid;
-	border-radius: 5px;
-	box-shadow: #FFF 0 0 0 1px inset;
+	z-index: 0;
 }
 
-.hangman_content .centered_text h1 {
+.panel .centered_text h1 {
 	margin-right: 0px;
 	margin-bottom: 30px;
 	font-size: 2.5em;
 	text-align: center;
-	color: #115098;
 }
 
-.hangman_content .centered_text h2 {
+.panel .centered_text h2 {
 	margin-bottom: 30px;
 	font-size: 2em;
 	text-align: center;
@@ -149,7 +55,7 @@
 	background: white;
 }
 
-form fieldset dt {
+form #status fieldset dt {
 	width: 45%;
 }
 
@@ -161,7 +67,7 @@ form fieldset dd {
 	margin-top: 20px;
 }
 
-#game_div fieldset dt {
+#game_div dt {
 	width: 20%;
 }
 
@@ -172,20 +78,37 @@ form fieldset dd {
 }
 
 
+
+/*
+* Letter table buttons and textarea
+*/
+.nq {
+	width: 100px;
+}
+
+.tarea {
+	font-weight: bold;
+}
+
+.letter-button {
+	width: 20px;
+	text-align: center;
+}
+
+
 /*
 * Quote input
 */
-fieldset dt {
+#hangman_quote_input fieldset dt {
 	float: left;
-	width: 20%;
+	width: 15%;
 	text-align: left;
-/*	vertical-align: middle;*/
 	display: block;
 	font-size: 1.1em;
 }
 
-fieldset dd {
-	margin-left: 20%;
+#hangman_quote_input fieldset dd {
+	margin-left: 2%;
 	vertical-align: top;
 	margin-bottom: 3px;
 	font-size: 1.1em;
@@ -214,53 +137,13 @@ p.submit-buttons input {
 * Highscore table
 */
 table.table1 {
-	border: 1px solid #CCCFD3;
 	padding: 1px;
-	border-collapse: separate;
-	border-spacing: 1px;
-	background-color: #FFFFFF;
 	clear: both;
 }
 
 table.table1 thead th {
 	height: 1.5em;
 	padding: 3px 6px;
-	background: #70AED3;
-	color: black;
 	font-size: 1.2em;
 	font-weight: bold;
-}
-
-table.table1 tbody td {
-	color: black;
-}
-
-table.zebra-table tbody tr:nth-child(odd) {
-	background-color: #F9F9F9;
-}
-
-table.zebra-table tbody tr:nth-child(even) {
-	background-color: #DCEBFE;
-}
-
-
-/*
-*
-*/
-.alpha-butt {
-	width: 40px;
-}
-
-.nq {
-	width: 100px;
-}
-
-.tarea {
-	font-weight: bold;
-}
-
-.icon-hangman {
-	background-position: 0 50%;
-	background-repeat: no-repeat;
-	background-image: url("./images/icon_hangman.gif");
 }

@@ -8,7 +8,7 @@
 	<div id="game_content">
 		<div id="status">
 			<div id="hm_picture">
-				<img src="{{ ROOT_PATH }}{{ IMAGE_PATH }}hmstart3.gif">
+				<img src="{{ ROOT_PATH }}{{ IMAGE_PATH }}hm10.svg" width="75" height="125">
 			</div>
 			<div>
 				<p>{{ HANGMAN_LIVES }}</p>
@@ -45,9 +45,6 @@
 			</fieldset>
 		</div>
 
-		<div id="submit_button_div">
-			<p></p>
-		</div>
 	</div>
 
 	<div class="letter_table">
@@ -65,17 +62,19 @@
  </form>
  
 <script>
-	jsHangmanLetters = {{ HANGMAN_LETTERS }};
-	jsHangmanTotalLetters = {{ HANGMAN_TOTAL_LETTERS }};
-	jsLetterRow = {{ HANGMAN_LETTER_ROW }};
-	jsClickStart = '{{ CLICK_START_FIRST }}';
-	jsNumberOfLives = {{ HANGMAN_NUMBER_OF_LIVES }};
-	jsQuotes = {{ HANGMAN_QUOTES }};
-	jsNoQuote = '{{ lang('HANGMAN_NO_QUOTE') }}';
-	jsLetterPoints = {{ LETTER_POINTS }};
-	jsWinPoints = {{ WIN_POINTS }};
-	jsWinString = '{{ lang('HANGMAN_YOUWIN') }}';
-	jsLoosePoints = {{ LOOSE_POINTS }};
-	jsLooseString = '{{ lang('HANGMAN_YOU_LOSE') }}';
-	jsAction = '{{ U_ACTION }}';
+	var jsHangmanLetters = {{ HANGMAN_LETTERS }};
+	var jsHangmanTotalLetters = {{ HANGMAN_TOTAL_LETTERS }};
+	var jsLetterRow = {{ HANGMAN_LETTER_ROW }};
+	var jsClickStart = '{{ CLICK_START_FIRST }}';
+	var jsNumberOfLives = {{ HANGMAN_NUMBER_OF_LIVES }};
+	var jsQuotes = {{ HANGMAN_QUOTES }};
+	var jsNoQuote = '{{ lang('HANGMAN_NO_QUOTE') }}';
+	var jsLetterPoints = {{ LETTER_POINTS }};
+	var jsWinPoints = {{ WIN_POINTS }};
+	var jsWinString = '{{ lang('HANGMAN_YOU_WIN') }}';
+	var jsLoosePoints = {{ LOOSE_POINTS }};
+	var jsLooseString = '{{ lang('HANGMAN_YOU_LOSE') }}';
+	var jsAction = '{{ U_ACTION }}';
 </script>
+
+{% INCLUDEJS '@mot_hangman/hangman_game.js' %}

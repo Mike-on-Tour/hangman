@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman Game v0.2.0
+* @package Hangman Game v0.2.3
 * @copyright (c) 2021 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -44,15 +44,16 @@ class settings_module
 		{
 			define ('HANGMAN_SCORE_TABLE', $table_prefix . 'hangman_score');
 
-			$db->sql_query('TRUNCATE TABLE ' . HANGMAN_SCORE_TABLE);
+			$db->sql_query('DELETE FROM ' . HANGMAN_SCORE_TABLE);	// We have to use 'DELETE FROM ' since SQLite doesn't have a TRUNCATE command
 
-			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_HANGMAN_HIGHSCORE_TABLE_CLEARED');
+			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'HANGMAN_SCORE_TABLE_CLEARED');
 
 			if ($request->is_ajax())
 			{
-				trigger_error('HIGHSCORE_TABLE_CLEARED');
+				trigger_error($language->lang('HIGHSCORE_TABLE_CLEARED'));
 			}
 		}
+
 		$template->assign_vars(array(
 			'ACP_HANGMAN_LIVES'					=> $config['mot_hangman_lives'],
 			'ACP_HANGMAN_POINTS_LETTER'			=> $config['mot_hangman_points_letter'],

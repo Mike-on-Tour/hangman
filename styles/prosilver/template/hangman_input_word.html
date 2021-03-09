@@ -4,7 +4,7 @@
 
 <p>{{ HANGMAN_QUOTE_INPUT_EXPL }}</p>
 
-<form id="hangman_quote_input" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}" onsubmit="cleanQuoteInput('hangman_quote_text')">
+<form id="hangman_quote_input" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}" onsubmit="return cleanQuoteInput('hangman_quote_text')">
 	<fieldset>
 		<dl>
 			<dt><label for="hangman_quote_text">{{ lang('HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
@@ -14,9 +14,15 @@
 
 	<fieldset>
         <p class="submit-buttons">
-            <input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />{# &nbsp;
-            <input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" /> #}
+            <input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />
         </p>
 	{{ S_FORM_TOKEN }}
 	</fieldset>
 </form>
+
+<script>
+	var jsLcLetters = {{ HANGMAN_LC_LETTERS }};
+	var jsUnauthLetters = '{{ lang('HANGMAN_UNAUTH_LETTERS') }}';
+</script>
+
+{% INCLUDEJS '@mot_hangman/hangman_input.js' %}
