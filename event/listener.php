@@ -59,7 +59,7 @@ class listener implements EventSubscriberInterface
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
-	public function add_page_header_link($event)
+	public function add_page_header_link()
 	{
 		$this->template->assign_vars(array(
 			'U_HANGMAN'	=> $this->helper->route('mot_hangman_main_controller'),
