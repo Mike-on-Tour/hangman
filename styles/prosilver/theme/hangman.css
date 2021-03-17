@@ -113,7 +113,6 @@ form fieldset dd {
 }
 
 
-
 /*
 * textarea and letter table buttons
 */
@@ -122,7 +121,6 @@ form fieldset dd {
 }
 
 .letter-button {
-	width: 25px;
 	padding: 0px 0px;
 	text-align: center;
 }
@@ -166,27 +164,31 @@ p.submit-buttons input {
 
 @media (max-width: 330px)
 {
-
-    .letter-button {
-	width: 17px;
-    }
+	.letter-button {
+		width: 17px;
+	}
 }
 
 @media (min-width: 370px)
 {
-    .letter-button {
-	width: 21px;
-    }
+	.letter-button {
+		width: 21px;
+	}
 }
-
 
 @media (min-width: 414px)
 {
-    .letter-button {
-	width: 24px;
-    }
+	.letter-button {
+		width: 24px;
+	}
 }
 
+@media (min-width: 600px)
+{
+	.letter-button {
+		width: 25px;
+	}
+}
 
 /*
 * Highscore table
