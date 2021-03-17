@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman Game v0.2.3
+* @package Hangman Game v0.2.4
 * @copyright (c) 2021 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -42,7 +42,7 @@ class settings_module
 
 		if ($request->is_set_post('reset_highscore'))
 		{
-			define ('HANGMAN_SCORE_TABLE', $table_prefix . 'hangman_score');
+			define ('HANGMAN_SCORE_TABLE', $table_prefix . 'mot_hangman_score');
 
 			// Correctly handle empty table
 			switch ($db->get_sql_layer())

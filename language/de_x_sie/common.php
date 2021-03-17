@@ -72,9 +72,9 @@ $lang = array_merge($lang, array(
 	'HANGMAN_NO_QUOTE'			=> 'Es sind keine Begriffe verfügbar. Versuchen Sie es bitte später noch einmal.',
 	'HANGMAN_FAILED_TRIES'		=> 'Falsche Versuche',
 	'HANGMAN_CORRECT_TRIES'		=> 'Richtige Versuche',
-	'HANGMAN_YOU_WIN'			=> 'Sie haben gewonnen! Erreichte Punktzahl: ',
+	'HANGMAN_YOU_WIN'			=> '<strong>Sie haben gewonnen!</strong><br>Erreichte Punktzahl: ',
 	'HANGMAN_NEW_QUOTE_TO'		=> 'Klicken Sie erst auf ´Spielstart´ zum Start!',
-	'HANGMAN_YOU_LOSE'			=> 'Sie haben leider verloren! Erreichte Punktzahl: ',
+	'HANGMAN_YOU_LOSE'			=> '<strong>Sie haben leider verloren!</strong><br>Erreichte Punktzahl: ',
 	'HANGMAN_POINTS_SAVED'		=> 'Ihre im Spiel gewonnenen Punkte wurden deinem Konto gutgeschrieben.',
 	// Term definition
 	'HANGMAN_QUOTE_INPUT_HEAD'	=> 'Eingabe eines neuen Suchbegriffes',

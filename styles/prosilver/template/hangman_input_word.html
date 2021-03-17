@@ -8,13 +8,13 @@
 	<fieldset>
 		<dl>
 			<dt><label for="hangman_quote_text">{{ lang('HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
-			<dd><input class="bg2" id="hangman_quote_text" type="text" size="100" maxlength="255" name="hangman_quote_text" value="{{ HANGMAN_QUOTE_TEXT }}" /></dd>
+			<dd><input class="inputbox autowidth" id="hangman_quote_text" type="text" size="100" maxlength="255" name="hangman_quote_text" value="{{ HANGMAN_QUOTE_TEXT }}"></dd>
 		</dl>
 	</fieldset>
 
 	<fieldset>
         <p class="submit-buttons">
-            <input class="button" type="submit" id="submit" name="submit" value="&nbsp;{{ lang('SUBMIT') }}&nbsp;" />
+            <input class="button" type="submit" id="submit" name="submit" value="&nbsp;{{ lang('SUBMIT') }}&nbsp;">
         </p>
 	{{ S_FORM_TOKEN }}
 	</fieldset>
@@ -22,7 +22,7 @@
 
 <script>
 	var jsLcLetters = {{ HANGMAN_LC_LETTERS }};
-	var jsUnauthLetters = '{{ lang('HANGMAN_UNAUTH_LETTERS') }}';
+	var jsUnauthLetters = "{{ lang('HANGMAN_UNAUTH_LETTERS') }}";
 </script>
 
 {% INCLUDEJS '@mot_hangman/hangman_input.js' %}

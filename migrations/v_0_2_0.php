@@ -58,7 +58,7 @@ class v_0_2_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'add_tables'	=> array(
-				$this->table_prefix . 'hangman_score'	=> array(
+				$this->table_prefix . 'mot_hangman_score'	=> array(
 					'COLUMNS'	=> array(
 						'user_id'	=> array('UINT:10', 0),
 						'solve_pts'	=> array('INT:11', 0),
@@ -67,12 +67,11 @@ class v_0_2_0 extends \phpbb\db\migration\migration
 					),
 					'PRIMARY_KEY'	=> 'user_id',
 				),
-				$this->table_prefix . 'hangman_words'	=> array(
+				$this->table_prefix . 'mot_hangman_words'	=> array(
 					'COLUMNS'	=> array(
 						'word_id'				=> array('UINT:10', null, 'auto_increment'),
 						'creator_id'			=> array('UINT:10', 0),
 						'hangman_word'			=> array('VCHAR:255', ''),
-//						'hangman_word_clean'	=> array('VCHAR:255', ''),
 						'hangman_word_hash'		=> array('BINT', 0),
 					),
 					'PRIMARY_KEY'	=> 'word_id',
@@ -88,8 +87,8 @@ class v_0_2_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'drop_tables'	=> array(
-				$this->table_prefix . 'hangman_score',
-				$this->table_prefix . 'hangman_words',
+				$this->table_prefix . 'mot_hangman_score',
+				$this->table_prefix . 'mot_hangman_words',
 			),
 		);
 	}

@@ -72,9 +72,9 @@ $lang = array_merge($lang, array(
 	'HANGMAN_NO_QUOTE'			=> 'Currently there are no terms available. Please try again later.',
 	'HANGMAN_FAILED_TRIES'		=> 'Failed Tries',
 	'HANGMAN_CORRECT_TRIES'		=> 'Correct Tries',
-	'HANGMAN_YOU_WIN'			=> 'You Win! Points gained: ',
+	'HANGMAN_YOU_WIN'			=> '<strong>You Win!</strong><br>Points gained: ',
 	'HANGMAN_NEW_QUOTE_TO'		=> 'Click ´Start Game´ to start Hangman Game!',
-	'HANGMAN_YOU_LOSE'			=> 'You lose! Points gained: ',
+	'HANGMAN_YOU_LOSE'			=> '<strong>You lose!</strong><br>Points gained: ',
 	'HANGMAN_POINTS_SAVED'		=> 'Your game account was credited with the points gained in this game turn.',
 	// Term definition
 	'HANGMAN_QUOTE_INPUT_HEAD'	=> 'Enter a new term',

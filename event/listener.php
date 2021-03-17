@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.1..0
+* @package Hangman v0.2.4
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)

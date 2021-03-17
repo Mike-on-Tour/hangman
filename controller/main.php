@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.2..0
+* @package Hangman v0.2.4
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -58,8 +58,8 @@ class main
 								\phpbb\controller\helper $helper, \phpbb\language\language $language, \phpbb\request\request_interface $request,
 								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext, $table_prefix)
 	{
-		define ('HANGMAN_SCORE_TABLE', $table_prefix . 'hangman_score');
-		define ('HANGMAN_WORDS_TABLE', $table_prefix . 'hangman_words');
+		define ('HANGMAN_SCORE_TABLE', $table_prefix . 'mot_hangman_score');
+		define ('HANGMAN_WORDS_TABLE', $table_prefix . 'mot_hangman_words');
 		global $phpbb_container;
 
 		$this->config = $config;
@@ -262,7 +262,6 @@ class main
 
 						// display message about successful operation
 						$message = $this->language->lang('HANGMAN_WORD_SAVED', $input_points);
-//						trigger_error($message . $this->back_link($this->u_action, $this->language->lang('BACK_TO_PREV')), E_USER_NOTICE);
 						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('TO_GAME'))
 												. $this->back_link($this->word_action, $this->language->lang('TO_WORD_INPUT'))
 												. $this->back_link($this->rank_action, $this->language->lang('TO_SCORE_TABLE')), E_USER_NOTICE);
@@ -325,7 +324,6 @@ class main
 				}
 
 				//base url for pagination, filtering and sorting
-//				$base_url = $this->u_action . "&amp;tab=3";
 				$base_url = append_sid("{$this->root_path}hangman", "tab=3");
 
 				// Load pagination

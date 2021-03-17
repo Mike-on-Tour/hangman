@@ -1,3 +1,4 @@
+{% include '@mot_hangman/hangman_modal.html' %}
 <form id="hangman_quote_input" name="frm" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
 	<div class="centered_text">
 		<h2>{{ lang('HANGMAN_TITLE') }}</h2>
@@ -48,32 +49,33 @@
 	</div>
 
 	<div class="letter_table">
-		<table align="center">
-			<tr id="row1"></tr>
-			<tr id="row2"></tr>
-		</table>
+		<div align="center">
+			<div id="row1"></div>
+			<div id="row2"></div>
+		</div>
 	</div>
 	
 	<fieldset>
-		<input type="text"		id="word_id"	name="word_id"	value="0"						hidden="true">
-		<input type="submit"	id="submit"		name="submit"	value="{{ lang('SUBMIT') }}"	hidden="true">
+		<input type="text" id="word_id" name="word_id" value="0" hidden="true">
+		<input type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden="true">
 	{{ S_FORM_TOKEN }}
 	</fieldset>
  </form>
  
 <script>
+	var jsRootPath = '{{ ROOT_PATH }}';
 	var jsHangmanLetters = {{ HANGMAN_LETTERS }};
 	var jsHangmanTotalLetters = {{ HANGMAN_TOTAL_LETTERS }};
 	var jsLetterRow = {{ HANGMAN_LETTER_ROW }};
 	var jsClickStart = '{{ CLICK_START_FIRST }}';
 	var jsNumberOfLives = {{ HANGMAN_NUMBER_OF_LIVES }};
 	var jsQuotes = {{ HANGMAN_QUOTES }};
-	var jsNoQuote = '{{ lang('HANGMAN_NO_QUOTE') }}';
+	var jsNoQuote = "{{ lang('HANGMAN_NO_QUOTE') }}";
 	var jsLetterPoints = {{ LETTER_POINTS }};
 	var jsWinPoints = {{ WIN_POINTS }};
-	var jsWinString = '{{ lang('HANGMAN_YOU_WIN') }}';
+	var jsWinString = "{{ lang('HANGMAN_YOU_WIN') }}";
 	var jsLoosePoints = {{ LOOSE_POINTS }};
-	var jsLooseString = '{{ lang('HANGMAN_YOU_LOSE') }}';
+	var jsLooseString = "{{ lang('HANGMAN_YOU_LOSE') }}";
 	var jsAction = '{{ U_ACTION }}';
 </script>
 

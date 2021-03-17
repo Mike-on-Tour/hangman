@@ -1,10 +1,20 @@
 'use strict';
 
+// Define keyPressed values
+var ENTER = 13;
+var ESC = 27;
+
+// Variable to indicate waiting for keyboard input
+var waitForButton = true;
+
+// Variable to hold the modal window
+var modal;
+
 // Variables to hold the original Quote and the Text with the underscores to show letter positions
 var quoteText = '';
 var showText = '';
 
-//
+// The used qoute's id from the database (needed to give it back to php after playing this quote in order to delete it from the database)
 var quoteId = 0;
 
 // Variable to define the game status
@@ -12,7 +22,7 @@ var running = false;
 
 // Variables to enable the display of hangman images
 var imageElement = document.getElementById('hm_picture');
-var imagePath = '<img src="../ext/mot/hangman/styles/all/theme/images/hm';
+var imagePath = '<img src="' + jsRootPath + 'ext/mot/hangman/styles/all/theme/images/hm';
 var imageExt = '.svg" width="75" height="125">';
 var imageNumber = 10 - jsNumberOfLives;
 
@@ -40,17 +50,66 @@ function jumpToPhp() {
 }
 
 /*
-* Event handler to get keyboard input
+* Open a modal window and display message
+*
+* @params	string	htmlText	Message to be displayed
+*/
+function modalWindow(htmlText) {
+	modal = document.getElementById("mot_hangman_modal");
+
+	var modalDiv = document.getElementById('modal_text');
+	modalDiv.innerHTML = htmlText;
+
+	modal.style.display = "block";
+}
+
+/*
+* Event handlers to get keyboard input
 *
 * @params	event
 */
 function keyPressed(event) {
 	var key = event.key;
+
 	key = key.toLocaleUpperCase();
 	if (key == 'SS') {
 		key = 'ß';
 	}
 	seek(key);
+}
+
+/*
+* Keyboard event handler to get 'Esc' or 'Enter' keys to trigger modal window closure
+*/
+function keyDown(event) {
+	var code = event.keyCode;
+	if (code == ENTER || code == ESC) {
+		waitForButton = false;
+	}
+}
+
+/*
+* Event handler for mouse click on the modal window's Ok button
+*/
+function clickOk() {
+	waitForButton = false;
+}
+
+/*
+* Wait for the user to either press the the 'Esc' or 'Enter' button or mouse click on the modal window's 'Ok' button to close the modal window and carry on with the script
+*/
+function waitToClose(backToPhp) {
+	if(waitForButton) {//we want it to match
+		setTimeout(function() { waitToClose(backToPhp)}, 50);//wait 50 millisecnds then recheck
+		return;
+	}
+	modal.style.display = "none";
+	// Reset the button
+	waitForButton = true;
+	if (backToPhp) {
+		document.getElementById('submit').click();
+//		jumpToPhp();
+	}
 }
 
 /*
@@ -67,11 +126,11 @@ function fillLetterTable(letters, letterCount, letterRow) {
 	var i = 0;
 
 	for (i = 0; i < letterRow; i++) {
-		row1.innerHTML = row1.innerHTML + '<td><input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');"></td>';
+		row1.innerHTML = row1.innerHTML + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt">';
 	}
 
 	for (i = letterRow; i < letterCount; i++) {
-		row2.innerHTML = row2.innerHTML + '<td><input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');"></td>';
+		row2.innerHTML = row2.innerHTML + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt">';
 	}
 }
 
@@ -96,8 +155,9 @@ function hangman_start() {
 
 	if (!running) {					// prevent another game start while game is running
 		if (quoteCount == 0) {
-			alert(jsNoQuote);
-			return;
+			waitForButton = true;
+			modalWindow(jsNoQuote);
+			waitToClose(false);
 		} else {
 			var quoteIndex = getRandomInt(quoteCount);
 			quoteId = jsQuotes[quoteIndex]['word_id'];
@@ -113,8 +173,8 @@ function hangman_start() {
 
 			// and hide the start button
 			document.getElementById('start_button').style.visibility = 'hidden';
+			running = true;	// indicate that game has started
 		}
-		running = true;	// indicate that game has started
 	}
 }
 
@@ -128,9 +188,8 @@ function seek(letter)
 	var correctLetter = false;
 
 	if(!running) {
-
-		alert(jsClickStart);
-
+		modalWindow(jsClickStart);
+		waitToClose(false);
 	} else {
 
 		// If this letter has already been used leave this  (necessary to avoid redundant count when using keyboard)
@@ -175,9 +234,8 @@ function seek(letter)
 			if (matches === null) {
 				points += jsWinPoints;
 				document.frm.score.value = points;
-				alert(jsWinString + points);				// alert( {{ lang('HANGMAN_YOU_WIN')|e('js') }} + points);
-				document.getElementById('submit').click();
-//				jumpToPhp();
+				modalWindow(jsWinString + points);
+				waitToClose(true);
 			}
 		} else {
 			imageNumber++;
@@ -192,9 +250,8 @@ function seek(letter)
 			if (livesUsed == jsNumberOfLives) {
 				points += jsLoosePoints;
 				document.frm.score.value = points;
-				alert(jsLooseString + points);
-				document.getElementById('submit').click();
-//				jumpToPhp();
+				modalWindow(jsLooseString + points);
+				waitToClose(true);
 			}
 		}
 	}
@@ -204,3 +261,4 @@ function seek(letter)
 fillLetterTable(jsHangmanLetters, jsHangmanTotalLetters, jsLetterRow);
 // and inserting an event handler for keyboard input
 document.addEventListener('keypress', keyPressed );
+document.addEventListener('keydown', keyDown );
