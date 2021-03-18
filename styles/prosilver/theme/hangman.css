@@ -77,9 +77,9 @@
 }
 
 #status {
-	float: left;
+/*	float: left;
 	margin-left: 15px;
-	width: 30%;
+	width: 30%; */
 }
 
 #hm_picture {
@@ -99,6 +99,10 @@ form fieldset dd {
 }
 
 .letter_table {
+	margin-top: 20px;
+}
+
+#game_div {
 	margin-top: 20px;
 }
 
@@ -131,7 +135,7 @@ form fieldset dd {
 */
 #hangman_quote_input fieldset dt {
 	float: left;
-	width: 15%;
+	width: 30%;
 	text-align: left;
 	display: block;
 	font-size: 1.1em;
@@ -165,14 +169,14 @@ p.submit-buttons input {
 @media (max-width: 320px)
 {
 	.letter-button {
-		width: 17px;
+		width: 16px;
 	}
 }
 
 @media (min-width: 321px)
 {
 	.letter-button {
-		width: 20px;
+		width: 18px;
 	}
 }
 
