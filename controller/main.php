@@ -79,6 +79,19 @@ class main
 	{
 		$pagination = $this->phpbb_container->get('pagination');
 
+		//If user is a bot.... redirect to the index.
+		if ($this->user->data['is_bot'])
+		{
+			redirect(append_sid("{$this->root_path}index." . $this->php_ext));
+		}
+
+		// Check if the user ist logged in.
+		if (!$this->user->data['is_registered'])
+		{
+			// Not logged in ? Redirect to the loginbox.
+			login_box('', $this->language->lang('NO_AUTH_OPERATION'));
+		}
+
 		$this->game_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
 		$this->word_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
 		$this->rank_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
