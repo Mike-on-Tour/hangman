@@ -79,9 +79,22 @@ class main
 	{
 		$pagination = $this->phpbb_container->get('pagination');
 
-		$this->game_action = append_sid("{$this->root_path}hangman", "tab=1");
-		$this->word_action = append_sid("{$this->root_path}hangman", "tab=2");
-		$this->rank_action = append_sid("{$this->root_path}hangman", "tab=3");
+		//If user is a bot.... redirect to the index.
+		if ($this->user->data['is_bot'])
+		{
+			redirect(append_sid("{$this->root_path}index." . $this->php_ext));
+		}
+
+		// Check if the user ist logged in.
+		if (!$this->user->data['is_registered'])
+		{
+			// Not logged in ? Redirect to the loginbox.
+			login_box('', $this->language->lang('NO_AUTH_OPERATION'));
+		}
+
+		$this->game_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
+		$this->word_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
+		$this->rank_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
 
 		// Get the possible letters from the default language file
 		$lang_arr = array();
@@ -98,7 +111,7 @@ class main
 			case 1:
 			default:
 				add_form_key('hangman_game_frm');
-				$this->u_action = append_sid("{$this->root_path}hangman", "tab=1");
+				$this->u_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -195,7 +208,7 @@ class main
 				$input_points = $this->config['mot_hangman_points_word'];
 				add_form_key('hangman_quote_input');
 
-				$this->u_action = append_sid("{$this->root_path}hangman", "tab=2");
+				$this->u_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -324,7 +337,7 @@ class main
 				}
 
 				//base url for pagination, filtering and sorting
-				$base_url = append_sid("{$this->root_path}hangman", "tab=3");
+				$base_url = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
 
 				// Load pagination
 				$start = $pagination->validate_start($start, $limit, $count_rankings);
@@ -337,9 +350,9 @@ class main
 
 		$this->template->assign_vars(array(
 			'SELECTED_TAB'		=> $selected_tab,
-			'TAB_1'				=> append_sid("{$this->root_path}hangman", "tab=1"),
-			'TAB_2'				=> append_sid("{$this->root_path}hangman", "tab=2"),
-			'TAB_3'				=> append_sid("{$this->root_path}hangman", "tab=3"),
+			'TAB_1'				=> $this->helper->route('mot_hangman_main_controller', ['tab' => '1']),
+			'TAB_2'				=> $this->helper->route('mot_hangman_main_controller', ['tab' => '2']),
+			'TAB_3'				=> $this->helper->route('mot_hangman_main_controller', ['tab' => '3']),
 		));
 		return $this->helper->render('hangman.html', $this->language->lang('HANGMAN'));
 	}
