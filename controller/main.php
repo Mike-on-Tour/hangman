@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.2.4
+* @package Hangman v0.2.5
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -92,9 +92,9 @@ class main
 			login_box('', $this->language->lang('NO_AUTH_OPERATION'));
 		}
 
-		$this->game_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
-		$this->word_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
-		$this->rank_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
+		$this->game_action = $this->helper->route('mot_hangman_main_controller', array('tab' => '1'));
+		$this->word_action = $this->helper->route('mot_hangman_main_controller', array('tab' => '2'));
+		$this->rank_action = $this->helper->route('mot_hangman_main_controller', array('tab' => '3'));
 
 		// Get the possible letters from the default language file
 		$lang_arr = array();
@@ -111,7 +111,7 @@ class main
 			case 1:
 			default:
 				add_form_key('hangman_game_frm');
-				$this->u_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
+				$this->u_action = $this->game_action;
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -208,7 +208,7 @@ class main
 				$input_points = $this->config['mot_hangman_points_word'];
 				add_form_key('hangman_quote_input');
 
-				$this->u_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
+				$this->u_action = $this->word_action;
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -337,7 +337,7 @@ class main
 				}
 
 				//base url for pagination, filtering and sorting
-				$base_url = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
+				$base_url = $this->rank_action;
 
 				// Load pagination
 				$start = $pagination->validate_start($start, $limit, $count_rankings);
@@ -350,9 +350,9 @@ class main
 
 		$this->template->assign_vars(array(
 			'SELECTED_TAB'		=> $selected_tab,
-			'TAB_1'				=> $this->helper->route('mot_hangman_main_controller', ['tab' => '1']),
-			'TAB_2'				=> $this->helper->route('mot_hangman_main_controller', ['tab' => '2']),
-			'TAB_3'				=> $this->helper->route('mot_hangman_main_controller', ['tab' => '3']),
+			'TAB_1'				=> $this->game_action,
+			'TAB_2'				=> $this->word_action,
+			'TAB_3'				=> $this->rank_action,
 		));
 		return $this->helper->render('hangman.html', $this->language->lang('HANGMAN'));
 	}

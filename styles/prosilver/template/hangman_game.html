@@ -1,5 +1,5 @@
 {% include '@mot_hangman/hangman_modal.html' %}
-<form id="hangman_quote_input" name="frm" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
+<form id="hangman_game_frm" name="frm" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
 	<div class="centered_text">
 		<h2>{{ lang('HANGMAN_TITLE') }}</h2>
 	</div>
@@ -33,7 +33,7 @@
 		<div id="game_div">
 			<fieldset>
 				<dl>
-					<textarea class="bg2 tarea" onfocus="word.blur();" name="word" cols="100" rows="2">	{L_HANGMAN_NEW_QUOTE_START}</textarea>
+					<textarea class="bg2 tarea" onfocus="word.blur();" name="word" cols="100" rows="2">{{ lang('HANGMAN_NEW_QUOTE_START') }}</textarea>
 				</dl>
 				<dl>
 					<dt><label>{{ lang('HANGMAN_FAILED_TRIES') }}{{ lang('COLON') }}</label></dt>

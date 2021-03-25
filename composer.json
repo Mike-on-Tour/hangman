@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "This extension will add a hangman game",
 	"homepage": "http://www.mike-on-tour.com",
-	"version": "0.2.4",
-	"time": "2021-03-17 12:11:57",
+	"version": "0.2.5",
+	"time": "2021-03-25 12:11:57",
 	"keywords": ["phpbb", "extension", "hangman"],
 	"license": "GPL-2.0-only",
 	"authors": [

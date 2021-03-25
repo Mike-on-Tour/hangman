@@ -80,6 +80,8 @@ function keyPressed(event) {
 
 /*
 * Keyboard event handler to get 'Esc' or 'Enter' keys to trigger modal window closure
+*
+* @params	event
 */
 function keyDown(event) {
 	var code = event.keyCode;
@@ -97,6 +99,8 @@ function clickOk() {
 
 /*
 * Wait for the user to either press the the 'Esc' or 'Enter' button or mouse click on the modal window's 'Ok' button to close the modal window and carry on with the script
+*
+* @params	boolean	backToPhp	if true we not only close the modal window but go back to the PHP script as well
 */
 function waitToClose(backToPhp) {
 	if(waitForButton) {//we want it to match
@@ -126,11 +130,11 @@ function fillLetterTable(letters, letterCount, letterRow) {
 	var i = 0;
 
 	for (i = 0; i < letterRow; i++) {
-		row1.innerHTML = row1.innerHTML + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt">';
+		row1.innerHTML = row1.innerHTML + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');">';
 	}
 
 	for (i = letterRow; i < letterCount; i++) {
-		row2.innerHTML = row2.innerHTML + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');" class="alpha-butt">';
+		row2.innerHTML = row2.innerHTML + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="seek(\'' + letters[i] + '\');">';
 	}
 }
 

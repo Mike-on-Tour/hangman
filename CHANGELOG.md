@@ -4,6 +4,23 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.2.5] - 2021-03-25
+
+### Added
+-	Bots are rerouted to the site's index page and users not logged in are rerouted to the login page in `controller/main.php`
+	(courtesy of Dr.Death)
+-	A mirgation file (`migrations/v_0_2_5.php`) to update `config` version number
+	
+### Changed
+-	All links to Hangman tabs are using routes now (courtesy of Dr.Death), and these are defined only once and these definitions are used throughout
+	`controller/main.php`
+-	Layout of all three tabs is responsive
+	
+### Fixed
+
+### Removed
+  
+  
 ## [0.2.4] - 2021-03-17
 
 ### Added
@@ -84,7 +101,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.2.0] - 2021-02-28
 
 ### Added
--	A migrition file (`migritions/v_0_2_0.php`) to introduce new config variables, new tables and an ACP module
+-	A migrition file (`migrations/v_0_2_0.php`) to introduce new config variables, new tables and an ACP module
 -	An ACP settings module
 -	A highscore table
 -	A form to enable users to define terms and quotes

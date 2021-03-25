@@ -9,6 +9,10 @@
 *
 */
 
+* {
+  box-sizing: border-box;
+}
+
 /*
 * Formatting the content div holding the content boxes
 */
@@ -77,9 +81,16 @@
 }
 
 #status {
-/*	float: left;
+	float: left;
 	margin-left: 15px;
-	width: 30%; */
+	margin-right: 10px;
+	width: 100%;
+}
+
+@media only screen and (min-width: 830px) {
+	#status {
+		width: 33.33%;
+	}
 }
 
 #hm_picture {
@@ -91,23 +102,72 @@
 }
 
 form #status fieldset dt {
-	width: 45%;
+	min-width: 66.66%;
+	display: inline;
+}
+
+form #game_div fieldset dt {
+	width: auto;
+	display: inline;
 }
 
 form fieldset dd {
 	margin-left: 2%;
 }
 
+/*
+* Breakpoint to display the two game content divs no longer side by side
+*/
+@media (max-width: 842px) {
+	#status {
+		width: 100%;
+	}
+
+	form #status fieldset dt {
+		width: 25%;
+		display: inline;
+	}
+
+	form #status fieldset dd {
+		width: auto;
+		display: inline;
+	}
+}
+
+@media  only screen and (max-width: 700px), only screen and (max-device-width: 700px) {
+	form #status fieldset dt {
+		width: 33.33%;
+		display: inline-block;
+	}
+
+	form #game_div fieldset dd {
+		display: inline;
+		margin-left: 2px;
+	}
+}
+
+@media  only screen and (max-width: 500px), only screen and (max-device-width: 500px) {
+	form #status fieldset dt {
+		width: 41.66%;
+		display: inline-block;
+	}
+
+	form #game_div fieldset dd {
+		margin-left: 0px;
+		margin-top: 3px;
+	}
+}
+
+
+@media  (max-width: 420px) {
+	form #game_div fieldset dd {
+		display: block;
+		margin-left: 0px;
+		margin-top: 3px;
+	}
+}
 .letter_table {
 	margin-top: 20px;
-}
-
-#game_div {
-	margin-top: 20px;
-}
-
-#game_div dt {
-	width: 20%;
 }
 
 #game_content:after {
@@ -115,7 +175,6 @@ form fieldset dd {
 	clear: both;
 	display: block;
 }
-
 
 /*
 * textarea and letter table buttons
@@ -125,8 +184,50 @@ form fieldset dd {
 }
 
 .letter-button {
+	width: 25px;
 	padding: 0px 0px;
 	text-align: center;
+}
+
+
+@media (max-width: 325px)
+{
+	.letter-button {
+		width: 17px;
+		text-align: center;
+	}
+}
+
+@media (min-width: 325px)
+{
+	.letter-button {
+		width: 18px;
+		text-align: center;
+	}
+}
+
+@media (min-width: 355px)
+{
+	.letter-button {
+		width: 20px;
+		text-align: center;
+	}
+}
+
+@media (min-width: 375px)
+{
+	.letter-button {
+		width: 21px;
+		text-align: center;
+	}
+}
+
+@media (min-width: 455px)
+{
+	.letter-button {
+		width: 25px;
+		text-align: center;
+	}
 }
 
 
@@ -134,18 +235,15 @@ form fieldset dd {
 * Quote input
 */
 #hangman_quote_input fieldset dt {
-	float: left;
-	width: 30%;
+	width: auto;
 	text-align: left;
-	display: block;
 	font-size: 1.1em;
 }
 
 #hangman_quote_input fieldset dd {
+	display: inline;
 	margin-left: 2%;
-	vertical-align: top;
-	margin-bottom: 3px;
-	font-size: 1.1em;
+	font-size: 1.0em;
 }
 
 p.submit-buttons {
@@ -164,35 +262,12 @@ p.submit-buttons input {
 	p.submit-buttons {
 		margin-top: 0;
 	}
-}
 
-@media (max-width: 320px)
-{
-	.letter-button {
-		width: 16px;
+	#hangman_quote_input fieldset dd {
+		margin-left: 0%;
 	}
 }
 
-@media (min-width: 321px)
-{
-	.letter-button {
-		width: 18px;
-	}
-}
-
-@media (min-width: 375px)
-{
-	.letter-button {
-		width: 21px;
-	}
-}
-
-@media (min-width: 411px)
-{
-	.letter-button {
-		width: 24px;
-	}
-}
 
 /*
 * Highscore table
@@ -207,4 +282,18 @@ table.table1 thead th {
 	padding: 3px 6px;
 	font-size: 1.2em;
 	font-weight: bold;
+}
+
+@media (max-width: 700px) {
+	table.responsive.show-header thead, table.responsive.show-header th:first-child {
+		display: block;
+		width: auto !important;
+		text-align: left !important;
+	}
+
+	table.responsive.show-header thead, table.responsive.show-header th {
+		display: block;
+		width: auto !important;
+		text-align: left !important;
+	}
 }
