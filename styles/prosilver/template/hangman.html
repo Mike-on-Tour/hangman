@@ -1,5 +1,13 @@
 {% include 'overall_header.html' %}
 {% INCLUDECSS '@mot_hangman/hangman.css' %}
+{% INCLUDEJS '@mot_hangman/hangman.js' %}
+
+<script>
+// <![CDATA[
+	var motHangman = {};
+	motHangman.tab = {{ SELECTED_TAB }};
+// ]]>
+</script>
 
 {% if not S_IS_BOT and S_USER_LOGGED_IN %}
 	<div id="page-body" class="page-body">
@@ -26,13 +34,13 @@
 					</ul>
 				</div>
 				<div class="panel bg3">
-					<div id="hangman_box_1" class="inner">
+					<div id="hangman_box_1" class="inner" hidden="true">
 						{% include 'hangman_game.html' %}
 					</div>
-					<div id="hangman_box_2" class="inner">
+					<div id="hangman_box_2" class="inner" hidden="true">
 						{% include 'hangman_input_word.html' %}
 					</div>
-					<div id="hangman_box_3" class="inner">
+					<div id="hangman_box_3" class="inner" hidden="true">
 						{% include 'hangman_score.html' %}
 					</div>
 				</div>
@@ -42,9 +50,3 @@
 {% endif %}
 
 {% include 'overall_footer.html' %}
-
-{% INCLUDEJS '@mot_hangman/hangman.js' %}
-
-<script>
-	selectTab('{{ SELECTED_TAB }}');
-</script>

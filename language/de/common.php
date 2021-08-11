@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.2..0
+* @package Hangman v0.3.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -40,7 +40,6 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'PLURAL_RULE'					=> 1,
 	// Tab menu
 	'TAB_GAME'					=> 'Spiel',
 	'TAB_WORD'					=> 'Eingabe Suchbegriff',
@@ -58,8 +57,8 @@ $lang = array_merge($lang, array(
 									Einmal verwendete Buchstaben verschwinden aus der Auswahl und können nicht mehr ausgewählt werden. Bereits gewählte
 									Buchstaben werden entweder im Fenster `Falsche Versuche` oder im Fenster `Richtige Versuche` aufgelistet.<br>
 									Entsprechend der aktuellen Einstellungen erhälst du für jeden richtigen Buchstaben %1$d Punkte gutgeschrieben, ein
-									gewonnenes Spiel zählt %2$d Punkte und ein verlorenes Spiel %3$d Punkte.<br>
-									ACHTUNG: Verwendete Suchbegriffe werden aus der Datenbank gelöscht. Gib also bitte nach jedem Spiel einen neuen Suchbegriff
+									gewonnenes Spiel zählt %2$d Punkte und ein verlorenes Spiel %3$d Punkte.',
+	'HANGMAN_DESC_DEL_TERM'		=> '<br>ACHTUNG: Verwendete Suchbegriffe werden aus der Datenbank gelöscht. Gib also bitte nach jedem Spiel einen neuen Suchbegriff
 									ein, damit andere ebenfalls spielen können.',
 	// List all letters of this language as uppercase letters seperated by comma. If this language contains lowercase letters without an uppercase equivalent list them here, too. If your language uses special characters and you have put them in
 	//	the following variable please consider mentioning them in the 'HANGMAN_QUOTE_INPUT_EXPL' variable
@@ -70,6 +69,7 @@ $lang = array_merge($lang, array(
 	'HANGMAN_NEW_QUOTE'			=> 'Spielstart',
 	'HANGMAN_NEW_QUOTE_START'	=> 'Klicke auf ´Spielstart´, um das Hangman Spiel zu starten',
 	'HANGMAN_NO_QUOTE'			=> 'Es sind keine Begriffe verfügbar. Versuche es bitte später noch einmal.',
+	'HANGMAN_CATEGORY'			=> 'Kategorie',
 	'HANGMAN_FAILED_TRIES'		=> 'Falsche Versuche',
 	'HANGMAN_CORRECT_TRIES'		=> 'Richtige Versuche',
 	'HANGMAN_YOU_WIN'			=> '<strong>Du hast gewonnen!</strong><br>Erreichte Punktzahl: ',
@@ -78,11 +78,11 @@ $lang = array_merge($lang, array(
 	'HANGMAN_POINTS_SAVED'		=> 'Deine im Spiel gewonnenen Punkte wurden deinem Konto gutgeschrieben.',
 	// Term definition
 	'HANGMAN_QUOTE_INPUT_HEAD'	=> 'Eingabe eines neuen Suchbegriffes',
-	'HANGMAN_QUOTE_INPUT_EXPL'	=> 'Hier kannst du neue Suchbegriffe eingeben. Dieser Suchbegriff darf Leerzeichen und Umlaute (inkl. `ß`), aber keine Satz-
-									und Sonderzeichen und Zahlen enthalten. So bist du nicht auf einzelne Wörter begrenzt, sondern kannst z.B. auch Zitate
-									eingeben.<br>
+	'HANGMAN_QUOTE_INPUT_EXPL'	=> 'Hier kannst du einen neuen Suchbegriff eingeben. Dieser Suchbegriff darf die Buchstaben %1$s (groß und klein) und Leerzeichen,
+									aber keine Satz- und Sonderzeichen und Zahlen enthalten. So bist du nicht auf einzelne Wörter begrenzt, sondern kannst z.B.
+									auch Zitate eingeben.<br>
 									Von dir eingegebene Suchbegriffe werden dir beim Spielen nicht angezeigt!<br>
-									Entsprechend den aktuellen Spieleinstellungen werden dir für jeden eingegebenen Begriff %1$s Punkte gutgeschrieben.',
+									Entsprechend den aktuellen Spieleinstellungen werden dir für jeden eingegebenen Begriff %2$d Punkte gutgeschrieben.',
 	'HANGMAN_QUOTE_INPUT'		=> 'Neuer Suchbegriff',
 	'HANGMAN_WORD_SAVED'		=> 'Der eingegebene Suchbegriff wurde erfolgreich in der Datenbank gespeichert.<br>
 									Deinem Konto wurden %1$s Punkte gutgeschrieben.',

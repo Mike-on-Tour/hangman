@@ -1,0 +1,3 @@
+parameters:
+    mot.hangman.tables.mot_hangman_score: '%core.table_prefix%mot_hangman_score'
+    mot.hangman.tables.mot_hangman_words: '%core.table_prefix%mot_hangman_words'

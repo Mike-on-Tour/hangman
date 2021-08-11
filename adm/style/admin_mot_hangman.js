@@ -1,7 +1,32 @@
+/**
+*
+* package Hangman v0.3.0
+* copyright (c) 2021 Mike-on-Tour
+* license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
+
+(function($) {  // Avoid conflicts with other libraries
+
 'use strict';
 
 /*
-* Define the search patterns for lat(itude) as a 2-digit floating point value with a possible leading minus (-)dd.d and for lon(gitude) as a 3-digit value (-)ddd.d
+* Check the 'Category' setting and hide or show the 'Enforce Catgory Input' setting accordingly
+*/
+$("input[name='mot_hangman_category_enable']").click(function() {
+	if ($(this).val() == 1) {
+		$("#mot_hangman_category_enforce_field").show();
+	} else {
+		$("#mot_hangman_category_enforce_field").hide();
+	}
+});
+
+if ($("input[name='mot_hangman_category_enable']:checked").val() == 1) {
+	$("#mot_hangman_category_enforce_field").show();
+}
+
+/*
+* Define the search patterns
 */
 var twoDigits = /\d{1,2}/;
 var negativeNumber = /-?\d{1,2}/;
@@ -9,55 +34,46 @@ var negativeNumber = /-?\d{1,2}/;
 /*
 * Checks the value of an input element with a regular expression to make certain we get the value we want
 *
-* @params:	inputName:	string, name of the DOM element we want to check
-*		matchString: string, contains the pre-defined search pattern
-*		defaultValue: value to use in case the provided value isn't valid
-*		minValue: lowest value allowed
-*		maxValue: highest value allowed
+* @params:	domElement:	object,  DOM element we want to check
+*		matchString:	string, contains the pre-defined search pattern
+*		defaultValue:	value to use in case the provided value isn't valid
+*		minValue:		lowest value allowed
+*		maxValue:		highest value allowed
 *
 * @return:	writes either the default value or - if it matches the pattern and is within the boundaries - the given value into the DOM element's value
 */
-function chkInput(inputName, matchString, defaultValue, minValue, maxValue)
-{
-	var domElement = document.getElementById(inputName);
-	var elementValue = domElement.value;
+function motHmChkInput(domElement, matchString, defaultValue, minValue, maxValue) {
+	var elementValue = domElement.val();
 	var result = elementValue.match(matchString);
 	if (result == null) {
-		domElement.value = defaultValue;		// input doesn't match the pattern, we use the default value
+		domElement.val(defaultValue);		// input doesn't match the pattern, we use the default value
 	} else {
 		if ((result[0] < minValue) || (result[0] > maxValue)) {
-			domElement.value = defaultValue;	// input matches the search pattern but is outside the given boundaries, we use the default value
+			domElement.val(defaultValue);	// input matches the search pattern but is outside the given boundaries, we use the default value
 		} else {
-			domElement.value = result[0];		// input matches th search pattern und is within the boundaries, we use it
+			domElement.val(result[0]);		// input matches the search pattern und is within the boundaries, we use it
 		}
 	}
 }
 
-/*
-* First replaces some characters with a comma in case somebody hit the wrong key, then erases all characters which are not a digit or a comma, erases all multible, trailing or leading commas
-* and checks whether the expression is of 'dd,dd' to make sure we get only two numbers seperated by a comma
-*
-* @params:	inputName:	string, name of the DOM element we want to check
-*		defaultValue: string, the value which gets set if we encounter an invalid input
-*
-* @return:	a pair of integer numbers seperated by a comma
-*/
-function cleanInput(inputName, defaultValue)
-{
-	var pairMatch = /\d{1,2}\,\d{1,2}/;
-	var domElement = document.getElementById(inputName);
-	var elementValue = domElement.value;
-	if (elementValue != '') {
-		elementValue = elementValue.replace(/[;:\._-]/g, ",");		// replace some characters with a comma (in case someone fooled while typing)
-		elementValue = elementValue.replace(/[^,\d]/g, "");			// erase all characters which are not a digit or a comma
-		elementValue = elementValue.replace(/,{2,10}/g, ",");		// erase multiple commas
-		elementValue = elementValue.replace(/^,*/, "");				// erase all leading commas
-		elementValue = elementValue.replace(/,*$/, "");				// erase all trailing commas
-	}
-	var result = elementValue.match(pairMatch);
-	if (result == null) {
-		domElement.value = defaultValue;		// input doesn't match the pattern, we use the default value
-	} else {
-		domElement.value = result[0];			// input matches th search pattern, we use it
-	}
-}
+$("#acp_hangman_lives").blur(function() {
+	motHmChkInput($(this), twoDigits, 10, 4, 10);
+});
+
+$("#acp_hangman_points_win").blur(function() {
+	motHmChkInput($(this), twoDigits, 15, 1, 99);
+});
+
+$("#acp_hangman_points_loose").blur(function() {
+	motHmChkInput($(this), negativeNumber, -5, -99, 0);
+});
+
+$("#acp_hangman_points_letter").blur(function() {
+	motHmChkInput($(this), twoDigits, 1, 0, 99);
+});
+
+$("#acp_hangman_points_word").blur(function() {
+	motHmChkInput($(this), twoDigits, 8, 0, 99);
+});
+
+})(jQuery); // Avoid conflicts with other libraries

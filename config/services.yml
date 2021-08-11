@@ -1,3 +1,6 @@
+imports:
+    - { resource: tables.yml }
+
 services:
     mot.hangman.controller:
         class: mot\hangman\controller\main
@@ -12,7 +15,18 @@ services:
             - '@user'
             - '%core.root_path%'
             - '%core.php_ext%'
-            - '%core.table_prefix%'
+            - '%mot.hangman.tables.mot_hangman_score%'
+            - '%mot.hangman.tables.mot_hangman_words%'
+
+    mot.hangman.controller.ajax_call:
+        class: mot\hangman\controller\ajax_call
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@request'
+            - '@user'
+            - '%mot.hangman.tables.mot_hangman_score%'
+            - '%mot.hangman.tables.mot_hangman_words%'
 
     mot.hangman.listener:
         class: mot\hangman\event\listener

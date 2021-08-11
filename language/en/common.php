@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.2..0
+* @package Hangman v0.3.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -40,7 +40,6 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'PLURAL_RULE'					=> 1,
 	// Tab menu
 	'TAB_GAME'					=> 'Game',
 	'TAB_WORD'					=> 'Search Term Input',
@@ -58,8 +57,8 @@ $lang = array_merge($lang, array(
 									Selected letters will vanish from the selection area and will no longer be available. Letters already selected by you will
 									be displayed either in the `Failed Tries` or the `Correct Tries` area.<br>
 									According to the current settings you will gain %1$s points for every correctly selected letter and %2$s points for a turn
-									you have won, losing will cost you %3$s points.<br>
-									ATTENTION: Terms used in a game turn will be deleted from the database after that turn. Please enter a term after you
+									you have won, losing will cost you %3$s points.',
+	'HANGMAN_DESC_DEL_TERM'		=> '<br>ATTENTION: Terms used in a game turn will be deleted from the database after that turn. Please enter a term after you
 									concluded a game turn in order to enable others to play, too.',
 	// List all letters of this language as uppercase letters separated by comma. If this language contains lowercase letters without an uppercase equivalent list them here, too. If your language uses special characters and you have put them in
 	//	the following variable please consider mentioning them in the 'HANGMAN_QUOTE_INPUT_EXPL' variable
@@ -70,6 +69,7 @@ $lang = array_merge($lang, array(
 	'HANGMAN_NEW_QUOTE'			=> 'Start Game',
 	'HANGMAN_NEW_QUOTE_START'	=> 'Click the ´Start Game´ button to start Hangman',
 	'HANGMAN_NO_QUOTE'			=> 'Currently there are no terms available. Please try again later.',
+	'HANGMAN_CATEGORY'			=> 'Category',
 	'HANGMAN_FAILED_TRIES'		=> 'Failed Tries',
 	'HANGMAN_CORRECT_TRIES'		=> 'Correct Tries',
 	'HANGMAN_YOU_WIN'			=> '<strong>You Win!</strong><br>Points gained: ',
@@ -78,10 +78,11 @@ $lang = array_merge($lang, array(
 	'HANGMAN_POINTS_SAVED'		=> 'Your game account was credited with the points gained in this game turn.',
 	// Term definition
 	'HANGMAN_QUOTE_INPUT_HEAD'	=> 'Enter a new term',
-	'HANGMAN_QUOTE_INPUT_EXPL'	=> 'You can enter a new term in this form. This term may contain spaces but must not contain punctuation marks, special
-									characters and digits. Therefore you are not limited to single words and you can enter quotes as well.<br>
+	'HANGMAN_QUOTE_INPUT_EXPL'	=> 'You can enter a new term in this form. This term may contain the letters %1$s (upper and lower case) and spaces but must
+									not contain punctuation marks, special characters and digits. Therefore you are not limited to single words and you can
+									enter quotes as well.<br>
 									Terms entered by yourself will not be displayed to you during game turns!<br>
-									According to the current settings your game account will be credited with %1$s points for entering a term.',
+									According to the current settings your game account will be credited with %2$d points for entering a term.',
 	'HANGMAN_QUOTE_INPUT'		=> 'New term',
 	'HANGMAN_WORD_SAVED'		=> 'The term you have entered was successfully stored in the database.<br>
 									Your game account was credited with %1$s points.',

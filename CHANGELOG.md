@@ -4,6 +4,29 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.3.0] - 2021-08-18
+
+### Added
+-	A mirgation file (`migrations/v_0_3_0.php`) to update `config` version number, add three new config variables and insert a new column into the
+	`MOT_HANGMAN_WORDS` table
+-	Tables are now defined in `config/tables.yml` and injected via services
+-	A category to each search term, the usage can be switched on or off in the ACP
+-	Made the deletion of used search terms an admin's selection in the ACP
+-	An auto-refresh to all term input pages to automatically return to the input form after 1 or 2 seconds respectively
+-	Leaving a running game results in a penalty of adding the loosing points to the player's account
+  
+### Changed
+-	All DOM operations are now done using jQuery
+-	Input field gets the focus on loading the Search Term Input page
+-	Selection of the quote is now done in the PHP script and no longer within Javascript to reduce the traffic to the client
+-	Language files `common.php` to reflect the change in deleting the used search term and to display the possible characters in the term input tab
+  
+### Fixed
+-	Put `public` and `static` into the correct order in all migration files and in `event/listener.php`
+  
+### Removed
+  
+  
 ## [0.2.5] - 2021-03-25
 
 ### Added

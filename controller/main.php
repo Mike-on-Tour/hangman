@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.2.5
+* @package Hangman v0.3.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -49,17 +49,20 @@ class main
 	/** @var string PHP extension */
 	protected $php_ext;
 
-	protected $table_prefix;
+	/** @var string mot.usermap.tables.usermap_users */
+	protected $mot_hangman_score_table;
+
+	/** @var string mot.usermap.tables.usermap_poi */
+	protected $mot_hangman_words_table;
 
 	/**
 	* Constructor
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\extension\manager $phpbb_extension_manager,
 								\phpbb\controller\helper $helper, \phpbb\language\language $language, \phpbb\request\request_interface $request,
-								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext, $table_prefix)
+								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext, $mot_hangman_score_table,
+								$mot_hangman_words_table)
 	{
-		define ('HANGMAN_SCORE_TABLE', $table_prefix . 'mot_hangman_score');
-		define ('HANGMAN_WORDS_TABLE', $table_prefix . 'mot_hangman_words');
 		global $phpbb_container;
 
 		$this->config = $config;
@@ -73,6 +76,10 @@ class main
 		$this->phpbb_container = $phpbb_container;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
+		$this->hangman_score_table = $mot_hangman_score_table;
+		$this->hangman_words_table = $mot_hangman_words_table;
+
+		$this->ext_path = $this->phpbb_extension_manager->get_extension_path('mot/hangman', true);
 	}
 
 	public function display()
@@ -104,6 +111,8 @@ class main
 		$letters = explode(',', $lang_arr['HANGMAN_LETTERS']);
 		$lc_letters = mb_strtolower($lang_arr['HANGMAN_LETTERS'], 'UTF-8');
 
+		$delete_term = $this->config['mot_hangman_autodelete'];
+
 		$tab = $this->request->variable('tab', 0);
 		switch ($tab)
 		{
@@ -111,7 +120,6 @@ class main
 			case 1:
 			default:
 				add_form_key('hangman_game_frm');
-				$this->u_action = $this->game_action;
 
 				if ($this->request->is_set_post('submit'))
 				{
@@ -123,17 +131,20 @@ class main
 					$game_points = $this->request->variable('score', 0);
 					$word_id = $this->request->variable('word_id', 0);
 
-					// Delete the used quote from database
-					$sql_in = array($word_id);
-					$sql = 'DELETE FROM ' . HANGMAN_WORDS_TABLE . '
-							WHERE ' . $this->db->sql_in_set('word_id', $sql_in);
-					$this->db->sql_query($sql);
+					// Delete the used quote from database (if applicable)
+					if ($delete_term)
+					{
+						$sql_in = array($word_id);
+						$sql = 'DELETE FROM ' . $this->hangman_words_table . '
+								WHERE ' . $this->db->sql_in_set('word_id', $sql_in);
+						$this->db->sql_query($sql);
+					}
 
 					// Update or Insert this user's score
 					$sql_arr = array(
 						'user_id'	=> $this->user->data['user_id'],
 					);
-					$sql = 'SELECT solve_pts, total_pts FROM ' . HANGMAN_SCORE_TABLE . '
+					$sql = 'SELECT solve_pts, total_pts FROM ' . $this->hangman_score_table . '
 							WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
 					$result = $this->db->sql_query($sql);
 					$row = $this->db->sql_fetchrow($result);
@@ -144,7 +155,7 @@ class main
 							'solve_pts'		=> $row['solve_pts'] + $game_points,
 							'total_pts'		=> $row['total_pts'] + $game_points,
 						);
-						$sql = 'UPDATE ' . HANGMAN_SCORE_TABLE . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
+						$sql = 'UPDATE ' . $this->hangman_score_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
 								WHERE user_id = ' . (int) $this->user->data['user_id'];
 						$this->db->sql_query($sql);
 					}
@@ -156,18 +167,19 @@ class main
 							'total_pts'		=> $game_points,
 							'word_pts'		=> 0,
 						);
-						$sql = 'INSERT INTO ' . HANGMAN_SCORE_TABLE . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
+						$sql = 'INSERT INTO ' . $this->hangman_score_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
 						$this->db->sql_query($sql);
 					}
 
 					// display message about successful operation
 					$message = $this->language->lang('HANGMAN_POINTS_SAVED');
+					meta_refresh(3, $this->game_action);
 					trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('TO_GAME'))
 											. $this->back_link($this->word_action, $this->language->lang('TO_WORD_INPUT'))
 											. $this->back_link($this->rank_action, $this->language->lang('TO_SCORE_TABLE')), E_USER_NOTICE);
 				}
 
-				// and calculate the length of the rows to display them
+				// Calculate the length of the rows to display usable letters
 				$total_letters = count ($letters);
 				$letter_row = $total_letters/2;
 				if ((int) $letter_row < $letter_row)
@@ -175,31 +187,35 @@ class main
 					$letter_row = (int) $letter_row + 1;
 				}
 
-				// Define the path to images
-				$image_path = 'ext/mot/hangman/styles/all/theme/images/';
-
-				// Get a quote from the table
+				// Get the quotes from the table
 				$sql_in = array($this->user->data['user_id']);
-				$sql = 'SELECT word_id, hangman_word FROM ' . HANGMAN_WORDS_TABLE . '
+				$sql = 'SELECT word_id, hangman_word, hangman_category FROM ' . $this->hangman_words_table . '
 						WHERE ' . $this->db->sql_in_set('creator_id', $sql_in, true);
 				$result = $this->db->sql_query($sql);
 				$quotes = $this->db->sql_fetchrowset($result);
 				$this->db->sql_freeresult($result);
+				$quote = count($quotes) > 0 ? $quotes[rand(0, count($quotes) - 1)] : [];
+
+				$game_desc = $this->language->lang('HANGMAN_DESC', $this->config['mot_hangman_points_letter'], $this->config['mot_hangman_points_win'], $this->config['mot_hangman_points_loose']);
+				if ($delete_term)
+				{
+					$game_desc .= $this->language->lang('HANGMAN_DESC_DEL_TERM');
+				}
 
 				$this->template->assign_vars(array(
-					'GAME_DESC'					=> $this->language->lang('HANGMAN_DESC', $this->config['mot_hangman_points_letter'], $this->config['mot_hangman_points_win'], $this->config['mot_hangman_points_loose']),
+					'GAME_DESC'					=> $game_desc,
 					'HANGMAN_LETTERS'			=> json_encode($letters),
 					'HANGMAN_TOTAL_LETTERS'		=> $total_letters,
 					'HANGMAN_LETTER_ROW'		=> $letter_row,
 					'HANGMAN_LIVES'				=> $this->language->lang('HANGMAN_LIVES', $this->config['mot_hangman_lives']),
 					'HANGMAN_NUMBER_OF_LIVES'	=> $this->config['mot_hangman_lives'],
 					'CLICK_START_FIRST'			=> $this->language->lang('HANGMAN_NEW_QUOTE_TO'),
-					'HANGMAN_QUOTES'			=> json_encode($quotes),
-					'IMAGE_PATH'				=> $image_path,
+					'HANGMAN_QUOTE'				=> json_encode($quote),
 					'LETTER_POINTS'				=> $this->config['mot_hangman_points_letter'],
 					'WIN_POINTS'				=> $this->config['mot_hangman_points_win'],
 					'LOOSE_POINTS'				=> $this->config['mot_hangman_points_loose'],
-					'U_ACTION'					=> $this->u_action,
+					'U_ACTION'					=> $this->game_action,
+					'AJAX_CALL'					=> $this->helper->route('mot_hangman_ajax_controller'),
 				));
 				$selected_tab = 1;
 				break;
@@ -214,6 +230,7 @@ class main
 				{
 					if (!check_form_key('hangman_quote_input'))
 					{
+						meta_refresh(1, $this->word_action);
 						trigger_error($this->language->lang('FORM_INVALID') . $this->back_link($this->u_action, $this->language->lang('BACK_TO_PREV')), E_USER_WARNING);
 					}
 
@@ -222,7 +239,7 @@ class main
 					$sql_arr = array(
 						'hangman_word_hash'	=> $hash,
 					);
-					$sql = 'SELECT word_id FROM ' . HANGMAN_WORDS_TABLE . '
+					$sql = 'SELECT word_id FROM ' . $this->hangman_words_table . '
 							WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
 					$result = $this->db->sql_query($sql);
 					$row = $this->db->sql_fetchrow($result);
@@ -235,15 +252,16 @@ class main
 							'creator_id'			=> $this->user->data['user_id'],
 							'hangman_word'			=> $quote,
 							'hangman_word_hash'		=> $hash,
+							'hangman_category'		=> $this->request->variable('hangman_quote_category', '', true)
 						);
-						$sql = 'INSERT INTO ' . HANGMAN_WORDS_TABLE . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
+						$sql = 'INSERT INTO ' . $this->hangman_words_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
 						$this->db->sql_query($sql);
 
 						// Update or insert the user's points
 						$sql_arr = array(
 							'user_id'	=> $this->user->data['user_id'],
 						);
-						$sql = 'SELECT total_pts, word_pts FROM ' . HANGMAN_SCORE_TABLE . '
+						$sql = 'SELECT total_pts, word_pts FROM ' . $this->hangman_score_table . '
 								WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
 						$result = $this->db->sql_query($sql);
 						$row = $this->db->sql_fetchrow($result);
@@ -256,7 +274,7 @@ class main
 								'total_pts'	=> $row['total_pts'] + $input_points,
 								'word_pts'	=> $row['word_pts'] + $input_points,
 							);
-							$sql = 'UPDATE ' . HANGMAN_SCORE_TABLE . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
+							$sql = 'UPDATE ' . $this->hangman_score_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
 									WHERE user_id = ' . (int) $this->user->data['user_id'];
 							$this->db->sql_query($sql);
 						}
@@ -269,11 +287,12 @@ class main
 								'total_pts'	=> $input_points,
 								'word_pts'	=> $input_points,
 							);
-							$sql = 'INSERT INTO ' . HANGMAN_SCORE_TABLE . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
+							$sql = 'INSERT INTO ' . $this->hangman_score_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
 							$this->db->sql_query($sql);
 						}
 
 						// display message about successful operation
+						meta_refresh(2, $this->word_action);
 						$message = $this->language->lang('HANGMAN_WORD_SAVED', $input_points);
 						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('TO_GAME'))
 												. $this->back_link($this->word_action, $this->language->lang('TO_WORD_INPUT'))
@@ -281,13 +300,14 @@ class main
 					}
 					else
 					{
+						meta_refresh(1, $this->word_action);
 						trigger_error($this->language->lang('HANGMAN_WORD_EXISTS') . $this->back_link($this->u_action, $this->language->lang('BACK_TO_PREV')), E_USER_WARNING);
 					}
 				}
 
 				$lc_letters = explode(',', $lc_letters);
 				$this->template->assign_vars(array(
-					'HANGMAN_QUOTE_INPUT_EXPL'	=> $this->language->lang('HANGMAN_QUOTE_INPUT_EXPL', $input_points),
+					'HANGMAN_QUOTE_INPUT_EXPL'	=> $this->language->lang('HANGMAN_QUOTE_INPUT_EXPL', implode(', ', $letters), $input_points),
 					'HANGMAN_LC_LETTERS'		=> json_encode($lc_letters),
 					'U_ACTION'					=> $this->u_action . '&amp;action=submit',
 				));
@@ -300,7 +320,7 @@ class main
 				$limit = 25;	// max 25 lines per page
 
 				// Get total numbers of players in score table
-				$count_query = "SELECT COUNT(user_id) AS 'user_count' FROM " . HANGMAN_SCORE_TABLE;
+				$count_query = "SELECT COUNT(user_id) AS 'user_count' FROM " . $this->hangman_score_table;
 				$result = $this->db->sql_query($count_query);
 				$row = $this->db->sql_fetchrow($result);
 				$count_rankings = $row['user_count'];
@@ -311,7 +331,7 @@ class main
 					'SELECT'    => 'u.user_id, u.username, u.user_colour, h.user_id, h.solve_pts, h.total_pts, h.word_pts',
 					'FROM'		=> array(
 						USERS_TABLE        	=> 'u',
-						HANGMAN_SCORE_TABLE	=> 'h',
+						$this->hangman_score_table	=> 'h',
 					),
 					'WHERE'		=> 'u.user_id = h.user_id',
 				);
@@ -349,12 +369,15 @@ class main
 		}
 
 		$this->template->assign_vars(array(
+			'SHOW_CATEGORY'		=> $this->config['mot_hangman_category_enable'] == 1 ? true : false,
+			'ENFORCE_CATEGORY'	=> $this->config['mot_hangman_category_enforce'] == 1 ? true : false,
 			'SELECTED_TAB'		=> $selected_tab,
 			'TAB_1'				=> $this->game_action,
 			'TAB_2'				=> $this->word_action,
 			'TAB_3'				=> $this->rank_action,
+			'IMAGE_PATH'		=> append_sid("{$this->ext_path}styles/all/theme/images/hm"),
 		));
-		return $this->helper->render('hangman.html', $this->language->lang('HANGMAN'));
+		return $this->helper->render('@mot_hangman/hangman.html', $this->language->lang('HANGMAN'));
 	}
 
 	/**

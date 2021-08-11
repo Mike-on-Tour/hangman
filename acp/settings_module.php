@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman Game v0.2.4
+* @package Hangman Game v0.3.0
 * @copyright (c) 2021 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -31,6 +31,9 @@ class settings_module
 			}
 
 			// save the settings to the phpbb_config table
+			$config->set('mot_hangman_autodelete', $request->variable('mot_hangman_autodelete', 0));
+			$config->set('mot_hangman_category_enable', $request->variable('mot_hangman_category_enable', 0));
+			$config->set('mot_hangman_category_enforce', $request->variable('mot_hangman_category_enforce', 0));
 			$config->set('mot_hangman_lives', $request->variable('acp_hangman_lives', 0));
 			$config->set('mot_hangman_points_letter', $request->variable('acp_hangman_points_letter', 0));
 			$config->set('mot_hangman_points_loose', $request->variable('acp_hangman_points_loose', 0));
@@ -65,6 +68,9 @@ class settings_module
 		}
 
 		$template->assign_vars(array(
+			'ACP_HANGMAN_AUTODELETE'			=> $config['mot_hangman_autodelete'],
+			'ACP_HANGMAN_CATEGORY_ENABLE'		=> $config['mot_hangman_category_enable'],
+			'ACP_HANGMAN_CATEGORY_ENFORCE'		=> $config['mot_hangman_category_enforce'],
 			'ACP_HANGMAN_LIVES'					=> $config['mot_hangman_lives'],
 			'ACP_HANGMAN_POINTS_LETTER'			=> $config['mot_hangman_points_letter'],
 			'ACP_HANGMAN_POINTS_LOOSE'			=> $config['mot_hangman_points_loose'],

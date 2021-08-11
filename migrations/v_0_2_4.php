@@ -15,7 +15,7 @@ class v_0_2_4 extends \phpbb\db\migration\migration
 	/**
 	* Check for migration v_0_2_3 to be installed
 	*/
-	static public function depends_on()
+	public static function depends_on()
 	{
 		return array('\mot\hangman\migrations\v_0_2_3');
 	}

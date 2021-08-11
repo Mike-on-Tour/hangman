@@ -1,3 +1,13 @@
+/**
+*
+* package Hangman v 0.3.0
+* copyright (c) 2020 - 2021 Mike-on-Tour
+* license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
+
+(function($) {  // Avoid conflicts with other libraries
+
 'use strict';
 
 /*
@@ -7,21 +17,32 @@
 *
 * @return	none
 */
-function selectTab(index) {
-	var element = document.getElementsByTagName('div');
+motHangman.selectTab = function(index) {
 	var elementId = "";
-	var object;
 
-	for (var i = 0; i < element.length; i++) {
-		elementId = element[i].id;
-		if (elementId.substr(0,12) == 'hangman_box_') {
-			object = document.getElementById(elementId);
-			object.hidden = true;
+	// Hide all boxes
+	$("div.inner").each(function() {
+		elementId = $(this).attr('id');
+		if ((typeof elementId !== 'undefined') && (elementId.substr(0,12) == 'hangman_box_')) {
+			$(this).attr("hidden", true);
 		}
-	}
+	});
 
-	var tab = document.getElementById('hangman_tab_' + index);
-	tab.setAttribute('class','tab activetab');
-	var box = document.getElementById('hangman_box_' + index);
-	box.hidden = false;
+	// Set all tabs to inactive
+	$("li.tab").each(function() {
+		elementId = $(this).attr('id');
+		if ((typeof elementId !== 'undefined') && (elementId.substr(0,12) == 'hangman_tab_')) {
+			$(this).attr("class", 'tab');
+		}
+	});
+
+	// Set selected tab to active
+	$("#hangman_tab_" + index).attr("class", 'tab activetab');
+
+	// Show selected box
+	$("#hangman_box_" + index).attr("hidden", false);
 }
+
+motHangman.selectTab(motHangman.tab);
+
+})(jQuery); // Avoid conflicts with other libraries
