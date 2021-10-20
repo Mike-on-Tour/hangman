@@ -18,16 +18,6 @@ services:
             - '%mot.hangman.tables.mot_hangman_score%'
             - '%mot.hangman.tables.mot_hangman_words%'
 
-    mot.hangman.controller.ajax_call:
-        class: mot\hangman\controller\ajax_call
-        arguments:
-            - '@config'
-            - '@dbal.conn'
-            - '@request'
-            - '@user'
-            - '%mot.hangman.tables.mot_hangman_score%'
-            - '%mot.hangman.tables.mot_hangman_words%'
-
     mot.hangman.listener:
         class: mot\hangman\event\listener
         arguments:

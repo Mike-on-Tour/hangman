@@ -4,19 +4,21 @@
 <script>
 // <![CDATA[
 	motHangman.jsShowCategory = '{{ SHOW_CATEGORY }}';
-	motHangman.jsHangmanLetters = {{ HANGMAN_LETTERS }};
+	motHangman.jsHangmanLetters = {{ MOT_HANGMAN_LETTERS }};
 	motHangman.jsHangmanTotalLetters = {{ HANGMAN_TOTAL_LETTERS }};
 	motHangman.jsLetterRow = {{ HANGMAN_LETTER_ROW }};
-	motHangman.jsImagePath = '{{ IMAGE_PATH|e('js') }}';
+	motHangman.jsImagePath = "{{ IMAGE_PATH|e('js') }}";
+	motHangman.jsAllowedPunctMarks = "{{ ALLOWED_PUNCT_MARKS|e('js') }}";
 	motHangman.jsClickStart = '{{ CLICK_START_FIRST|e('js') }}';
 	motHangman.jsNumberOfLives = {{ HANGMAN_NUMBER_OF_LIVES }};
 	motHangman.jsQuote = {{ HANGMAN_QUOTE }};
-	motHangman.jsNoQuote = "{{ lang('HANGMAN_NO_QUOTE')|e('js') }}";
+	motHangman.jsNoQuote = "{{ lang('MOT_HANGMAN_NO_QUOTE')|e('js') }}";
 	motHangman.jsLetterPoints = {{ LETTER_POINTS }};
 	motHangman.jsWinPoints = {{ WIN_POINTS }};
-	motHangman.jsWinString = "{{ lang('HANGMAN_YOU_WIN')|e('js') }}";
+	motHangman.jsWinString = "{{ lang('MOT_HANGMAN_YOU_WIN')|e('js') }}";
 	motHangman.jsLoosePoints = {{ LOOSE_POINTS }};
-	motHangman.jsLooseString = "{{ lang('HANGMAN_YOU_LOSE')|e('js') }}";
+	motHangman.jsPunishEvaders = '{{ ENABLE_EVADE_PUNISH }}';
+	motHangman.jsLooseString = "{{ lang('MOT_HANGMAN_YOU_LOSE')|e('js') }}";
 	motHangman.jsAction = "{{ U_ACTION|e('js') }}";
 	motHangman.jsAjaxCall = "{{ AJAX_CALL|e('js') }}";
 // ]]>
@@ -24,7 +26,7 @@
 
 <form id="hangman_game_frm" name="frm" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
 	<div class="centered_text">
-		<h2>{{ lang('HANGMAN_TITLE') }}</h2>
+		<h2>{{ lang('MOT_HANGMAN_TITLE') }}</h2>
 	</div>
 
 	<p>{{ GAME_DESC }}<br></p>
@@ -35,18 +37,18 @@
 				<img src="{{ IMAGE_PATH }}10.svg" width="75" height="125">
 			</div>
 			<div>
-				<p>{{ HANGMAN_LIVES }}</p>
+				<p>{{ MOT_HANGMAN_LIVES }}</p>
 				<fieldset>
 					<dl>
-						<dt><label>{{ lang('HANGMAN_LIVES_USED') }}</label></dt>
+						<dt><label>{{ lang('MOT_HANGMAN_LIVES_USED') }}</label></dt>
 						<dd><input id="lives" class="bg2" type="text" size="2" onfocus="lives.blur();" value="0" name="lives" readonly /></dd>
 					</dl>
 					<dl>
-						<dt><label>{{ lang('HANGMAN_SCORE') }}</label></dt>
+						<dt><label>{{ lang('MOT_HANGMAN_SCORE') }}</label></dt>
 						<dd><input id="score" class="bg2" type="text" size="2" onfocus="score.blur();" value="0" name="score" readonly /></dd>
 					</dl>
 					<dl>
-						<dt><input class="button" id="start_button" type="button" value="{{ lang('HANGMAN_NEW_QUOTE') }}"></dt>
+						<dt><input class="button" id="start_button" type="button" value="{{ lang('MOT_HANGMAN_NEW_QUOTE') }}"></dt>
 						<dd></dd>
 					</dl>
 				</fieldset>
@@ -57,19 +59,19 @@
 			<fieldset>
 				{% if SHOW_CATEGORY %}
 					<dl>
-						<dt><label>{{ lang('HANGMAN_CATEGORY') }}{{ lang('COLON') }}</label></dt>
+						<dt><label>{{ lang('MOT_HANGMAN_CATEGORY') }}{{ lang('COLON') }}</label></dt>
 						<dd><span id="hangman_category" class="bg2"><span></dd>
 					</dl>
 				{% endif %}
 				<dl>
-					<textarea class="bg2 tarea" onfocus="word.blur();" id="hangman_word" name="word" cols="100" rows="2">{{ lang('HANGMAN_NEW_QUOTE_START') }}</textarea>
+					<textarea class="bg2 tarea" onfocus="word.blur();" id="hangman_word" name="word" cols="100" rows="2">{{ lang('MOT_HANGMAN_NEW_QUOTE_START') }}</textarea>
 				</dl>
 				<dl>
-					<dt><label>{{ lang('HANGMAN_FAILED_TRIES') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('MOT_HANGMAN_FAILED_TRIES') }}{{ lang('COLON') }}</label></dt>
 					<dd><input id="tried" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="tried" readonly /></dd>
 				</dl>
 				<dl>
-					<dt><label>{{ lang('HANGMAN_CORRECT_TRIES') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('MOT_HANGMAN_CORRECT_TRIES') }}{{ lang('COLON') }}</label></dt>
 					<dd><input id="correct" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="correct" readonly /></dd>
 				<dl>
 			</fieldset>

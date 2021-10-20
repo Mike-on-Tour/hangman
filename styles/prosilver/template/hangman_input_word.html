@@ -5,25 +5,32 @@
 	motHangman.jsShowCategory = '{{ SHOW_CATEGORY }}';
 	motHangman.jsEnforceCategory = '{{ ENFORCE_CATEGORY }}';
 	motHangman.jsLcLetters = {{ HANGMAN_LC_LETTERS }};
-	motHangman.jsUnauthLetters = "{{ lang('HANGMAN_UNAUTH_LETTERS')|e('js') }}";
+	motHangman.jsUnauthLetters = "{{ lang('MOT_HANGMAN_UNAUTH_LETTERS')|e('js') }}";
+	motHangman.jsAllowedPunctMarks = "{{ ALLOWED_PUNCT_MARKS|e('js') }}";
 // ]]>
 </script>
 
 <div class="centered_text">
-	<h2>{{ lang('HANGMAN_QUOTE_INPUT_HEAD') }}</h2>
+	<h2>{{ lang('MOT_HANGMAN_QUOTE_INPUT_HEAD') }}</h2>
 </div>
 
-<p>{{ HANGMAN_QUOTE_INPUT_EXPL }}</p>
+<p>
+	{{ MOT_HANGMAN_QUOTE_INPUT_EXPL }}<br>
+	{% if SHOW_CATEGORY %}
+		{{ lang('MOT_HANGMAN_CATEGORY_EXPL') }}<br>
+	{% endif %}
+	{{ MOT_HANGMAN_INPUT_POINTS }}
+</p>
 
 <form id="hangman_quote_input" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
 	<fieldset>
 		<dl>
-			<dt><label for="hangman_quote_text">{{ lang('HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
+			<dt><label for="hangman_quote_text">{{ lang('MOT_HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
 			<dd><input class="inputbox autowidth" id="hangman_quote_text" type="text" size="50" maxlength="255" name="hangman_quote_text" value="{{ HANGMAN_QUOTE_TEXT }}"></dd>
 		</dl>
 		{% if SHOW_CATEGORY %}
 			<dl>
-				<dt><label for="hangman_quote_category">{{ lang('HANGMAN_CATEGORY') }}{{ lang('COLON') }}</label></dt>
+				<dt><label for="hangman_quote_category">{{ lang('MOT_HANGMAN_CATEGORY') }}{{ lang('COLON') }}</label></dt>
 				<dd><input class="inputbox autowidth" id="hangman_quote_category" type="text" size="50" maxlength="255" name="hangman_quote_category" value="{{ HANGMAN_CATEGORY_TEXT }}"></dd>
 			</dl>
 		{% endif %}

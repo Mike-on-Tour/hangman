@@ -95,6 +95,19 @@ motHangman.fillLetterTable = function(letters, letterCount, letterRow) {
 *
 */
 $("#start_button").click(function() {
+	function replaceChars(myString) {
+		var len = myString.length;
+		var tempString = ''
+		for (var i = 0; i < len; i++) {
+			if (!motHangman.jsAllowedPunctMarks.includes(myString[i]) && myString[i] != ' ') {
+				tempString += '_';
+			} else {
+				tempString += myString[i];
+			}
+		}
+		return tempString;
+	}
+
 	if (!motHangman.running) {					// prevent another game start while game is running
 		if (motHangman.jsQuote.length == 0) {
 			motHangman.modalWindow(motHangman.jsNoQuote);
@@ -104,9 +117,9 @@ $("#start_button").click(function() {
 			$("#word_id").val(motHangman.quoteId);
 
 			motHangman.quoteText = motHangman.jsQuote['hangman_word'];
-			motHangman.showText = motHangman.quoteText.replace(/[ ]/g, '  ');			// if the quote contains spaces double them to get an even number of characters
-			motHangman.showText = motHangman.showText.replace(/[^ ]/g, '_ ');			// replace all characters with underscores for display
+			motHangman.showText = replaceChars(motHangman.quoteText);			// replace all characters with underscores for display
 			$("#hangman_word").val(motHangman.showText);
+			$("#hangman_word").css("letter-spacing", "5px");
 
 			// set hangman picture to start
 			$("#hm_picture").html('<img src="' + motHangman.jsImagePath + motHangman.imageNumber + motHangman.imageExt);
@@ -151,12 +164,12 @@ motHangman.seek = function(letter) {
 				correctLetter = true;
 				tempText = '';
 				if (i != 0) {
-					tempText = this.showText.substr(0, 2*i);
+					tempText = this.showText.substr(0, i);
 				}
-				len = showLength - (2 * (i + 1));
-				tempText = tempText + this.quoteText[i] + ' ';
+				len = showLength - (i + 1);
+				tempText = tempText + this.quoteText[i];
 				if (i < quoteLength - 1) {
-					tempText += this.showText.substr(2*(i+1), len);
+					tempText += this.showText.substr(i+1, len);
 				}
 				this.showText = tempText;
 			}
@@ -245,29 +258,26 @@ $(document).keydown(function(e) {
 *
 * @params	evt
 */
-$(window).on('beforeunload', function(evt) {
-	if (motHangman.running) {
-		evt.preventDefault();	// For Firefox, Safari, IE and Firefox for Android
-		evt.returnValue = '';	// For Chrome and Edge and Android: WebView, Chrome, Opera, Samsung Internet
-		return '';				// For Opera
-	}
-});
+if (motHangman.jsPunishEvaders) {
+	$(window).on('beforeunload', function(evt) {
+		if (motHangman.running) {
+			evt.preventDefault();	// For Firefox, Safari, IE and Firefox for Android
+			evt.returnValue = '';	// For Chrome and Edge and Android: WebView, Chrome, Opera, Samsung Internet
+			return '';				// For Opera
+		}
+	});
 
-$(window).on('visibilitychange', function(evt) {
-	if (motHangman.running) {
-		motHangman.points = motHangman.jsLoosePoints;
-		$("#score").val(motHangman.points);
-		$.post(motHangman.jsAjaxCall,
-			{score: motHangman.jsLoosePoints, word_id: motHangman.quoteId},
-			function($result) {
-				if ($result['success']) {
-					motHangman.modalWindow(motHangman.jsLooseString + motHangman.points);
-					motHangman.waitToClose(false);
-				}
-			}
-		);
-	}
-});
+	$(window).on('visibilitychange', function(evt) {
+		if (motHangman.running) {
+			motHangman.points = motHangman.jsLoosePoints;
+			$("#score").val(motHangman.points);
+			var formData = new FormData();
+			formData.append('score', motHangman.points);
+			formData.append('word_id', motHangman.quoteId);
+			navigator.sendBeacon(motHangman.jsAjaxCall, formData);
+		}
+	});
+}
 
 // Start immediately with displaying the letter table
 motHangman.fillLetterTable(motHangman.jsHangmanLetters, motHangman.jsHangmanTotalLetters, motHangman.jsLetterRow);

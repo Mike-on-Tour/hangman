@@ -4,27 +4,31 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
-## [0.3.0] - 2021-08-18
+## [0.3.0] - 2021-10-20
 
 ### Added
--	A mirgation file (`migrations/v_0_3_0.php`) to update `config` version number, add three new config variables and insert a new column into the
+-	A mirgation file (`migrations/v_0_3_0.php`) to remove `config` version number, add four new config variables and insert a new column into the
 	`MOT_HANGMAN_WORDS` table
 -	Tables are now defined in `config/tables.yml` and injected via services
 -	A category to each search term, the usage can be switched on or off in the ACP
 -	Made the deletion of used search terms an admin's selection in the ACP
 -	An auto-refresh to all term input pages to automatically return to the input form after 1 or 2 seconds respectively
--	Leaving a running game results in a penalty of adding the loosing points to the player's account
+-	Leaving a running game results in a penalty of adding the loosing points to the player's account (function is selectable in the ACP)
+-	The usage of punctuation marks is now possible, admin can define in the ACP what punctuation marks are available
   
 ### Changed
 -	All DOM operations are now done using jQuery
 -	Input field gets the focus on loading the Search Term Input page
 -	Selection of the quote is now done in the PHP script and no longer within Javascript to reduce the traffic to the client
 -	Language files `common.php` to reflect the change in deleting the used search term and to display the possible characters in the term input tab
+-	Position of modal window in the game tab
+-	Version number is now derived from the `composer.json` file
   
 ### Fixed
 -	Put `public` and `static` into the correct order in all migration files and in `event/listener.php`
   
 ### Removed
+-	`config` variable `mot_hangman_version`, version is now extracted from `composer.json` file
   
   
 ## [0.2.5] - 2021-03-25
@@ -32,7 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 -	Bots are rerouted to the site's index page and users not logged in are rerouted to the login page in `controller/main.php`
 	(courtesy of Dr.Death)
--	A mirgation file (`migrations/v_0_2_5.php`) to update `config` version number
+-	A migration file (`migrations/v_0_2_5.php`) to update `config` version number
 	
 ### Changed
 -	All links to Hangman tabs are using routes now (courtesy of Dr.Death), and these are defined only once and these definitions are used throughout
@@ -53,7 +57,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 	(courtesy of Dr.Death)
 
 ### Changed
--	Table names in migration file `v_0_2_0.php` to avoid conflicts with another extension which uses identical table names
+-	Table names from migration file `v_0_2_0.php` to avoid conflicts with another extension which uses identical table names
 -	Letter buttons on the game tab
 	(courtesy of Dr.Death)
 -	Messages to the user are now displayed with a modal window instead of doing it with a Javascript alert window
@@ -124,7 +128,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.2.0] - 2021-02-28
 
 ### Added
--	A migrition file (`migrations/v_0_2_0.php`) to introduce new config variables, new tables and an ACP module
+-	A migration file (`migrations/v_0_2_0.php`) to introduce new config variables, new tables and an ACP module
 -	An ACP settings module
 -	A highscore table
 -	A form to enable users to define terms and quotes

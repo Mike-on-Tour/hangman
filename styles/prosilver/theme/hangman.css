@@ -57,10 +57,14 @@
 .hangman_modal_content {
 	position: relative;
 	padding: 10px;
-	margin: auto;
+	margin-top: 200px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
 	min-width: 100px;
 	max-width: 250px;
 	min-height: 50px;
+	z-index: 100;
 }
 
 .modal_text {

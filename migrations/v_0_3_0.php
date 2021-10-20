@@ -23,12 +23,14 @@ class v_0_3_0 extends \phpbb\db\migration\migration
 	public function update_data()
 	{
 		return [
-			// Update the version variable
-			['config.update', ['mot_hangman_version', '0.3.0']],
+			// remove old config values
+			['config.remove', ['mot_hangman_version']],
 			// Add new variables
 			['config.add', ['mot_hangman_autodelete', '1']],
 			['config.add', ['mot_hangman_category_enable', '0']],
 			['config.add', ['mot_hangman_category_enforce', '0']],
+			['config.add', ['mot_hangman_evade_enable', '0']],
+			['config.add', ['mot_hangman_punctuation_marks', ',.-;:!?']],
 		];
 	}
 

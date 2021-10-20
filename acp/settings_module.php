@@ -18,8 +18,9 @@ class settings_module
 		global $config, $db, $phpbb_container, $phpbb_log, $request, $template, $user, $phpbb_root_path, $table_prefix;
 
 		$language = $phpbb_container->get('language');
+		$this->md_manager = $phpbb_container->get('ext.manager')->create_extension_metadata_manager('mot/hangman');
 		$this->tpl_name = 'acp_hangman_settings';
-		$this->page_title = $language->lang('ACP_HANGMAN');
+		$this->page_title = $language->lang('ACP_MOT_HANGMAN');
 
 		add_form_key('acp_hangman_settings');
 
@@ -34,13 +35,15 @@ class settings_module
 			$config->set('mot_hangman_autodelete', $request->variable('mot_hangman_autodelete', 0));
 			$config->set('mot_hangman_category_enable', $request->variable('mot_hangman_category_enable', 0));
 			$config->set('mot_hangman_category_enforce', $request->variable('mot_hangman_category_enforce', 0));
+			$config->set('mot_hangman_evade_enable', $request->variable('mot_hangman_evade_enable', 0));
 			$config->set('mot_hangman_lives', $request->variable('acp_hangman_lives', 0));
 			$config->set('mot_hangman_points_letter', $request->variable('acp_hangman_points_letter', 0));
 			$config->set('mot_hangman_points_loose', $request->variable('acp_hangman_points_loose', 0));
 			$config->set('mot_hangman_points_win', $request->variable('acp_hangman_points_win', 0));
 			$config->set('mot_hangman_points_word', $request->variable('acp_hangman_points_word', 0));
+			$config->set('mot_hangman_punctuation_marks', $request->variable('acp_hangman_punctuation_marks', ''));
 
-			trigger_error($language->lang('ACP_HANGMAN_SETTING_SAVED') . adm_back_link($this->u_action));
+			trigger_error($language->lang('ACP_MOT_HANGMAN_SETTING_SAVED') . adm_back_link($this->u_action));
 		}
 
 		if ($request->is_set_post('reset_highscore'))
@@ -59,27 +62,29 @@ class settings_module
 				break;
 			}
 
-			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'HANGMAN_SCORE_TABLE_CLEARED');
+			$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED');
 
 			if ($request->is_ajax())
 			{
-				trigger_error($language->lang('HIGHSCORE_TABLE_CLEARED'));
+				trigger_error($language->lang('ACP_MOT_HANGMAN_HIGHSCORE_TABLE_CLEARED'));
 			}
 		}
 
+		$mot_hangman_version = $this->md_manager->get_metadata('version');
 		$template->assign_vars(array(
-			'ACP_HANGMAN_AUTODELETE'			=> $config['mot_hangman_autodelete'],
-			'ACP_HANGMAN_CATEGORY_ENABLE'		=> $config['mot_hangman_category_enable'],
-			'ACP_HANGMAN_CATEGORY_ENFORCE'		=> $config['mot_hangman_category_enforce'],
-			'ACP_HANGMAN_LIVES'					=> $config['mot_hangman_lives'],
-			'ACP_HANGMAN_POINTS_LETTER'			=> $config['mot_hangman_points_letter'],
-			'ACP_HANGMAN_POINTS_LOOSE'			=> $config['mot_hangman_points_loose'],
-			'ACP_HANGMAN_POINTS_WIN'			=> $config['mot_hangman_points_win'],
-			'ACP_HANGMAN_POINTS_WORD'			=> $config['mot_hangman_points_word'],
-			'U_ACTION'							=> $this->u_action,
-			'HANGMAN_VERSION'					=> $config['mot_hangman_version'],
-			'HANGMAN_YEAR'						=> date('Y'),
-			'ICON_PAYPAL'						=> '<img src="' . $phpbb_root_path . 'ext/mot/hangman/adm/images/Paypal.svg" />',
+			'ACP_MOT_HANGMAN_AUTODELETE'			=> $config['mot_hangman_autodelete'],
+			'ACP_MOT_HANGMAN_CATEGORY_ENABLE'		=> $config['mot_hangman_category_enable'],
+			'ACP_MOT_HANGMAN_CATEGORY_ENFORCE'		=> $config['mot_hangman_category_enforce'],
+			'ACP_MOT_HANGMAN_EVADE_ENABLE'			=> $config['mot_hangman_evade_enable'],
+			'ACP_MOT_HANGMAN_LIVES'					=> $config['mot_hangman_lives'],
+			'ACP_MOT_HANGMAN_POINTS_LETTER'			=> $config['mot_hangman_points_letter'],
+			'ACP_MOT_HANGMAN_POINTS_LOOSE'			=> $config['mot_hangman_points_loose'],
+			'ACP_MOT_HANGMAN_POINTS_WIN'			=> $config['mot_hangman_points_win'],
+			'ACP_MOT_HANGMAN_POINTS_WORD'			=> $config['mot_hangman_points_word'],
+			'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'		=> $config['mot_hangman_punctuation_marks'],
+			'U_ACTION'								=> $this->u_action,
+			'HANGMAN_VERSION'						=> $language->lang('ACP_MOT_HANGMAN_VERSION', $mot_hangman_version, date('Y')),
+			'ICON_PAYPAL'							=> '<img src="' . $phpbb_root_path . 'ext/mot/hangman/adm/images/Paypal.svg" />',
 		));
 	}
 

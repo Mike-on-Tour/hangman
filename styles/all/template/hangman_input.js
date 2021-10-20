@@ -16,8 +16,6 @@ $("#hangman_quote_input").submit(function() {
 	var elementValue = '';
 
 	elementValue = $("#hangman_quote_text").val();
-	// delete all special characters
-	elementValue = elementValue.replace(/[,;\:\._\-\<\>\#'\+\*^°\!\"§\$%&\/()\=\?\|\{\}\[\]~]/g, '');
 	// delete all digits
 	elementValue = elementValue.replace(/\d/g, '');
 	// delete multiple spaces
@@ -30,7 +28,7 @@ $("#hangman_quote_input").submit(function() {
 	var unauthLetters = new Array();
 	for (var i = 0; i < strLenght; i++) {
 		checkLetter = elementValue[i];
-		if (!motHangman.jsLcLetters.includes(checkLetter.toLowerCase()) && checkLetter != ' ') {
+		if (!motHangman.jsLcLetters.includes(checkLetter.toLowerCase()) && !motHangman.jsAllowedPunctMarks.includes(checkLetter) && checkLetter != ' ') {
 			unauthLetters.push(checkLetter);
 			onlyAuthLetters = false;
 		}

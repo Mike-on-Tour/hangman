@@ -2,52 +2,66 @@
 {% INCLUDEJS '@mot_hangman/admin_mot_hangman.js' %}
 {% INCLUDECSS '@mot_hangman/mot_hangman_acp.css' %}
 
-<h1>{{ lang('ACP_HANGMAN_SETTINGS') }}</h1>
+<h1>{{ lang('ACP_MOT_HANGMAN_SETTINGS') }}</h1>
 
 <form id="acp_hangman_settings" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
 	<fieldset>
-		<legend>{{ lang('ACP_HANGMAN_EXT_SETTINGS') }}</legend>
+		<legend>{{ lang('ACP_MOT_HANGMAN_EXT_SETTINGS') }}</legend>
  		<dl>
-			<dt><label for="mot_hangman_autodelete">{{ lang('ACP_HANGMAN_AUTODELETE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_AUTODELETE_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_autodelete" value="1"{% if ACP_HANGMAN_AUTODELETE %} id="mot_hangman_autodelete" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_autodelete" value="0"{% if not ACP_HANGMAN_AUTODELETE %} id="mot_hangman_autodelete" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
+			<dt><label for="mot_hangman_autodelete">{{ lang('ACP_MOT_HANGMAN_AUTODELETE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_AUTODELETE_EXP') }}</p></dt>
+			<dd><label><input type="radio" class="radio" name="mot_hangman_autodelete" value="1"{% if ACP_MOT_HANGMAN_AUTODELETE %} id="mot_hangman_autodelete" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="mot_hangman_autodelete" value="0"{% if not ACP_MOT_HANGMAN_AUTODELETE %} id="mot_hangman_autodelete" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 		</dl>
  		<dl>
-			<dt><label for="mot_hangman_category_enable">{{ lang('ACP_HANGMAN_CATEGORY_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_CATEGORY_ENABLE_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_category_enable" value="1"{% if ACP_HANGMAN_CATEGORY_ENABLE %} id="mot_hangman_category_enable" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_category_enable" value="0"{% if not ACP_HANGMAN_CATEGORY_ENABLE %} id="mot_hangman_category_enable" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
+			<dt><label for="mot_hangman_category_enable">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE_EXP') }}</p></dt>
+			<dd><label><input type="radio" class="radio" name="mot_hangman_category_enable" value="1"{% if ACP_MOT_HANGMAN_CATEGORY_ENABLE %} id="mot_hangman_category_enable" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="mot_hangman_category_enable" value="0"{% if not ACP_MOT_HANGMAN_CATEGORY_ENABLE %} id="mot_hangman_category_enable" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 		</dl>
 		<div id="mot_hangman_category_enforce_field" hidden="true">
 			<dl>
-				<dt><label for="mot_hangman_category_enforce">{{ lang('ACP_HANGMAN_CATEGORY_ENFORCE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_CATEGORY_ENFORCE_EXP') }}</p></dt>
-				<dd><label><input type="radio" class="radio" name="mot_hangman_category_enforce" value="1"{% if ACP_HANGMAN_CATEGORY_ENFORCE %} id="mot_hangman_category_enforce" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
-					<label><input type="radio" class="radio" name="mot_hangman_category_enforce" value="0"{% if not ACP_HANGMAN_CATEGORY_ENFORCE %} id="mot_hangman_category_enforce" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
+				<dt><label for="mot_hangman_category_enforce">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE_EXP') }}</p></dt>
+				<dd><label><input type="radio" class="radio" name="mot_hangman_category_enforce" value="1"{% if ACP_MOT_HANGMAN_CATEGORY_ENFORCE %} id="mot_hangman_category_enforce" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+					<label><input type="radio" class="radio" name="mot_hangman_category_enforce" value="0"{% if not ACP_MOT_HANGMAN_CATEGORY_ENFORCE %} id="mot_hangman_category_enforce" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 			</dl>
 		</div>
+ 		<dl>
+			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
+			<dd><label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="1"{% if ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="0"{% if not ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
+		</dl>
 	</fieldset>
 
 	<fieldset>
-		<legend>{{ lang('ACP_HANGMAN_GAME_SETTINGS') }}</legend>
-		<p>{{ lang('ACP_HANGMAN_GAME_SETTINGS_EXP') }}</p>
+		<legend>{{ lang('ACP_MOT_HANGMAN_GAME_SETTINGS') }}</legend>
+		<p>{{ lang('ACP_MOT_HANGMAN_GAME_SETTINGS_EXP') }}</p>
 		<dl>
-			<dt><label for="acp_hangman_lives">{{ lang('ACP_HANGMAN_LIVES') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_LIVES_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_lives" type="number" min="4" max="10" name="acp_hangman_lives" value="{{ ACP_HANGMAN_LIVES }}" /></dd>
+			<dt><label for="acp_hangman_lives">{{ lang('ACP_MOT_HANGMAN_LIVES') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LIVES_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_lives" type="number" min="4" max="10" name="acp_hangman_lives" value="{{ ACP_MOT_HANGMAN_LIVES }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_points_win">{{ lang('ACP_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_WIN_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_win" type="text" size="3" maxlength="3" name="acp_hangman_points_win" value="{{ ACP_HANGMAN_POINTS_WIN }}" /></dd>
+			<dt><label for="acp_hangman_points_win">{{ lang('ACP_MOT_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WIN_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_win" type="text" size="3" maxlength="3" name="acp_hangman_points_win" value="{{ ACP_MOT_HANGMAN_POINTS_WIN }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_points_loose">{{ lang('ACP_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_LOOSE_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_loose" type="text" size="3" maxlength="3" name="acp_hangman_points_loose" value="{{ ACP_HANGMAN_POINTS_LOOSE }}" /></dd>
+			<dt><label for="acp_hangman_points_loose">{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_loose" type="text" size="3" maxlength="3" name="acp_hangman_points_loose" value="{{ ACP_MOT_HANGMAN_POINTS_LOOSE }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp^_hangman_points_letter">{{ lang('ACP_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_LETTER_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_letter" type="text" size="3" maxlength="3" name="acp_hangman_points_letter" value="{{ ACP_HANGMAN_POINTS_LETTER }}" /></dd>
+			<dt><label for="acp^_hangman_points_letter">{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_letter" type="text" size="3" maxlength="3" name="acp_hangman_points_letter" value="{{ ACP_MOT_HANGMAN_POINTS_LETTER }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_points_word">{{ lang('ACP_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_word" type="text" size="3" maxlength="3" name="acp_hangman_points_word" value="{{ ACP_HANGMAN_POINTS_WORD }}" /></dd>
+			<dt><label for="acp_hangman_points_word">{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_points_word" type="text" size="3" maxlength="3" name="acp_hangman_points_word" value="{{ ACP_MOT_HANGMAN_POINTS_WORD }}" /></dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_MOT_HANGMAN_INPUT_SETTINGS') }}</legend>
+		<p>{{ lang('ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP') }}</p>
+		<dl>
+			<dt><label for="acp_hangman_punctuation_marks">{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_punctuation_marks" type="text" name="acp_hangman_punctuation_marks" value="{{ ACP_MOT_HANGMAN_PUNCTUATION_MARKS }}" /></dd>
 		</dl>
 	</fieldset>
 
@@ -64,7 +78,7 @@
 <fieldset>
 	<form id="reset_highscore_action" method="post" action="{U_ACTION}" data-ajax="true">
 		<dl>
-			<dt><label for="reset_highscore">{{ lang('RESET_HIGHSCORE') }}{{ lang('COLON') }}</label><p class="warning_text">{{ lang('RESET_HIGHSCORE_CAUTION') }}</p></dt>
+			<dt><label for="reset_highscore">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE') }}{{ lang('COLON') }}</label><p class="warning_text">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION') }}</p></dt>
 			<dd><input type="hidden" name="reset_highscore" value="online" /><input class="button2" type="submit" id="reset_highscore" name="reset_highscore" value="{L_RUN}" /></dd>
 		</dl>
 	</form>
@@ -72,13 +86,11 @@
 
 <fieldset>
 	<dl>
-		<dt><label>{{ lang('SUPPORT_HANGMAN') }}</label></dt>
+		<dt><label>{{ lang('ACP_MOT_HANGMAN_SUPPORT_HANGMAN') }}</label></dt>
 		<dd><a href="https://paypal.me/MichaelVormwald?locale.x=de_DE" target="_blank" rel="noopener noreferrer">{{ ICON_PAYPAL }}</a></dd>
 	</dl>
 </fieldset>
 
-<p class="centered_text">
-Hangman ver {{ HANGMAN_VERSION }} &copy; 2021 - {{ HANGMAN_YEAR }} by Mike-on-Tour
-</p>
+<p class="centered_text">{{ HANGMAN_VERSION }}</p>
 
 {% include 'overall_footer.html' %}

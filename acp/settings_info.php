@@ -16,12 +16,12 @@ class settings_info
 	{
 		return array(
 			'filename'	=> '\mot\hangman\acp\settings_module',
-			'title'		=> 'ACP_HANGMAN',
+			'title'		=> 'ACP_MOT_HANGMAN',
 			'modes'		=> array(
 				'settings'	=> array(
-					'title'	=> 'ACP_HANGMAN_SETTINGS',
+					'title'	=> 'ACP_MOT_HANGMAN_SETTINGS',
 					'auth'	=> 'ext_mot/hangman && acl_a_board',
-					'cat'	=> array('ACP_HANGMAN'),
+					'cat'	=> array('ACP_MOT_HANGMAN'),
 				),
 			),
 		);

@@ -108,8 +108,8 @@ class main
 		$default_lang = new language_file_loader($this->root_path, $this->php_ext);
 		$default_lang->set_extension_manager($this->phpbb_extension_manager);
 		$default_lang->load_extension('mot/hangman', 'common', array($this->config['default_lang'], 'en'), $lang_arr);
-		$letters = explode(',', $lang_arr['HANGMAN_LETTERS']);
-		$lc_letters = mb_strtolower($lang_arr['HANGMAN_LETTERS'], 'UTF-8');
+		$letters = explode(',', $lang_arr['MOT_HANGMAN_LETTERS']);
+		$lc_letters = mb_strtolower($lang_arr['MOT_HANGMAN_LETTERS'], 'UTF-8');
 
 		$delete_term = $this->config['mot_hangman_autodelete'];
 
@@ -172,11 +172,11 @@ class main
 					}
 
 					// display message about successful operation
-					$message = $this->language->lang('HANGMAN_POINTS_SAVED');
+					$message = $this->language->lang('MOT_HANGMAN_POINTS_SAVED');
 					meta_refresh(3, $this->game_action);
-					trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('TO_GAME'))
-											. $this->back_link($this->word_action, $this->language->lang('TO_WORD_INPUT'))
-											. $this->back_link($this->rank_action, $this->language->lang('TO_SCORE_TABLE')), E_USER_NOTICE);
+					trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('MOT_HANGMAN_TO_GAME'))
+											. $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT'))
+											. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE')), E_USER_NOTICE);
 				}
 
 				// Calculate the length of the rows to display usable letters
@@ -194,26 +194,29 @@ class main
 				$result = $this->db->sql_query($sql);
 				$quotes = $this->db->sql_fetchrowset($result);
 				$this->db->sql_freeresult($result);
-				$quote = count($quotes) > 0 ? $quotes[rand(0, count($quotes) - 1)] : [];
+				$quote_count = count($quotes);
+				$quote = $quote_count > 0 ? $quotes[rand(0, $quote_count - 1)] : [];
 
-				$game_desc = $this->language->lang('HANGMAN_DESC', $this->config['mot_hangman_points_letter'], $this->config['mot_hangman_points_win'], $this->config['mot_hangman_points_loose']);
+				$game_desc = $this->language->lang('MOT_HANGMAN_DESC', $this->config['mot_hangman_points_letter'], $this->config['mot_hangman_points_win'], $this->config['mot_hangman_points_loose']);
 				if ($delete_term)
 				{
-					$game_desc .= $this->language->lang('HANGMAN_DESC_DEL_TERM');
+					$game_desc .= $this->language->lang('MOT_HANGMAN_DESC_DEL_TERM');
 				}
 
 				$this->template->assign_vars(array(
 					'GAME_DESC'					=> $game_desc,
-					'HANGMAN_LETTERS'			=> json_encode($letters),
+					'MOT_HANGMAN_LETTERS'		=> json_encode($letters),
 					'HANGMAN_TOTAL_LETTERS'		=> $total_letters,
 					'HANGMAN_LETTER_ROW'		=> $letter_row,
-					'HANGMAN_LIVES'				=> $this->language->lang('HANGMAN_LIVES', $this->config['mot_hangman_lives']),
+					'MOT_HANGMAN_LIVES'			=> $this->language->lang('MOT_HANGMAN_LIVES', $this->config['mot_hangman_lives']),
 					'HANGMAN_NUMBER_OF_LIVES'	=> $this->config['mot_hangman_lives'],
-					'CLICK_START_FIRST'			=> $this->language->lang('HANGMAN_NEW_QUOTE_TO'),
+					'CLICK_START_FIRST'			=> $this->language->lang('MOT_HANGMAN_NEW_QUOTE_TO'),
 					'HANGMAN_QUOTE'				=> json_encode($quote),
+					'QUOTE_COUNT'				=> $quote_count,
 					'LETTER_POINTS'				=> $this->config['mot_hangman_points_letter'],
 					'WIN_POINTS'				=> $this->config['mot_hangman_points_win'],
 					'LOOSE_POINTS'				=> $this->config['mot_hangman_points_loose'],
+					'ENABLE_EVADE_PUNISH'		=> $this->config['mot_hangman_evade_enable'] == 1 ? true : false,
 					'U_ACTION'					=> $this->game_action,
 					'AJAX_CALL'					=> $this->helper->route('mot_hangman_ajax_controller'),
 				));
@@ -276,7 +279,6 @@ class main
 							);
 							$sql = 'UPDATE ' . $this->hangman_score_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
 									WHERE user_id = ' . (int) $this->user->data['user_id'];
-							$this->db->sql_query($sql);
 						}
 						else
 						{
@@ -288,28 +290,29 @@ class main
 								'word_pts'	=> $input_points,
 							);
 							$sql = 'INSERT INTO ' . $this->hangman_score_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
-							$this->db->sql_query($sql);
 						}
+						$this->db->sql_query($sql);
 
 						// display message about successful operation
 						meta_refresh(2, $this->word_action);
-						$message = $this->language->lang('HANGMAN_WORD_SAVED', $input_points);
-						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('TO_GAME'))
-												. $this->back_link($this->word_action, $this->language->lang('TO_WORD_INPUT'))
-												. $this->back_link($this->rank_action, $this->language->lang('TO_SCORE_TABLE')), E_USER_NOTICE);
+						$message = $this->language->lang('MOT_HANGMAN_WORD_SAVED', $input_points);
+						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('MOT_HANGMAN_TO_GAME'))
+												. $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT'))
+												. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE')), E_USER_NOTICE);
 					}
 					else
 					{
 						meta_refresh(1, $this->word_action);
-						trigger_error($this->language->lang('HANGMAN_WORD_EXISTS') . $this->back_link($this->u_action, $this->language->lang('BACK_TO_PREV')), E_USER_WARNING);
+						trigger_error($this->language->lang('MOT_HANGMAN_WORD_EXISTS') . $this->back_link($this->u_action, $this->language->lang('BACK_TO_PREV')), E_USER_WARNING);
 					}
 				}
 
 				$lc_letters = explode(',', $lc_letters);
 				$this->template->assign_vars(array(
-					'HANGMAN_QUOTE_INPUT_EXPL'	=> $this->language->lang('HANGMAN_QUOTE_INPUT_EXPL', implode(', ', $letters), $input_points),
-					'HANGMAN_LC_LETTERS'		=> json_encode($lc_letters),
-					'U_ACTION'					=> $this->u_action . '&amp;action=submit',
+					'MOT_HANGMAN_QUOTE_INPUT_EXPL'	=> $this->language->lang('MOT_HANGMAN_QUOTE_INPUT_EXPL', implode(', ', $letters), $this->config['mot_hangman_punctuation_marks']),
+					'MOT_HANGMAN_INPUT_POINTS'		=> $this->language->lang('MOT_HANGMAN_INPUT_POINTS', (int) $input_points),
+					'HANGMAN_LC_LETTERS'			=> json_encode($lc_letters),
+					'U_ACTION'						=> $this->u_action . '&amp;action=submit',
 				));
 				$selected_tab = 2;
 				break;
@@ -346,13 +349,13 @@ class main
 				{
 					$i++;
 					$this->template->assign_block_vars('rankings', array(
-						'RANK'			=> $i,
-						'USERNAME'		=> $row['username'],
-						'USER_ID'		=> $row['user_id'],
-						'USER_COLOUR'	=> $row['user_colour'],
-						'TOTAL_POINTS'	=> $row['total_pts'],
-						'GAME_POINTS'	=> $row['solve_pts'],
-						'WORD_POINTS'	=> $row['word_pts'],
+						'RANK'						=> $i,
+						'USERNAME'					=> $row['username'],
+						'USER_ID'					=> $row['user_id'],
+						'USER_COLOUR'				=> $row['user_colour'],
+						'MOT_HANGMAN_TOTAL_POINTS'	=> $row['total_pts'],
+						'MOT_HANGMAN_GAME_POINTS'	=> $row['solve_pts'],
+						'MOT_HANGMAN_WORD_POINTS'	=> $row['word_pts'],
 					));
 				}
 
@@ -368,16 +371,72 @@ class main
 
 		}
 
+		$image_path = append_sid("{$this->ext_path}styles/all/theme/images/hm");
+		$pos = strrpos($image_path, '?', 0);
+		if ($pos !== false)
+		{
+			$image_path = substr($image_path, 0, $pos);
+		}
+
 		$this->template->assign_vars(array(
-			'SHOW_CATEGORY'		=> $this->config['mot_hangman_category_enable'] == 1 ? true : false,
-			'ENFORCE_CATEGORY'	=> $this->config['mot_hangman_category_enforce'] == 1 ? true : false,
-			'SELECTED_TAB'		=> $selected_tab,
-			'TAB_1'				=> $this->game_action,
-			'TAB_2'				=> $this->word_action,
-			'TAB_3'				=> $this->rank_action,
-			'IMAGE_PATH'		=> append_sid("{$this->ext_path}styles/all/theme/images/hm"),
+			'SHOW_CATEGORY'			=> $this->config['mot_hangman_category_enable'] == 1 ? true : false,
+			'ENFORCE_CATEGORY'		=> $this->config['mot_hangman_category_enforce'] == 1 ? true : false,
+			'SELECTED_TAB'			=> $selected_tab,
+			'TAB_1'					=> $this->game_action,
+			'TAB_2'					=> $this->word_action,
+			'TAB_3'					=> $this->rank_action,
+			'IMAGE_PATH'			=> $image_path,
+			'ALLOWED_PUNCT_MARKS'	=> $this->config['mot_hangman_punctuation_marks'],
 		));
-		return $this->helper->render('@mot_hangman/hangman.html', $this->language->lang('HANGMAN'));
+		return $this->helper->render('@mot_hangman/hangman.html', $this->language->lang('MOT_HANGMAN'));
+	}
+
+	/**
+	* Handles cheaters who are trying to evade a loosing game
+	*/
+	public function hangman_ajax_response()
+	{
+		$game_points = $this->request->variable('score', 0);
+		$word_id = $this->request->variable('word_id', 0);
+
+		// Delete the used quote from database (if applicable)
+		if ($this->config['mot_hangman_autodelete'])
+		{
+			$sql_in = array($word_id);
+			$sql = 'DELETE FROM ' . $this->hangman_words_table . '
+					WHERE ' . $this->db->sql_in_set('word_id', $sql_in);
+			$this->db->sql_query($sql);
+		}
+
+		// Update or Insert this user's score
+		$sql_arr = [
+			'user_id'	=> $this->user->data['user_id'],
+		];
+		$sql = 'SELECT solve_pts, total_pts FROM ' . $this->hangman_score_table . '
+				WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		$this->db->sql_freeresult($result);
+		if (!empty ($row))
+		{
+			$sql_arr = [
+				'solve_pts'		=> $row['solve_pts'] + $game_points,
+				'total_pts'		=> $row['total_pts'] + $game_points,
+			];
+			$sql = 'UPDATE ' . $this->hangman_score_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
+					WHERE user_id = ' . (int) $this->user->data['user_id'];
+		}
+		else
+		{
+			$sql_arr = [
+				'user_id'		=> $this->user->data['user_id'],
+				'solve_pts'		=> $game_points,
+				'total_pts'		=> $game_points,
+				'word_pts'		=> 0,
+			];
+			$sql = 'INSERT INTO ' . $this->hangman_score_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
+		}
+		$this->db->sql_query($sql);
 	}
 
 	/**
@@ -403,4 +462,5 @@ class main
 		setlocale (LC_CTYPE, 'C');
 		return sprintf('%u', crc32(strtolower($original_string))) . strlen($original_string);
 	}
+
 }

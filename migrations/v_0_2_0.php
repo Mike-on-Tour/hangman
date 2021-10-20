@@ -33,20 +33,20 @@ class v_0_2_0 extends \phpbb\db\migration\migration
 			array('config.add', array('mot_hangman_points_word', 8)),
 			array('config.add', array('mot_hangman_version', '0.2.0')),
 
-			// Add a parent module (ACP_HANGMAN) to the Extensions tab (ACP_CAT_DOT_MODS)
+			// Add a parent module (ACP_MOT_HANGMAN) to the Extensions tab (ACP_CAT_DOT_MODS)
 			array('module.add', array(
 				'acp',
 				'ACP_CAT_DOT_MODS',
-				'ACP_HANGMAN'
+				'ACP_MOT_HANGMAN'
 			)),
 
-			// Add our settings_module to the parent module (ACP_HANGMAN)
+			// Add our settings_module to the parent module (ACP_MOT_HANGMAN)
 			array('module.add', array(
 				'acp',
-				'ACP_HANGMAN',
+				'ACP_MOT_HANGMAN',
 				array(
 					'module_basename'	=> '\mot\hangman\acp\settings_module',
-					'module_langname'	=> 'ACP_HANGMAN_SETTINGS',
+					'module_langname'	=> 'ACP_MOT_HANGMAN_SETTINGS',
 					'module_mode'		=> 'settings',
 					'module_auth'		=> 'ext_mot/hangman && acl_a_board',
 				),
