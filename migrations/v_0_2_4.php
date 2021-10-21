@@ -45,7 +45,7 @@ class v_0_2_4 extends \phpbb\db\migration\migration
 				],
 				'PRIMARY_KEY'	=> 'user_id',
 			];
-			$word_table_structure = array[
+			$word_table_structure = [
 				'COLUMNS'	=> [
 					'word_id'				=> ['UINT:10', null, 'auto_increment'],
 					'creator_id'			=> ['UINT:10', 0],
