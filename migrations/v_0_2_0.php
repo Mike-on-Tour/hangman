@@ -23,74 +23,74 @@ class v_0_2_0 extends \phpbb\db\migration\migration
 
 	public function update_data()
 	{
-		return array(
+		return [
 
 			// Add the config variable we want to be able to set
-			array('config.add', array('mot_hangman_lives', 10)),
-			array('config.add', array('mot_hangman_points_letter', 1)),
-			array('config.add', array('mot_hangman_points_loose', -5)),
-			array('config.add', array('mot_hangman_points_win', 15)),
-			array('config.add', array('mot_hangman_points_word', 8)),
-			array('config.add', array('mot_hangman_version', '0.2.0')),
+			['config.add', ['mot_hangman_lives', 10]],
+			['config.add', ['mot_hangman_points_letter', 1]],
+			['config.add', ['mot_hangman_points_loose', -5]],
+			['config.add', ['mot_hangman_points_win', 15]],
+			['config.add', ['mot_hangman_points_word', 8]],
+			['config.add', ['mot_hangman_version', '0.2.0']],
 
 			// Add a parent module (ACP_MOT_HANGMAN) to the Extensions tab (ACP_CAT_DOT_MODS)
-			array('module.add', array(
+			['module.add', [
 				'acp',
 				'ACP_CAT_DOT_MODS',
 				'ACP_MOT_HANGMAN'
-			)),
+			]],
 
 			// Add our settings_module to the parent module (ACP_MOT_HANGMAN)
-			array('module.add', array(
+			['module.add', [
 				'acp',
 				'ACP_MOT_HANGMAN',
-				array(
+				[
 					'module_basename'	=> '\mot\hangman\acp\settings_module',
 					'module_langname'	=> 'ACP_MOT_HANGMAN_SETTINGS',
 					'module_mode'		=> 'settings',
 					'module_auth'		=> 'ext_mot/hangman && acl_a_board',
-				),
-			)),
-		);
+				],
+			]],
+		];
 	}
 
 	public function update_schema()
 	{
-		return array(
-			'add_tables'	=> array(
-				$this->table_prefix . 'mot_hangman_score'	=> array(
-					'COLUMNS'	=> array(
-						'user_id'	=> array('UINT:10', 0),
-						'solve_pts'	=> array('INT:11', 0),
-						'total_pts'	=> array('INT:11', 0),
-						'word_pts'	=> array('INT:11', 0),
-					),
+		return [
+			'add_tables'	=> [
+				$this->table_prefix . 'mot_hangman_score'	=> [
+					'COLUMNS'	=> [
+						'user_id'	=> ['UINT:10', 0],
+						'solve_pts'	=> ['INT:11', 0],
+						'total_pts'	=> ['INT:11', 0],
+						'word_pts'	=> ['INT:11', 0],
+					],
 					'PRIMARY_KEY'	=> 'user_id',
-				),
-				$this->table_prefix . 'mot_hangman_words'	=> array(
-					'COLUMNS'	=> array(
-						'word_id'				=> array('UINT:10', null, 'auto_increment'),
-						'creator_id'			=> array('UINT:10', 0),
-						'hangman_word'			=> array('VCHAR:255', ''),
-						'hangman_word_hash'		=> array('BINT', 0),
-					),
+				],
+				$this->table_prefix . 'mot_hangman_words'	=> [
+					'COLUMNS'	=> [
+						'word_id'				=> ['UINT:10', null, 'auto_increment'],
+						'creator_id'			=> ['UINT:10', 0],
+						'hangman_word'			=> ['VCHAR:255', ''],
+						'hangman_word_hash'		=> ['BINT', 0],
+					],
 					'PRIMARY_KEY'	=> 'word_id',
-					'KEYS'			=> array(
-						'hangman_word_hash'	=> array('UNIQUE', 'hangman_word_hash'),
-					),
-				),
-			),
-		);
+					'KEYS'			=> [
+						'hangman_word_hash'	=> ['UNIQUE', 'hangman_word_hash'],
+					],
+				],
+			],
+		];
 	}
 
 	public function revert_schema()
 	{
-		return array(
-			'drop_tables'	=> array(
+		return [
+			'drop_tables'	=> [
 				$this->table_prefix . 'mot_hangman_score',
 				$this->table_prefix . 'mot_hangman_words',
-			),
-		);
+			],
+		];
 	}
 
 }

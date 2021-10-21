@@ -25,11 +25,11 @@ class listener implements EventSubscriberInterface
 
 	public static function getSubscribedEvents()
 	{
-		return array(
+		return [
 			'core.user_setup'	=> 'load_language_on_setup',
 			'core.page_header'	=> 'add_page_header_link',
 
-		);
+		];
 	}
 	/* @var \phpbb\controller\helper */
 	protected $helper;
@@ -52,17 +52,17 @@ class listener implements EventSubscriberInterface
 	public function load_language_on_setup($event)
 	{
 		$lang_set_ext = $event['lang_set_ext'];
-		$lang_set_ext[] = array(
+		$lang_set_ext[] = [
 			'ext_name' => 'mot/hangman',
 			'lang_set' => 'common',
-		);
+		];
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
 
 	public function add_page_header_link()
 	{
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'U_HANGMAN'	=> $this->helper->route('mot_hangman_main_controller'),
-		));
+		]);
 	}
 }

@@ -71,7 +71,7 @@ class settings_module
 		}
 
 		$mot_hangman_version = $this->md_manager->get_metadata('version');
-		$template->assign_vars(array(
+		$template->assign_vars([
 			'ACP_MOT_HANGMAN_AUTODELETE'			=> $config['mot_hangman_autodelete'],
 			'ACP_MOT_HANGMAN_CATEGORY_ENABLE'		=> $config['mot_hangman_category_enable'],
 			'ACP_MOT_HANGMAN_CATEGORY_ENFORCE'		=> $config['mot_hangman_category_enforce'],
@@ -85,7 +85,7 @@ class settings_module
 			'U_ACTION'								=> $this->u_action,
 			'HANGMAN_VERSION'						=> $language->lang('ACP_MOT_HANGMAN_VERSION', $mot_hangman_version, date('Y')),
 			'ICON_PAYPAL'							=> '<img src="' . $phpbb_root_path . 'ext/mot/hangman/adm/images/Paypal.svg" />',
-		));
+		]);
 	}
 
 }
