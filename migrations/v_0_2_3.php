@@ -17,14 +17,14 @@ class v_0_2_3 extends \phpbb\db\migration\migration
 	*/
 	public static function depends_on()
 	{
-		return array('\mot\hangman\migrations\v_0_2_2');
+		return ['\mot\hangman\migrations\v_0_2_2'];
 	}
 
 	public function update_data()
 	{
-		return array(
+		return [
 			// Update the version variable
-			array('config.update', array('mot_hangman_version', '0.2.3')),
-		);
+			['config.update', ['mot_hangman_version', '0.2.3']],
+		];
 	}
 }

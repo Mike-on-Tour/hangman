@@ -14,16 +14,16 @@ class settings_info
 {
 	public function module()
 	{
-		return array(
+		return [
 			'filename'	=> '\mot\hangman\acp\settings_module',
 			'title'		=> 'ACP_MOT_HANGMAN',
-			'modes'		=> array(
-				'settings'	=> array(
+			'modes'		=> [
+				'settings'	=> [
 					'title'	=> 'ACP_MOT_HANGMAN_SETTINGS',
 					'auth'	=> 'ext_mot/hangman && acl_a_board',
-					'cat'	=> array('ACP_MOT_HANGMAN'),
-				),
-			),
-		);
+					'cat'	=> ['ACP_MOT_HANGMAN'],
+				],
+			],
+		];
 	}
 }
