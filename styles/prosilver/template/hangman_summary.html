@@ -1,0 +1,83 @@
+<div class="centered_text">
+	<h2>{{ lang('MOT_HANGMAN_SUMMARY') }}</h2>
+</div>
+
+<div class="summary_content">
+	<fieldset>
+		<legend>{{ lang('ACP_MOT_HANGMAN_GAME_SETTINGS') }}</legend>
+		<dl>
+			<dt><label>{{ lang('ACP_MOT_HANGMAN_LIVES') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_LIVES }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_POINTS_WIN }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_POINTS_LOOSE }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_POINTS_LETTER }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_POINTS_WORD }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_EVADE_ENABLE }}</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_MOT_HANGMAN_TERMS') }}</legend>
+		<dl>
+			<dt><label>{{ lang('MOT_HANGMAN_TERMS_AVAILABLE') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_TERMS_AVAILABLE }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('MOT_HANGMAN_USER_TERMS_AVAILABLE') }}{{ lang('COLON') }}</label></dt>
+			<dd>{{ MOT_HANGMAN_USER_TERMS_AVAILABLE }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('MOT_HANGMAN_USER_TERMS') }}{{ lang('COLON') }}</label></dt>
+			<dd>
+				{% if pagination %}
+					<div class="pagination">
+						{% include 'pagination.html' %}
+					</div>
+					<div><p>&nbsp;</p></div>
+				{% endif %}
+				
+				<table class="table1 zebra-list">
+					<tbody>
+						<tr>
+							<th style="text-align: center;">{{ lang('MOT_HANGMAN_TERM') }}</th>
+							{% if SHOW_CATEGORY %}<th style="text-align: center;">{{ lang('MOT_HANGMAN_CATEGORY') }}</th>{% endif %}
+						</tr>
+					{% for term in terms %}
+						<tr>
+							<td style="text-align: center;">{{ term.MOT_HANGMAN_TERM }}</td>
+							{% if SHOW_CATEGORY %}<td style="text-align: center;">{{ term.MOT_HANGMAN_CATEGORY}}</td>{% endif %}
+						</tr>
+					{% else %}
+					<tr>
+						<td {% if SHOW_CATEGORY %}colspan="2"{% else %}colspan="1"{% endif %} style="text-align: center;">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				
+				{% if pagination %}
+					<div>&nbsp;</div>
+					<div class="pagination">
+						{% include 'pagination.html' %}
+					</div>
+					<div><p>&nbsp;</p></div>
+				{% endif %}
+			</dd>
+		</dl>
+	</fieldset>
+</div>

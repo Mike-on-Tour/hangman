@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.3.0
+* @package Hangman v0.4.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 Mike-on-Tour
+* @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -31,6 +31,9 @@ class main
 	/** @var \phpbb\language\language $language Language object */
 	protected $language;
 
+	/** @var \phpbb\pagination  */
+	protected $pagination;
+
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
@@ -39,9 +42,6 @@ class main
 
 	/* @var \phpbb\user */
 	protected $user;
-
-	/** @var ContainerBuilder */
-	protected $phpbb_container;
 
 	/** @var string phpBB root path */
 	protected $root_path;
@@ -59,21 +59,19 @@ class main
 	* Constructor
 	*/
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\extension\manager $phpbb_extension_manager,
-								\phpbb\controller\helper $helper, \phpbb\language\language $language, \phpbb\request\request_interface $request,
-								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext, $mot_hangman_score_table,
-								$mot_hangman_words_table)
+								\phpbb\controller\helper $helper, \phpbb\language\language $language, \phpbb\pagination $pagination,
+								\phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext,
+								$mot_hangman_score_table, $mot_hangman_words_table)
 	{
-		global $phpbb_container;
-
 		$this->config = $config;
 		$this->db = $db;
 		$this->phpbb_extension_manager 	= $phpbb_extension_manager;
 		$this->helper = $helper;
 		$this->language = $language;
+		$this->pagination = $pagination;
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
-		$this->phpbb_container = $phpbb_container;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
 		$this->hangman_score_table = $mot_hangman_score_table;
@@ -84,8 +82,6 @@ class main
 
 	public function display()
 	{
-		$pagination = $this->phpbb_container->get('pagination');
-
 		//If user is a bot.... redirect to the index.
 		if ($this->user->data['is_bot'])
 		{
@@ -102,6 +98,7 @@ class main
 		$this->game_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
 		$this->word_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
 		$this->rank_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
+		$this->summary_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '4']);
 
 		// Get the possible letters from the default language file
 		$lang_arr = [];
@@ -176,7 +173,8 @@ class main
 					meta_refresh(3, $this->game_action);
 					trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('MOT_HANGMAN_TO_GAME'))
 											. $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT'))
-											. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE')), E_USER_NOTICE);
+											. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE'))
+											. $this->back_link($this->summary_action, $this->language->lang('MOT_HANGMAN_TO_SUMMARY')), E_USER_NOTICE);
 				}
 
 				// Calculate the length of the rows to display usable letters
@@ -195,7 +193,7 @@ class main
 				$quotes = $this->db->sql_fetchrowset($result);
 				$this->db->sql_freeresult($result);
 				$quote_count = count($quotes);
-				$quote = $quote_count > 0 ? $quotes[rand(0, $quote_count - 1)] : [];
+				$quote = $quote_count > 0 ? $quotes[array_rand($quotes)] : [];
 
 				$game_desc = $this->language->lang('MOT_HANGMAN_DESC', $this->config['mot_hangman_points_letter'], $this->config['mot_hangman_points_win'], $this->config['mot_hangman_points_loose']);
 				if ($delete_term)
@@ -298,7 +296,8 @@ class main
 						$message = $this->language->lang('MOT_HANGMAN_WORD_SAVED', $input_points);
 						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('MOT_HANGMAN_TO_GAME'))
 												. $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT'))
-												. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE')), E_USER_NOTICE);
+												. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE'))
+												. $this->back_link($this->summary_action, $this->language->lang('MOT_HANGMAN_TO_SUMMARY')), E_USER_NOTICE);
 					}
 					else
 					{
@@ -312,6 +311,7 @@ class main
 					'MOT_HANGMAN_QUOTE_INPUT_EXPL'	=> $this->language->lang('MOT_HANGMAN_QUOTE_INPUT_EXPL', implode(', ', $letters), $this->config['mot_hangman_punctuation_marks']),
 					'MOT_HANGMAN_INPUT_POINTS'		=> $this->language->lang('MOT_HANGMAN_INPUT_POINTS', (int) $input_points),
 					'HANGMAN_LC_LETTERS'			=> json_encode($lc_letters),
+					'TERM_MIN_LENGTH'				=> $this->config['mot_hangman_term_length'],
 					'U_ACTION'						=> $this->u_action . '&amp;action=submit',
 				]);
 				$selected_tab = 2;
@@ -320,7 +320,7 @@ class main
 			case 3:
 				// set parameter for pagination
 				$start = $this->request->is_set('start') ? $this->request->variable('start', 0) : 0;
-				$limit = 25;	// max 25 lines per page
+				$limit = $this->config['mot_hangman_rows_per_page'];	// max lines per page
 
 				// Get total numbers of players in score table
 				$count_query = "SELECT COUNT(user_id) AS 'user_count' FROM " . $this->hangman_score_table;
@@ -363,10 +363,66 @@ class main
 				$base_url = $this->rank_action;
 
 				// Load pagination
-				$start = $pagination->validate_start($start, $limit, $count_rankings);
-				$pagination->generate_template_pagination($base_url, 'pagination', 'start', $count_rankings, $limit, $start);
+				$start = $this->pagination->validate_start($start, $limit, $count_rankings);
+				$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $count_rankings, $limit, $start);
 
 				$selected_tab = 3;
+				break;
+
+			case 4:
+				// set parameter for pagination
+				$start = $this->request->is_set('start') ? $this->request->variable('start', 0) : 0;
+				$limit = $this->config['mot_hangman_rows_per_page'];	// max lines per page
+
+				// Get total number of terms
+				$count_query = "SELECT COUNT(word_id) AS 'term_count' FROM " . $this->hangman_words_table;
+				$result = $this->db->sql_query($count_query);
+				$row = $this->db->sql_fetchrow($result);
+				$term_count = $row['term_count'];
+				$this->db->sql_freeresult($result);
+
+				$count_query = "SELECT COUNT(word_id) AS 'term_count' FROM " . $this->hangman_words_table . '
+								WHERE creator_id = ' . (int) $this->user->data['user_id'];
+				$result = $this->db->sql_query($count_query);
+				$row = $this->db->sql_fetchrow($result);
+				$user_term_count = $row['term_count'];
+				$this->db->sql_freeresult($result);
+
+				$sql = 'SELECT * FROM ' . $this->hangman_words_table . '
+						WHERE creator_id = ' . (int) $this->user->data['user_id'];
+				$result = $this->db->sql_query_limit( $sql, $limit, $start );
+				$user_term = $this->db->sql_fetchrowset($result);
+				$this->db->sql_freeresult($result);
+
+				foreach ($user_term as $row)
+				{
+					$this->template->assign_block_vars('terms', [
+						'MOT_HANGMAN_TERM'		=> $row['hangman_word'],
+						'MOT_HANGMAN_CATEGORY'	=> $row['hangman_category'],
+					]);
+				}
+
+				//base url for pagination, filtering and sorting
+				$base_url = $this->summary_action;
+
+				// Load pagination
+				$start = $this->pagination->validate_start($start, $limit, $user_term_count);
+				$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $user_term_count, $limit, $start);
+
+				$this->template->assign_vars([
+					'MOT_HANGMAN_LIVES'					=> $this->config['mot_hangman_lives'],
+					'MOT_HANGMAN_POINTS_WIN'			=> $this->config['mot_hangman_points_win'],
+					'MOT_HANGMAN_POINTS_LOOSE'			=> $this->config['mot_hangman_points_loose'],
+					'MOT_HANGMAN_POINTS_LETTER'			=> $this->config['mot_hangman_points_letter'],
+					'MOT_HANGMAN_POINTS_WORD'			=> $this->config['mot_hangman_points_word'],
+					'MOT_HANGMAN_EVADE_ENABLE'			=> $this->config['mot_hangman_evade_enable'] == 1 ? $this->language->lang('YES') : $this->language->lang('NO'),
+					'MOT_HANGMAN_TERMS_AVAILABLE'		=> $term_count,
+					'MOT_HANGMAN_USER_TERMS_AVAILABLE'	=> $user_term_count,
+				]);
+
+				$this->language->add_lang('info_acp_hangman', 'mot/hangman');
+
+				$selected_tab = 4;
 				break;
 
 		}
@@ -385,6 +441,7 @@ class main
 			'TAB_1'					=> $this->game_action,
 			'TAB_2'					=> $this->word_action,
 			'TAB_3'					=> $this->rank_action,
+			'TAB_4'					=> $this->summary_action,
 			'IMAGE_PATH'			=> $image_path,
 			'ALLOWED_PUNCT_MARKS'	=> $this->config['mot_hangman_punctuation_marks'],
 		]);
@@ -459,7 +516,7 @@ class main
 	*/
 	private function get_hash($original_string)
 	{
-		setlocale (LC_CTYPE, 'C');
+//		setlocale (LC_CTYPE, 'C');
 		return sprintf('%u', crc32(strtolower($original_string))) . strlen($original_string);
 	}
 

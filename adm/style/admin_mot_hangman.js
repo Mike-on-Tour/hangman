@@ -1,7 +1,7 @@
 /**
 *
-* package Hangman v0.3.0
-* copyright (c) 2021 Mike-on-Tour
+* package Hangman v0.4.0
+* copyright (c) 2021 - 2022 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -75,5 +75,23 @@ $("#acp_hangman_points_letter").blur(function() {
 $("#acp_hangman_points_word").blur(function() {
 	motHmChkInput($(this), twoDigits, 8, 0, 99);
 });
+/*
+$("#acp_mot_hangman_file").change(function(evt) {
+	var files = evt.target.files;
+});
+*/
+$("#acp_mot_hangman_file_upload").on('submit', (function(evt) {
+	var fd = new FormData();
+	var files = $('#acp_mot_hangman_file')[0].files;
+	if (files.length > 0 ) {
+		fd.append('file',files[0]);
+		$.post(motHangman.acpAction,
+			{filedata: fd,},
+		);
+	} else {
+		evt.preventDefault();
+		phpbb.alert(motHangman.acpError, motHangman.acpSelectFile);
+	}
+}));
 
 })(jQuery); // Avoid conflicts with other libraries

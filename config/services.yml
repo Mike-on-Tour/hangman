@@ -10,6 +10,7 @@ services:
             - '@ext.manager'
             - '@controller.helper'
             - '@language'
+            - '@pagination'
             - '@request'
             - '@template'
             - '@user'
@@ -25,3 +26,20 @@ services:
             - '@template'
         tags:
             - { name: event.listener }
+
+    mot.hangman.controller.hangman_acp:
+        class: mot\hangman\controller\hangman_acp
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '@dbal.tools'
+            - '@language'
+            - '@log'
+            - '@ext.manager'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '%core.root_path%'
+            - '%mot.hangman.tables.mot_hangman_score%'
+            - '%mot.hangman.tables.mot_hangman_words%'
+            - '%mot.hangman.tables.old_hangman_words%'

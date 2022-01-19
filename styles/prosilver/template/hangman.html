@@ -31,6 +31,7 @@
 						<li id="hangman_tab_1" class="tab"><a href="{{ TAB_1 }}">{{ lang('MOT_HANGMAN_TAB_GAME') }}</a></li>
 						<li id="hangman_tab_2" class="tab"><a href="{{ TAB_2 }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
 						<li id="hangman_tab_3" class="tab"><a href="{{ TAB_3 }}">{{ lang('MOT_HANGMAN_TAB_SCORE') }}</a></li>
+						<li id="hangman_tab_4" class="tab"><a href="{{ TAB_4 }}">{{ lang('MOT_HANGMAN_TAB_SUMMARY') }}</a></li>
 					</ul>
 				</div>
 				<div class="panel bg3">
@@ -42,6 +43,9 @@
 					</div>
 					<div id="hangman_box_3" class="inner" hidden="true">
 						{% include 'hangman_score.html' %}
+					</div>
+					<div id="hangman_box_4" class="inner" hidden="true">
+						{% include 'hangman_summary.html' %}
 					</div>
 				</div>
 			</div>

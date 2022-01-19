@@ -1,8 +1,8 @@
 /*
 *
-* @package Hangman Game v0.2.4
+* @package Hangman Game v0.4.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 Mike-on-Tour
+* @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -301,4 +301,65 @@ table.table1 thead th {
 		width: auto !important;
 		text-align: left !important;
 	}
+}
+
+/*
+* Summary
+*/
+.summary_content fieldset {
+	margin: 15px 0;
+	padding: 10px;
+	border-top: 1px solid #D7D7D7;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #D7D7D7;
+/*	background-color: #FFFFFF;*/
+	position: relative;
+	border-radius: 3px;
+}
+
+.summary_content .rtl fieldset {
+	border-top: 1px solid #D7D7D7;
+	border-right: 1px solid #D7D7D7;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+}
+
+.summary_content legend {
+	padding: 1px 0;
+	font-family: Tahoma,arial,Verdana,Sans-serif;
+	font-size: 1.1em;
+	font-weight: bold;
+/*	color: #115098;*/
+	margin-top: -.4em;
+	position: relative;
+	text-transform: none;
+	line-height: 1.2em;
+	top: -.2em;
+	vertical-align: middle;
+}
+
+.summary_content label {
+	font-size: 1.0em;
+}
+
+.summary_content dl {
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 1.00em;
+	margin: 0 0 0 10px;
+}
+
+.summary_content dt {
+	float: left;
+	width: auto;
+}
+
+.rtl dt {
+	float: right;
+	margin: 0 10px 0 0;
+}
+
+.summary_content fieldset dl:hover dt label {
+	color: inherit;
+	font-weight: none;
 }

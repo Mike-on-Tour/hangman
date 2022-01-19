@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.3.0
+* @package Hangman v0.4.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 Mike-on-Tour
+* @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -44,10 +44,12 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_TAB_GAME'			=> 'Game',
 	'MOT_HANGMAN_TAB_WORD'			=> 'Search Term Input',
 	'MOT_HANGMAN_TAB_SCORE'			=> 'Highscore',
+	'MOT_HANGMAN_TAB_SUMMARY'		=> 'Summary',
 	// Back menu
 	'MOT_HANGMAN_TO_GAME'			=> 'Start Game',
 	'MOT_HANGMAN_TO_WORD_INPUT'		=> 'Submit a new search term',
 	'MOT_HANGMAN_TO_SCORE_TABLE'	=> 'View Highscore',
+	'MOT_HANGMAN_TO_SUMMARY'		=> 'Summary',
 	// Game
 	'MOT_HANGMAN'					=> 'Hangman',
 	'MOT_HANGMAN_TITLE'				=> 'Hangman Game',
@@ -83,13 +85,15 @@ $lang = array_merge($lang, [
 										Terms entered by yourself will not be displayed to you during game turns!',
 	'MOT_HANGMAN_CATEGORY_EXPL'		=> 'By supplying a category you can give a hint for solving the term.',
 	'MOT_HANGMAN_INPUT_POINTS'		=> [
-		1							=> 'According to the current settings your game account will be credited with %2$d point for entering a term.',
-		2							=> 'According to the current settings your game account will be credited with %2$d points for entering a term.',
+		1							=> 'According to the current settings your game account will be credited with %1$d point for entering a term.',
+		2							=> 'According to the current settings your game account will be credited with %1$d points for entering a term.',
 	],
 	'MOT_HANGMAN_QUOTE_INPUT'		=> 'New term',
 	'MOT_HANGMAN_WORD_SAVED'		=> 'The term you have entered was successfully stored in the database.<br>
 										Your game account was credited with %1$s points.',
 	'MOT_HANGMAN_UNAUTH_LETTERS'	=> 'The term contains these invalid characters: ',
+	'MOT_HANGMAN_TERM_TOO_SHORT'	=> 'Term is too short! Minimum number of letters is: ',
+	'MOT_HANGMAN_CATEGORY_MISSING'	=> 'Category must not be empty!',
 	'MOT_HANGMAN_WORD_EXISTS'		=> '<strong>The term you have entered already exists!</strong> Please try again with another term.',
 	// Ranking table
 	'MOT_HANGMAN_RANKING_TABLE'		=> 'Highscore',
@@ -97,4 +101,12 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_GAME_POINTS'		=> 'Game points',
 	'MOT_HANGMAN_WORD_POINTS'		=> 'Term input points',
 	'MOT_HANGMAN_NO_ENTRIES'		=> 'No entries',
+	// Summary
+	'MOT_HANGMAN_SUMMARY'			=> 'Summary',
+	'ACP_MOT_HANGMAN_TERMS'			=> 'Terms',
+	'MOT_HANGMAN_TERMS_AVAILABLE'	=> 'Number of available terms',
+	'MOT_HANGMAN_USER_TERMS_AVAILABLE'	=> 'Number of terms entered by yourself',
+	'MOT_HANGMAN_USER_TERMS'		=> 'Available terms entered by yourself',
+	'MOT_HANGMAN_TERM'				=> 'Term',
+	'MOT_HANGMAN_CATEGORY'			=> 'Category',
 ]);

@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package Hangman v0.3.0
-* @copyright (c) 2021 Mike-on-Tour
+* @package Hangman v0.4.0
+* @copyright (c) 2021 - 2022 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -52,6 +52,8 @@ $lang = array_merge($lang, [
 													verlassen wollen und erst bei Bejahen dieser Frage mit der ´Punktezahl bei Verlieren´ bestraft. Abhängig von
 													der Einstellung ´Benutzte Begriffe löschen´ wird der in diesem Spiel verwendete Suchbegriff ggf. gelöscht.<br>
 													Ist diese Option ausgeschaltet, wird die verlangte Seite ohne weitere Maßnahmen geladen.',
+	'ACP_MOT_HANGMAN_ROWS_PER_PAGE'				=> 'Zeilen pro Tabellenseite',
+	'ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP'			=> 'Wähle hier die Anzahl der Zeilen, die pro Tabellenseite angezeigt werden soll.',
 	'ACP_MOT_HANGMAN_GAME_SETTINGS'				=> 'Spieleinstellungen',
 	'ACP_MOT_HANGMAN_GAME_SETTINGS_EXP'			=> 'Hier kannst du alle Einstellungen zu Anzahl der Leben (Fehlversuche) und der zu zählenden Punkte eingeben.<br>
 													Die Eingaben werden entsprechend den Hinweisen zu den einzelnen Werten überprüft und ggf. abgeändert.',
@@ -72,14 +74,46 @@ $lang = array_merge($lang, [
 													(ganze Zahl größer oder gleich Null)',
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS'			=> 'Einstellungen für Suchbegriff',
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP'		=> 'Hier kannst du Einstellungen für die Eingabe der Suchbegriffe vornehmen.',
+	'ACP_MOT_HANGMAN_TERM_LENGTH'				=> 'Mindestlänge des Suchbegriffes',
+	'ACP_MOT_HANGMAN_TERM_LENGTH_EXP'			=> 'Hier kannst du die Mindestlänge des Suchbegriffes als Anzahl der mindestens notwendigen Buchstaben eingeben
+													(Satz- und Leerzeichen werden nicht mitgezählt).',
 	'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'			=> 'Erlaubte Satzzeichen',
 	'ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP'		=> 'Die Satzzeichen, die bei der Eingabe eines Suchbegriffes neben den Buchstaben und dem Leerzeichen erlaubt
-													sind. Sie werden im Spiel im Suchbegriff angezeigt.',
+													sind. Sie werden im Spiel im Suchbegriff angezeigt.<br>
+													ACHTUNG: Beim Import von Suchbegriffen aus Dateien oder anderen Tabellen werden ebenfalls nur diese
+													Satzzeichen übernommen!',
 	'ACP_MOT_HANGMAN_SETTING_SAVED'				=> 'Die Einstellungen für das Hangman Spiel wurden erfolgreich gesichert.',
+	// Data migration
+	'ACP_MOT_HANGMAN_MIGRATION_SETTINGS'		=> 'Daten importieren',
+	'ACP_MOT_HANGMAN_UPLOAD_XML'				=> 'Eine lokale xml-Datei hochladen',
+	'ACP_MOT_HANGMAN_UPLOAD_XML_EXP'			=> 'Hier kannst du eine lokal auf deinem PC gespeicherte xml-Datei mit Suchbegriffen und Kategorien auswählen,
+													auf den Server hochladen und in die Tabelle mit den Suchbegriffen integrieren.<br>
+													Als Ersteller wirst dabei du eingetragen, d.h. du kannst diese Suchbegriffe nicht spielen. Außerdem erhälst
+													du keine Punkte dafür gutgeschrieben.',
+	'ACP_MOT_HANGMAN_UPLOAD'					=> 'Datei hochladen',
+	'ACP_MOT_HANGMAN_ERROR'						=> 'Fehler!',
+	'ACP_MOT_HANGMAN_SELECT_FILE'				=> 'Wähle bitte zuerst eine Datei aus',
+	'ACP_MOT_HANGMAN_INVALID_FILE_EXT'			=> 'Ungültige Datei-Erweiterung.',
+	'ACP_MOT_HANGMAN_INVALID_FILE_CONTENT'		=> 'Datei ist fehlerhaft, Laden abgebrochen.',
+	'ACP_MOT_HANGMAN_XML_IMPORTED'				=> [
+		1	=> '%1$d Datensatz aus der Datei „<i>%2$s</i>“ importiert.',
+		2	=> '%1$d Datensätze aus der Datei „<i>%2$s</i>“ importiert.',
+	],
+	'ACP_MOT_HANGMAN_XML_NO_IMPORT'				=> 'Die Datei „<i>%1$s</i>“ enthielt keine importierbaren Daten.',
+	'ACP_MOT_HANGMAN_IMPORT_TABLE'				=> 'Suchbegriffe aus ´dmzx/hangmangame´ importieren',
+	'ACP_MOT_HANGMAN_IMPORT_TABLE_EXP'			=> 'Wenn du diese Auswahl siehst, existiert in der Datenbank eine Tabelle mit Suchbegriffen, die du noch nicht
+													in dieses Spiel importiert hast; dies kannst du durch Anklicken der Schaltfläche rechts tun.<br>
+													Dabei werden Suchbegriff, Hilfestellung (als Kategorie) und Ersteller übernommen, aber keine Punkte gutgeschrieben.',
+	'ACP_MOT_HANGMAN_IMPORT_TABLE_BUTTON'		=> 'Tabelle importieren',
+	'ACP_MOT_HANGMAN_TABLE_IMPORTED'			=> [
+		1	=> '%1$d Datensatz aus der Tabelle „<i>%2$s</i>“ importiert.',
+		2	=> '%1$d Datensätze aus der Tabelle „<i>%2$s</i>“ importiert.',
+	],
+	'ACP_MOT_HANGMAN_TABLE_NO_IMPORT'			=> 'Die Tabelle „<i>%1$s</i>“ enthielt keine importierbaren Daten.',
 	'ACP_MOT_HANGMAN_RESET_HIGHSCORE'			=> 'Rangliste löschen',
 	'ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION'	=> '<strong>ACHTUNG:</strong> Dieser Vorgang kann nicht rückgängig gemacht werden!',
-	'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED'		=> 'Hangman Rangliste gelöscht',
+	'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED'		=> '<strong>Hangman Rangliste gelöscht</strong>',
 	'ACP_MOT_HANGMAN_HIGHSCORE_TABLE_CLEARED'	=> 'Rangliste wurde gelöscht',
 	'ACP_MOT_HANGMAN_SUPPORT_HANGMAN'			=> 'Wenn du die Entwicklung des Hangman Spiels unterstützen möchtest, kannst du das hier tun:<br>',
-	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic" /><br>&copy; 2020 - %2$d by Mike-on-Tour',
+	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic" /><br>&copy; 2021 - %2$d by Mike-on-Tour',
 ]);

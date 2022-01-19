@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.3.0
+* @package Hangman v0.4.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 Mike-on-Tour
+* @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -44,10 +44,12 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_TAB_GAME'			=> 'Spiel',
 	'MOT_HANGMAN_TAB_WORD'			=> 'Eingabe Suchbegriff',
 	'MOT_HANGMAN_TAB_SCORE'			=> 'Rangliste',
+	'MOT_HANGMAN_TAB_SUMMARY'		=> 'Übersicht',
 	// Back menu
 	'MOT_HANGMAN_TO_GAME'			=> 'Neues Spiel',
 	'MOT_HANGMAN_TO_WORD_INPUT'		=> 'Einen neuen Suchbegriff eingeben',
 	'MOT_HANGMAN_TO_SCORE_TABLE'	=> 'Zur Rangliste',
+	'MOT_HANGMAN_TO_SUMMARY'		=> 'Zur Übersicht',
 	// Game
 	'MOT_HANGMAN'					=> 'Hangman',
 	'MOT_HANGMAN_TITLE'				=> 'Hangman Spiel',
@@ -90,6 +92,8 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_WORD_SAVED'		=> 'Der eingegebene Suchbegriff wurde erfolgreich in der Datenbank gespeichert.<br>
 										Ihrem Konto wurden %1$s Punkte gutgeschrieben.',
 	'MOT_HANGMAN_UNAUTH_LETTERS'	=> 'Der Suchbegriff enthält folgende ungültige Zeichen: ',
+	'MOT_HANGMAN_TERM_TOO_SHORT'	=> 'Der Suchbegriff ist zu kurz! Erforderliche Anzahl an Buchstaben: ',
+	'MOT_HANGMAN_CATEGORY_MISSING'	=> 'Kategorie muss ausgefüllt sein!',
 	'MOT_HANGMAN_WORD_EXISTS'		=> '<strong>Der eingegebene Suchbegriff existiert bereits!</strong> Geben Sie bitte einen anderen Begriff ein.',
 	// Ranking table
 	'MOT_HANGMAN_RANKING_TABLE'		=> 'Rangliste',
@@ -97,4 +101,12 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_GAME_POINTS'		=> 'Spielepunkte',
 	'MOT_HANGMAN_WORD_POINTS'		=> 'Begriffseingabepunkte',
 	'MOT_HANGMAN_NO_ENTRIES'		=> 'Keine Einträge',
+	// Summary
+	'MOT_HANGMAN_SUMMARY'			=> 'Übersicht',
+	'ACP_MOT_HANGMAN_TERMS'			=> 'Suchbegriffe',
+	'MOT_HANGMAN_TERMS_AVAILABLE'	=> 'Anzahl der verfügbaren Suchbegriffe',
+	'MOT_HANGMAN_USER_TERMS_AVAILABLE'	=> 'Davon von Ihnen eingegebene Suchbegriffe',
+	'MOT_HANGMAN_USER_TERMS'		=> 'Von Ihnen eingegebene, verfügbare Suchbegriffe',
+	'MOT_HANGMAN_TERM'				=> 'Suchbegriff',
+	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
 ]);

@@ -4,6 +4,28 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.4.0] - 2022-01-18
+
+### Added
+-	A check for a minimum length of the search term, minimum length is selectable in the ACP setting tab
+-	A summary tab in the main window
+-	Importing search terms from two types of xml files
+-	Importing search terms from existing `dmzx/hangmangame` extension
+  
+### Changed
+-	Messages in the term input tab are using `phpbb.alert` now instead of `alert`
+-	`pagination` class is loaded as a service now and no longer via the `phpbb_container` in `controller/main.php`
+-	Function to select a quote now uses the `array_rand()` function instead of the `rand()` function based on the count of elements in the quotes array
+	in `controller/main.php`
+-	Input type of all game settings (points) is now `number` instead of `text`
+-	ACP module is a controller with service injection now instead of a module with global variables
+  
+### Fixed
+-	A faulty error message for a missing category (no ' in the `lang()` statement) in `styles/prosilver/template/hangman_input_word.html`
+  
+### Removed
+  
+  
 ## [0.3.0] - 2021-10-20
 
 ### Added
@@ -22,7 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -	Selection of the quote is now done in the PHP script and no longer within Javascript to reduce the traffic to the client
 -	Language files `common.php` to reflect the change in deleting the used search term and to display the possible characters in the term input tab
 -	Position of modal window in the game tab
--	Version number is now derived from the `composer.json` file
+-	Version number is now extracted from the `composer.json` file
   
 ### Fixed
 -	Put `public` and `static` into the correct order in all migration files and in `event/listener.php`

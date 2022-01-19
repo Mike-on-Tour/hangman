@@ -29,6 +29,10 @@
 			<dd><label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="1"{% if ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
 				<label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="0"{% if not ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 		</dl>
+		<dl>
+			<dt><label for="mot_hangman_rows_per_page">{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP') }}</p></dt>
+			<dd><input id="mot_hangman_rows_per_page" type="number" min="2" max="50" name="mot_hangman_rows_per_page" value="{{ ACP_MOT_HANGMAN_ROWS_PER_PAGE }}" /></dd>
+		</dl>
 	</fieldset>
 
 	<fieldset>
@@ -40,25 +44,29 @@
 		</dl>
 		<dl>
 			<dt><label for="acp_hangman_points_win">{{ lang('ACP_MOT_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WIN_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_win" type="text" size="3" maxlength="3" name="acp_hangman_points_win" value="{{ ACP_MOT_HANGMAN_POINTS_WIN }}" /></dd>
+			<dd><input id="acp_hangman_points_win" type="number" min="1" name="acp_hangman_points_win" value="{{ ACP_MOT_HANGMAN_POINTS_WIN }}" /></dd>
 		</dl>
 		<dl>
 			<dt><label for="acp_hangman_points_loose">{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_loose" type="text" size="3" maxlength="3" name="acp_hangman_points_loose" value="{{ ACP_MOT_HANGMAN_POINTS_LOOSE }}" /></dd>
+			<dd><input id="acp_hangman_points_loose" type="number" max="0" name="acp_hangman_points_loose" value="{{ ACP_MOT_HANGMAN_POINTS_LOOSE }}" /></dd>
 		</dl>
 		<dl>
 			<dt><label for="acp^_hangman_points_letter">{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_letter" type="text" size="3" maxlength="3" name="acp_hangman_points_letter" value="{{ ACP_MOT_HANGMAN_POINTS_LETTER }}" /></dd>
+			<dd><input id="acp_hangman_points_letter" type="number" min="0" name="acp_hangman_points_letter" value="{{ ACP_MOT_HANGMAN_POINTS_LETTER }}" /></dd>
 		</dl>
 		<dl>
 			<dt><label for="acp_hangman_points_word">{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
-			<dd><input id="acp_hangman_points_word" type="text" size="3" maxlength="3" name="acp_hangman_points_word" value="{{ ACP_MOT_HANGMAN_POINTS_WORD }}" /></dd>
+			<dd><input id="acp_hangman_points_word" type="number" min="0" name="acp_hangman_points_word" value="{{ ACP_MOT_HANGMAN_POINTS_WORD }}" /></dd>
 		</dl>
 	</fieldset>
 
 	<fieldset>
 		<legend>{{ lang('ACP_MOT_HANGMAN_INPUT_SETTINGS') }}</legend>
 		<p>{{ lang('ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP') }}</p>
+		<dl>
+			<dt><label for="acp_hangman_term_length">{{ lang('ACP_MOT_HANGMAN_TERM_LENGTH') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_TERM_LENGTH_EXP') }}</p></dt>
+			<dd><input id="acp_hangman_term_length" type="number" min="1" name="acp_hangman_term_length" value="{{ ACP_MOT_HANGMAN_TERM_LENGTH }}" /></dd>
+		</dl>
 		<dl>
 			<dt><label for="acp_hangman_punctuation_marks">{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_punctuation_marks" type="text" name="acp_hangman_punctuation_marks" value="{{ ACP_MOT_HANGMAN_PUNCTUATION_MARKS }}" /></dd>
@@ -75,11 +83,38 @@
 
 </form>
 
+<hr>
+
 <fieldset>
-	<form id="reset_highscore_action" method="post" action="{U_ACTION}" data-ajax="true">
+	<legend>{{ lang('ACP_MOT_HANGMAN_MIGRATION_SETTINGS') }}</legend>
+	<form id="acp_mot_hangman_file_upload" method="post" action="{{ U_ACTION }}" enctype="multipart/form-data">
+		<dl>
+			<dt><label for="acp_mot_hangman_file">{{ lang('ACP_MOT_HANGMAN_UPLOAD_XML') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_UPLOAD_XML_EXP') }}</p></dt>
+			<dd>
+				<input type="file" id="acp_mot_hangman_file" name="acp_mot_hangman_file" class="inputbox autowidth" accept=".xml" />&nbsp;
+				<input id="acp_mot_hangman_upload_file" class="button2" type="submit" name="acp_mot_hangman_upload_file" value="{{ lang('ACP_MOT_HANGMAN_UPLOAD') }}" />
+			</dd>
+		</dl>
+	</form>
+	{% if ACP_MOT_HANGMAN_IMPORT_OLD_TABLE %}
+		<form id="acp_mot_hangman_table_import" method="post" action="{{ U_ACTION }}">
+			<dl>
+				<dt><label for="acp_mot_hangman_import_table">{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE_EXP') }}</p></dt>
+				<dd>
+					<input id="acp_mot_hangman_import_table" class="button2" type="submit" name="acp_mot_hangman_import_table" value="{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE_BUTTON') }}" />
+				</dd>
+			</dl>
+		</form>
+	{% endif %}
+</fieldset>
+
+<hr>
+
+<fieldset>
+	<form id="reset_highscore_action" method="post" action="{{ U_ACTION }}" data-ajax="true">
 		<dl>
 			<dt><label for="reset_highscore">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE') }}{{ lang('COLON') }}</label><p class="warning_text">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION') }}</p></dt>
-			<dd><input type="hidden" name="reset_highscore" value="online" /><input class="button2" type="submit" id="reset_highscore" name="reset_highscore" value="{L_RUN}" /></dd>
+			<dd><input type="hidden" name="reset_highscore" value="online" /><input class="button2" type="submit" id="reset_highscore" name="reset_highscore" value="{{ lang('RUN') }}" /></dd>
 		</dl>
 	</form>
 </fieldset>
@@ -87,10 +122,25 @@
 <fieldset>
 	<dl>
 		<dt><label>{{ lang('ACP_MOT_HANGMAN_SUPPORT_HANGMAN') }}</label></dt>
-		<dd><a href="https://paypal.me/MichaelVormwald?locale.x=de_DE" target="_blank" rel="noopener noreferrer">{{ ICON_PAYPAL }}</a></dd>
+		<dd>
+			<form action="https://www.paypal.com/donate" method="post" target="_top">
+				<input type="hidden" name="hosted_button_id" value="JQQ5R6VM2XHW4" />
+				<input type="image" src="https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+				<img alt="" border="0" src="https://www.paypal.com/en_DE/i/scr/pixel.gif" width="1" height="1" />
+			</form>
+		</dd>
 	</dl>
 </fieldset>
 
 <p class="centered_text">{{ HANGMAN_VERSION }}</p>
+
+<script>
+// <![CDATA[
+	var motHangman = {};
+	motHangman.acpError = "{{ lang('ACP_MOT_HANGMAN_ERROR')|e('js') }}";
+	motHangman.acpSelectFile = "{{ lang('ACP_MOT_HANGMAN_SELECT_FILE')|e('js') }}";
+	motHangman.acpAction = "{{ U_ACTION|e('js') }}";
+// ]]>
+</script>
 
 {% include 'overall_footer.html' %}
