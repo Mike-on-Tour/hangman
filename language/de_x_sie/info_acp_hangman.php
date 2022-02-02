@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.4.0
+* @package Hangman v0.5.0
 * @copyright (c) 2021 - 2022 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -35,6 +35,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN'							=> 'Hangman',
 	'ACP_MOT_HANGMAN_SETTINGS'					=> 'Einstellungen',
+	// General settings
 	'ACP_MOT_HANGMAN_EXT_SETTINGS'				=> 'Programmeinstellungen',
 	'ACP_MOT_HANGMAN_AUTODELETE'				=> 'Benutzte Begriffe löschen?',
 	'ACP_MOT_HANGMAN_AUTODELETE_EXP'			=> 'Wenn Sie hier ´Ja´ auswählen, werden beim Spiel verwendete Suchbegriffe bei Beendigung des Spiels aus der Datenbank gelöscht.',
@@ -45,13 +46,29 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN_CATEGORY_ENFORCE'			=> 'Ausfüllen der Kategorie erzwingen?',
 	'ACP_MOT_HANGMAN_CATEGORY_ENFORCE_EXP'		=> 'Wenn Sie hier ´Ja´ auswählen, wird bei eingeschalteter ´Kategorie´ das Eingeben einer Kategorie erzwungen, das
 													Eingabeformular kann dann ohne eine Eintragung im Feld ´Kategorie´ nicht verlassen werden.',
-	'ACP_MOT_HANGMAN_EVADE_ENABLE'				=> 'Verlassen eines Spieles als Verloren werten?',
-	'ACP_MOT_HANGMAN_EVADE_ENABLE_EXP'			=> 'Wenn Sie hier ´Ja´ auswählen, erhalten Spieler, die ein laufendes Spiel verlassen (z.B. durch Anklicken eines
-													Links oder Neuladen der Seite) die ´Punktezahl bei Verlieren´ angerechnet.<br>
-													Ist diese Option eingeschaltet, werden Spieler über ein Popup-Fenster gefragt, ob sie das Spiel wirklich
-													verlassen wollen und erst bei Bejahen dieser Frage mit der ´Punktezahl bei Verlieren´ bestraft. Abhängig von
-													der Einstellung ´Benutzte Begriffe löschen´ wird der in diesem Spiel verwendete Suchbegriff ggf. gelöscht.<br>
-													Ist diese Option ausgeschaltet, wird die verlangte Seite ohne weitere Maßnahmen geladen.',
+	'ACP_MOT_HANGMAN_SHOW_TERM'					=> 'Anzeige des Suchbegriffes bei Verlieren',
+	'ACP_MOT_HANGMAN_SHOW_TERM_EXP'				=> 'Wenn aktiviert, wird in der Meldung über das verlorene Spiel auch der Suchbegriff im Klartext angezeigt.',
+	'ACP_MOT_HANGMAN_ENFORCE_TERM'				=> 'Spieler mit zu wenigen Eingabepunkten blockieren',
+	'ACP_MOT_HANGMAN_ENFORCE_TERM_EXP'			=> 'Wenn Sie hier ´Ja´ auswählen, werden Spieler, bei denen das Verhältnis der Spielepunkte zu den Begriffseingabepunkten
+													eine bestimmte Grenze überschreitet, aufgefordert vor einem neuen Spiel zunächst neue Suchbegriffe einzugeben.
+													So können Sie Spieler erziehen, die das Eingaben von Suchbegriffen vernachlässigen.<br>
+													Das Verhältnis Spielepunkte zu Begriffseingabepunkten können Sie in der nächsten Einstellung auswählen, sie
+													wird angezeigt sobald Sie hier ´Ja´ auswählen.',
+	'ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO'		=> 'Verhältnis Spielepunkte zu Begriffseingabepunkten',
+	'ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO_EXP'	=> 'Es handelt sich bei dieser Maßnahme prinzipiell um den Ausschluss von Mitgliedern vom Spiel, wenn sie zu
+													zu wenige neue Suchbegriffe eingeben; es wird deshalb empfohlen, dieses Verhältnis anfangs nicht zu niedrig
+													einzustellen, beispielsweise bedeutet der voreingestellte Wert von 40, dass ein Spieler mit 40 Begriffseingabepunkten
+													und mehr als 1.600 Spielepunkten so lange vom Spiel ausgeschlossen wird (er bekommt statt des Spiels einen
+													entsprechenden Hinweistext angezeigt) bis er so viele neue Suchbegriffe eingegeben hat, dass das Verhältnis
+													unter 40 sinkt.<br>
+													Vor der ersten Verwendung sollte deshalb ein Blick in die Rangliste stehen, um die Spieler mit dem größten
+													Verhältnis zu identifizieren und dann langsam diesen Wert zu senken. Langfristiges Ziel sollte ein Verhältnis
+													sein, das der durchschnittlichen Punktezahl bei Spielgewinn geteilt durch die Punkte für die Eingabe eines
+													Suchbegriffes entspricht.<br>
+													Beispiel: Durchschnittlich 25 Punkte bei Spielgewinn zu 8 Punkten für jeden Begriff bedeutet ein Verhältnis
+													von 3,125, aufgerundet 4. Damit muss jeder Spieler für (fast) jeden verwendeten Begriff einen
+													neuen eingeben; dies erscheint als gesundes Verhältnis, wenn verwendete Begriffe gelöscht
+													werden, ist dies nicht der Fall, kann das Verhältnis auch deutlich höher gewählt werden.',
 	'ACP_MOT_HANGMAN_ROWS_PER_PAGE'				=> 'Zeilen pro Tabellenseite',
 	'ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP'			=> 'Wählen Sie hier die Anzahl der Zeilen, die pro Tabellenseite angezeigt werden soll.',
 	'ACP_MOT_HANGMAN_GAME_SETTINGS'				=> 'Spieleinstellungen',
@@ -72,6 +89,14 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN_POINTS_WORD'				=> 'Punkte für eingestellten Suchbegriff',
 	'ACP_MOT_HANGMAN_POINTS_WORD_EXP'			=> 'Anzahl der Punkte, die einem Spieler für das Erstellen eines Suchbegriffes auf seinem Spielekonto gutgeschrieben werden<br>
 													(ganze Zahl größer oder gleich Null)',
+	'ACP_MOT_HANGMAN_EVADE_ENABLE'				=> 'Verlassen eines Spieles als Verloren werten?',
+	'ACP_MOT_HANGMAN_EVADE_ENABLE_EXP'			=> 'Wenn Sie hier ´Ja´ auswählen, erhalten Spieler, die ein laufendes Spiel verlassen (z.B. durch Anklicken eines
+													Links oder Neuladen der Seite) die ´Punktezahl bei Verlieren´ angerechnet.<br>
+													Ist diese Option eingeschaltet, werden Spieler über ein Popup-Fenster gefragt, ob sie das Spiel wirklich
+													verlassen wollen und erst bei Bejahen dieser Frage mit der ´Punktezahl bei Verlieren´ bestraft. Abhängig von
+													der Einstellung ´Benutzte Begriffe löschen´ wird der in diesem Spiel verwendete Suchbegriff ggf. gelöscht.<br>
+													Ist diese Option ausgeschaltet, wird die verlangte Seite ohne weitere Maßnahmen geladen.',
+	//Term settings
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS'			=> 'Einstellungen für Suchbegriff',
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP'		=> 'Hier können Sie Einstellungen für die Eingabe der Suchbegriffe vornehmen.',
 	'ACP_MOT_HANGMAN_TERM_LENGTH'				=> 'Mindestlänge des Suchbegriffes',
@@ -110,6 +135,15 @@ $lang = array_merge($lang, [
 		2	=> '%1$d Datensätze aus der Tabelle „<i>%2$s</i>“ importiert.',
 	],
 	'ACP_MOT_HANGMAN_TABLE_NO_IMPORT'			=> 'Die Tabelle „<i>%1$s</i>“ enthielt keine importierbaren Daten.',
+	'ACP_MOT_HANGMAN_DATA_EXPORT'				=> 'Daten exportieren',
+	'ACP_MOT_HANGMAN_EXPORT_TERMS'				=> 'Suchbegriffe aus Tabelle exportieren',
+	'ACP_MOT_HANGMAN_EXPORT_TERMS_EXP'			=> 'Hier können Sie die in der Tabelle “_mot_hangman_words” enthaltenen Suchbegriffe in eine XML-Datei
+													exportieren.<br>
+													Durch Klicken des Buttons rechts wird eine XML-Datei mit einem vordefinierten Namen erzeugt und anschließend
+													zum Download und lokalen Abspeichern angeboten.',
+	'ACP_MOT_HANGMAN_SUBMIT_EXPORT'				=> 'Daten exportieren',
+	'ACP_MOT_HANGMAN_TABLE_NO_EXPORT'			=> 'Export der Daten ist fehlgeschlagen, Datei konnte nicht erzeugt werden.',
+	// Misc
 	'ACP_MOT_HANGMAN_RESET_HIGHSCORE'			=> 'Rangliste löschen',
 	'ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION'	=> '<strong>ACHTUNG:</strong> Dieser Vorgang kann nicht rückgängig gemacht werden!',
 	'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED'		=> '<strong>Hangman Rangliste gelöscht</strong>',

@@ -1,6 +1,6 @@
 /**
 *
-* package Hangman v0.4.0
+* package Hangman v0.5.0
 * copyright (c) 2021 - 2022 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -23,6 +23,21 @@ $("input[name='mot_hangman_category_enable']").click(function() {
 
 if ($("input[name='mot_hangman_category_enable']:checked").val() == 1) {
 	$("#mot_hangman_category_enforce_field").show();
+}
+
+/*
+* Check the 'Enforce term' setting and hide or show the 'Enforce Term Ratio' setting accordingly
+*/
+$("input[name='mot_hangman_enforce_term']").click(function() {
+	if ($(this).val() == 1) {
+		$("#mot_hangman_enforce_term_ratio_field").show();
+	} else {
+		$("#mot_hangman_enforce_term_ratio_field").hide();
+	}
+});
+
+if ($("input[name='mot_hangman_enforce_term']:checked").val() == 1) {
+	$("#mot_hangman_enforce_term_ratio_field").show();
 }
 
 /*

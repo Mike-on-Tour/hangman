@@ -95,13 +95,16 @@ class hangman_acp
 			$this->config->set('mot_hangman_autodelete', $this->request->variable('mot_hangman_autodelete', 0));
 			$this->config->set('mot_hangman_category_enable', $this->request->variable('mot_hangman_category_enable', 0));
 			$this->config->set('mot_hangman_category_enforce', $this->request->variable('mot_hangman_category_enforce', 0));
-			$this->config->set('mot_hangman_evade_enable', $this->request->variable('mot_hangman_evade_enable', 0));
+			$this->config->set('mot_hangman_show_term', $this->request->variable('mot_hangman_show_term', 0));
+			$this->config->set('mot_hangman_enforce_term', $this->request->variable('mot_hangman_enforce_term', 0));
+			$this->config->set('mot_hangman_enforce_term_ratio', $this->request->variable('mot_hangman_enforce_term_ratio', 0));
 			$this->config->set('mot_hangman_rows_per_page', $this->request->variable('mot_hangman_rows_per_page', 0));
 			$this->config->set('mot_hangman_lives', $this->request->variable('acp_hangman_lives', 0));
 			$this->config->set('mot_hangman_points_letter', $this->request->variable('acp_hangman_points_letter', 0));
 			$this->config->set('mot_hangman_points_loose', $this->request->variable('acp_hangman_points_loose', 0));
 			$this->config->set('mot_hangman_points_win', $this->request->variable('acp_hangman_points_win', 0));
 			$this->config->set('mot_hangman_points_word', $this->request->variable('acp_hangman_points_word', 0));
+			$this->config->set('mot_hangman_evade_enable', $this->request->variable('mot_hangman_evade_enable', 0));
 			$this->config->set('mot_hangman_term_length', $this->request->variable('acp_hangman_term_length', 0));
 			$this->config->set('mot_hangman_punctuation_marks', $this->request->variable('acp_hangman_punctuation_marks', ''));
 
@@ -280,17 +283,56 @@ class hangman_acp
 			}
 		}
 
+		if ($this->request->is_set_post('acp_mot_hangman_export_file'))
+		{
+			$sql = 'SELECT hangman_word, hangman_category FROM ' . $this->hangman_words_table;
+			$result = $this->db->sql_query($sql);
+			$hangmans = $this->db->sql_fetchrowset($result);
+			$this->db->sql_freeresult($result);
+
+			$dom = new \DOMDocument('1.0', 'utf-8');
+			$dom->formatOutput = true;
+			$root = $dom->createElement('hangdb');
+			$dom->appendChild($root);
+
+			foreach ($hangmans as $row)
+			{
+				$root->appendChild($node = $dom->createElement('hangman'));
+				$node->appendChild($dom->createElement('word', $row['hangman_word']));
+				$node->appendChild($dom->createElement('help', $row['hangman_category']));
+			}
+
+			$filename = "hangman_" . date('Ymd-Gis') . ".xml";
+			$file = fopen('php://memory', 'w');
+			$bytes_written = fwrite($file, $dom->saveXML());
+			if ($bytes_written !== false)
+			{
+				fseek($file, 0);
+				header('Content-Type: text/xml');
+				header('Content-Disposition: attachment; filename="' . $filename . '";');
+				fpassthru($file);
+				exit;
+			}
+			else
+			{
+				trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_NO_EXPORT') . adm_back_link($this->u_action), E_USER_WARNING);
+			}
+		}
+
 		$this->template->assign_vars([
 			'ACP_MOT_HANGMAN_AUTODELETE'			=> $this->config['mot_hangman_autodelete'],
 			'ACP_MOT_HANGMAN_CATEGORY_ENABLE'		=> $this->config['mot_hangman_category_enable'],
 			'ACP_MOT_HANGMAN_CATEGORY_ENFORCE'		=> $this->config['mot_hangman_category_enforce'],
-			'ACP_MOT_HANGMAN_EVADE_ENABLE'			=> $this->config['mot_hangman_evade_enable'],
+			'ACP_MOT_HANGMAN_SHOW_TERM'				=> $this->config['mot_hangman_show_term'],
+			'ACP_MOT_HANGMAN_ENFORCE_TERM'			=> $this->config['mot_hangman_enforce_term'],
+			'ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO'	=> $this->config['mot_hangman_enforce_term_ratio'],
 			'ACP_MOT_HANGMAN_ROWS_PER_PAGE'			=> $this->config['mot_hangman_rows_per_page'],
 			'ACP_MOT_HANGMAN_LIVES'					=> $this->config['mot_hangman_lives'],
 			'ACP_MOT_HANGMAN_POINTS_LETTER'			=> $this->config['mot_hangman_points_letter'],
 			'ACP_MOT_HANGMAN_POINTS_LOOSE'			=> $this->config['mot_hangman_points_loose'],
 			'ACP_MOT_HANGMAN_POINTS_WIN'			=> $this->config['mot_hangman_points_win'],
 			'ACP_MOT_HANGMAN_POINTS_WORD'			=> $this->config['mot_hangman_points_word'],
+			'ACP_MOT_HANGMAN_EVADE_ENABLE'			=> $this->config['mot_hangman_evade_enable'],
 			'ACP_MOT_HANGMAN_TERM_LENGTH'			=> $this->config['mot_hangman_term_length'],
 			'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'		=> $this->config['mot_hangman_punctuation_marks'],
 			'ACP_MOT_HANGMAN_IMPORT_OLD_TABLE'		=> $this->db_tools->sql_table_exists($this->old_hangman_words_table),

@@ -29,18 +29,26 @@
 				<div id="tabs" class="tabs">
 					<ul>
 						<li id="hangman_tab_1" class="tab"><a href="{{ TAB_1 }}">{{ lang('MOT_HANGMAN_TAB_GAME') }}</a></li>
-						<li id="hangman_tab_2" class="tab"><a href="{{ TAB_2 }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
+						{% if ALLOW_TERM_INPUT %}
+							<li id="hangman_tab_2" class="tab"><a href="{{ TAB_2 }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
+						{% endif %}
 						<li id="hangman_tab_3" class="tab"><a href="{{ TAB_3 }}">{{ lang('MOT_HANGMAN_TAB_SCORE') }}</a></li>
 						<li id="hangman_tab_4" class="tab"><a href="{{ TAB_4 }}">{{ lang('MOT_HANGMAN_TAB_SUMMARY') }}</a></li>
 					</ul>
 				</div>
 				<div class="panel bg3">
 					<div id="hangman_box_1" class="inner" hidden="true">
-						{% include 'hangman_game.html' %}
+						{% if ALLOW_USER %}
+							{% include 'hangman_game.html' %}
+						{% else %}
+							{% include 'hangman_no_game.html' %}
+						{% endif %}
 					</div>
-					<div id="hangman_box_2" class="inner" hidden="true">
-						{% include 'hangman_input_word.html' %}
-					</div>
+					{% if ALLOW_TERM_INPUT %}
+						<div id="hangman_box_2" class="inner" hidden="true">
+							{% include 'hangman_input_word.html' %}
+						</div>
+					{% endif %}
 					<div id="hangman_box_3" class="inner" hidden="true">
 						{% include 'hangman_score.html' %}
 					</div>

@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.4.0
+* @package Hangman v0.5.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -16,6 +16,9 @@ use phpbb\language\language_file_loader;
 
 class main
 {
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
 	/* @var \phpbb\config\config */
 	protected $config;
 
@@ -58,11 +61,13 @@ class main
 	/**
 	* Constructor
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\extension\manager $phpbb_extension_manager,
-								\phpbb\controller\helper $helper, \phpbb\language\language $language, \phpbb\pagination $pagination,
-								\phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext,
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db,
+								\phpbb\extension\manager $phpbb_extension_manager, \phpbb\controller\helper $helper,
+								\phpbb\language\language $language, \phpbb\pagination $pagination, \phpbb\request\request_interface $request,
+								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext,
 								$mot_hangman_score_table, $mot_hangman_words_table)
 	{
+		$this->auth = $auth;
 		$this->config = $config;
 		$this->db = $db;
 		$this->phpbb_extension_manager 	= $phpbb_extension_manager;
@@ -108,7 +113,13 @@ class main
 		$letters = explode(',', $lang_arr['MOT_HANGMAN_LETTERS']);
 		$lc_letters = mb_strtolower($lang_arr['MOT_HANGMAN_LETTERS'], 'UTF-8');
 
+		// Get some config variables first
 		$delete_term = $this->config['mot_hangman_autodelete'];
+		$enforce_term = $this->config['mot_hangman_enforce_term'];
+		$input_points = $this->config['mot_hangman_points_word'];
+
+		// Define some variables
+		$allow_user = true;	// Assume that this player is not blocked
 
 		$tab = $this->request->variable('tab', 0);
 		switch ($tab)
@@ -177,6 +188,39 @@ class main
 											. $this->back_link($this->summary_action, $this->language->lang('MOT_HANGMAN_TO_SUMMARY')), E_USER_NOTICE);
 				}
 
+				// Check if users should be blocked from playing
+				if ($enforce_term)
+				{
+					$sql_in = [$this->user->data['user_id']];
+					$sql = 'SELECT solve_pts, word_pts FROM ' . $this->hangman_score_table . '
+							WHERE ' . $this->db->sql_in_set('user_id', $sql_in);
+					$result = $this->db->sql_query($sql);
+					$user_row = $this->db->sql_fetchrow($result);
+					$this->db->sql_freeresult($result);
+					if (!empty($user_row))
+					{
+						$config_ratio = $this->config['mot_hangman_enforce_term_ratio'];
+						if ($user_row['word_pts'] == 0)	// prevent division by zero
+						{
+							$ratio = $user_row['solve_pts'];	// use the difference instead of the ratio
+						}
+						else
+						{
+							$ratio = $user_row['solve_pts'] / $user_row['word_pts'];
+						}
+						if ($ratio > $config_ratio)
+						{
+							$allow_user = false;
+							$min_term_necessary = intdiv(intdiv($user_row['solve_pts'], $config_ratio) + 1 - $user_row['word_pts'], $input_points) + 1;
+							$this->template->assign_vars([
+								'NO_GAME_EXPLANATION'	=> $this->language->lang('MOT_HANGMAN_GAME_BLOCKED', (int) $min_term_necessary),
+								'LINK_TO_TERM_INPUT'	=> $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT')),
+							]);
+							meta_refresh(12, $this->word_action);
+						}
+					}
+				}
+
 				// Calculate the length of the rows to display usable letters
 				$total_letters = count ($letters);
 				$letter_row = $total_letters/2;
@@ -202,6 +246,7 @@ class main
 				}
 
 				$this->template->assign_vars([
+					'ALLOW_USER'				=> $allow_user,
 					'GAME_DESC'					=> $game_desc,
 					'MOT_HANGMAN_LETTERS'		=> json_encode($letters),
 					'HANGMAN_TOTAL_LETTERS'		=> $total_letters,
@@ -215,6 +260,7 @@ class main
 					'WIN_POINTS'				=> $this->config['mot_hangman_points_win'],
 					'LOOSE_POINTS'				=> $this->config['mot_hangman_points_loose'],
 					'ENABLE_EVADE_PUNISH'		=> $this->config['mot_hangman_evade_enable'] == 1 ? true : false,
+					'SHOW_TERM_WHEN_LOST'		=> $this->config['mot_hangman_show_term'] == 1 ? true : false,
 					'U_ACTION'					=> $this->game_action,
 					'AJAX_CALL'					=> $this->helper->route('mot_hangman_ajax_controller'),
 				]);
@@ -222,7 +268,6 @@ class main
 				break;
 
 			case 2:
-				$input_points = $this->config['mot_hangman_points_word'];
 				add_form_key('hangman_quote_input');
 
 				$this->u_action = $this->word_action;
@@ -437,6 +482,7 @@ class main
 		$this->template->assign_vars([
 			'SHOW_CATEGORY'			=> $this->config['mot_hangman_category_enable'] == 1 ? true : false,
 			'ENFORCE_CATEGORY'		=> $this->config['mot_hangman_category_enforce'] == 1 ? true : false,
+			'ALLOW_TERM_INPUT'		=> $this->auth->acl_get('u_mot_create_search_term'),
 			'SELECTED_TAB'			=> $selected_tab,
 			'TAB_1'					=> $this->game_action,
 			'TAB_2'					=> $this->word_action,

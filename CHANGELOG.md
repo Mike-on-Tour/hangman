@@ -4,6 +4,25 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.5.0] - 2022-02-02
+
+### Added
+-	A settings function to export the `phpbb_mot_hangman_words` table as a XML file
+-	A function to display the term in clear after loosing a game, function is selectble in the ACP
+-	A system (including ACP setting) to block players from playing if their ratio of game points to term input points exceeds a value
+	defined by the administrator (in the ACP)
+-	A function to `event/listener.php` to delete `mot_hangman_score_table` entries if a user gets deleted
+-	A rudimentary permissions system to allow user to enter search terms
+
+### Changed
+-	Shifted the setting for 'Count a game as lost if game is left?' to the 'Game settings' section
+-	The search term input field from 'text' to 'textarea' in order to make it look more comfortable with long terms
+
+### Fixed
+
+### Removed
+  
+  
 ## [0.4.0] - 2022-01-18
 
 ### Added

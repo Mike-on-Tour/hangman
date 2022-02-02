@@ -24,11 +24,22 @@
 					<label><input type="radio" class="radio" name="mot_hangman_category_enforce" value="0"{% if not ACP_MOT_HANGMAN_CATEGORY_ENFORCE %} id="mot_hangman_category_enforce" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 			</dl>
 		</div>
- 		<dl>
-			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="1"{% if ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="0"{% if not ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
+		<dl>
+			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_SHOW_TERM') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_SHOW_TERM_EXP') }}</p></dt>
+			<dd><label><input type="radio" class="radio" name="mot_hangman_show_term" value="1"{% if ACP_MOT_HANGMAN_SHOW_TERM %} id="mot_hangman_show_term" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="mot_hangman_show_term" value="0"{% if not ACP_MOT_HANGMAN_SHOW_TERM %} id="mot_hangman_show_term" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 		</dl>
+ 		<dl>
+			<dt><label for="mot_hangman_enforce_term">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_EXP') }}</p></dt>
+			<dd><label><input type="radio" class="radio" name="mot_hangman_enforce_term" value="1"{% if ACP_MOT_HANGMAN_ENFORCE_TERM %} id="mot_hangman_enforce_term" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="mot_hangman_enforce_term" value="0"{% if not ACP_MOT_HANGMAN_ENFORCE_TERM %} id="mot_hangman_enforce_term" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
+		</dl>
+		<div id="mot_hangman_enforce_term_ratio_field" hidden="true">
+			<dl>
+				<dt><label for="mot_hangman_enforce_term_ratio">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO_EXP') }}</p></dt>
+				<dd><input id="mot_hangman_enforce_term_ratio" type="number" min="0" max="1000" name="mot_hangman_enforce_term_ratio" value={{ ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO }} /></dd>
+			</dl>
+		</div>
 		<dl>
 			<dt><label for="mot_hangman_rows_per_page">{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP') }}</p></dt>
 			<dd><input id="mot_hangman_rows_per_page" type="number" min="2" max="50" name="mot_hangman_rows_per_page" value="{{ ACP_MOT_HANGMAN_ROWS_PER_PAGE }}" /></dd>
@@ -57,6 +68,11 @@
 		<dl>
 			<dt><label for="acp_hangman_points_word">{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_points_word" type="number" min="0" name="acp_hangman_points_word" value="{{ ACP_MOT_HANGMAN_POINTS_WORD }}" /></dd>
+		</dl>
+ 		<dl>
+			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
+			<dd><label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="1"{% if ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="mot_hangman_evade_enable" value="0"{% if not ACP_MOT_HANGMAN_EVADE_ENABLE %} id="mot_hangman_evade_enable" checked="checked"{%  endif %} /> {{ lang('NO') }}</label></dd>
 		</dl>
 	</fieldset>
 
@@ -106,6 +122,16 @@
 			</dl>
 		</form>
 	{% endif %}
+</fieldset>
+
+<fieldset>
+	<legend>{{ lang('ACP_MOT_HANGMAN_DATA_EXPORT') }}</legend>
+	<form id="acp_mot_hangman_data_export" method="post" action="{{ U_ACTION }}">
+		<dl>
+			<dt><label for="acp_mot_hangman_export_file">{{ lang('ACP_MOT_HANGMAN_EXPORT_TERMS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXPORT_TERMS_EXP') }}</p>
+			<dd><input id="acp_mot_hangman_export_file" class="button2" type="submit" name="acp_mot_hangman_export_file" value="{{ lang('ACP_MOT_HANGMAN_SUBMIT_EXPORT') }}" /></dd>
+		</dl>
+	</form>
 </fieldset>
 
 <hr>

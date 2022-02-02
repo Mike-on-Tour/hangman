@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.4.0
+* @package Hangman v0.5.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -76,7 +76,13 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_YOU_WIN'			=> '<strong>You Win!</strong><br>Points gained: ',
 	'MOT_HANGMAN_NEW_QUOTE_TO'		=> 'Click ´Start Game´ to start Hangman Game!',
 	'MOT_HANGMAN_YOU_LOSE'			=> '<strong>You lose!</strong><br>Points gained: ',
+	'MOT_HANGMAN_SHOW_TERM'			=> '<br><br>The term read:<br><i>',
 	'MOT_HANGMAN_POINTS_SAVED'		=> 'Your game account was credited with the points gained in this game turn.',
+	'MOT_HANGMAN_GAME_BLOCKED'		=> 'The administrator has defined a game points to term input points ratio which must not be exceeded.
+										You have earned so many game points that in your case this ratio is exceeded. You must enter new
+										terms prior to playing again.<br><br>
+										According to your current score you must enter at least <strong>%1$d term(s)</strong> in order to
+										play again.',
 	// Term definition
 	'MOT_HANGMAN_QUOTE_INPUT_HEAD'	=> 'Enter a new term',
 	'MOT_HANGMAN_QUOTE_INPUT_EXPL'	=> 'You can enter a new term in this form. This term may contain the letters %1$s (upper and lower case), spaces and the

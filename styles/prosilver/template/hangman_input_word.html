@@ -30,7 +30,7 @@
 	<fieldset>
 		<dl>
 			<dt><label for="hangman_quote_text">{{ lang('MOT_HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
-			<dd><input class="inputbox autowidth" id="hangman_quote_text" type="text" size="50" maxlength="255" name="hangman_quote_text" value="{{ HANGMAN_QUOTE_TEXT }}"></dd>
+			<dd><textarea class="inputbox autowidth" id="hangman_quote_text" cols="50" rows="1" maxlength="255" name="hangman_quote_text">{{ HANGMAN_QUOTE_TEXT }}</textarea></dd>
 		</dl>
 		{% if SHOW_CATEGORY %}
 			<dl>

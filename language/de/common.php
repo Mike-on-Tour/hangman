@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.4.0
+* @package Hangman v0.5.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2022 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -76,7 +76,14 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_YOU_WIN'			=> '<strong>Du hast gewonnen!</strong><br>Erreichte Punktzahl: ',
 	'MOT_HANGMAN_NEW_QUOTE_TO'		=> 'Klicke erst auf ´Spielstart´ zum Start!',
 	'MOT_HANGMAN_YOU_LOSE'			=> '<strong>Du hast leider verloren!</strong><br>Erreichte Punktzahl: ',
+	'MOT_HANGMAN_SHOW_TERM'			=> '<br><br>Der Suchbegriff lautete:<br><i>',
 	'MOT_HANGMAN_POINTS_SAVED'		=> 'Deine im Spiel gewonnenen Punkte wurden deinem Konto gutgeschrieben.',
+	'MOT_HANGMAN_GAME_BLOCKED'		=> 'Der Administrator hat ein Verhältnis von Spielepunkten zu Begriffseingabepunkten festgelegt, das nicht
+										überschritten werden darf. Du hast in den vergangenen Spielen so viele Spielepunkte erreicht, dass
+										dieses Verhältnis bei dir überschritten ist. Bevor du wieder spielen kannst, musst du erst neue
+										Suchbegriffe eingeben.<br><br>
+										Entsprechend deinem aktuellen Punktestand musst du mindestens <strong>%1$d Begriff(e)</strong>
+										eingeben, damit du wieder spielen kannst.',
 	// Term definition
 	'MOT_HANGMAN_QUOTE_INPUT_HEAD'	=> 'Eingabe eines neuen Suchbegriffes',
 	'MOT_HANGMAN_QUOTE_INPUT_EXPL'	=> 'Hier kannst du einen neuen Suchbegriff eingeben. Dieser Suchbegriff darf die Buchstaben %1$s (groß und klein), Leerzeichen

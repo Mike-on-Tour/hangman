@@ -5,6 +5,7 @@ services:
     mot.hangman.controller:
         class: mot\hangman\controller\main
         arguments:
+            - '@auth'
             - '@config'
             - '@dbal.conn'
             - '@ext.manager'
@@ -22,8 +23,10 @@ services:
     mot.hangman.listener:
         class: mot\hangman\event\listener
         arguments:
+            - '@dbal.conn'
             - '@controller.helper'
             - '@template'
+            - '%mot.hangman.tables.mot_hangman_score%'
         tags:
             - { name: event.listener }
 
