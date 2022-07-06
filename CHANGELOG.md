@@ -4,11 +4,29 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.6.0] - 2022-07-04
+
+### Added
+-	An `ext.php` file to check for the correct prerequisites and for compatibility with ExtMgrPlus
+
+### Changed
+-	Minimum PHP version to 7.2 (from 7.0)
+-	The coding for radio buttons in `adm/style/acp_hangman_settings.html` to short form of TWIG syntax
+
+### Fixed
+-	Two missing spaces after `controller:` in `config/routing.yml`, lines 3 and 7 which prevented enabling on a phpBB 4.0 board
+-	Migration file `migrations/v_0_5_0.php` to set permissions for a user role only if that role exists in order to prevent error messages if standard roles
+	were deleted
+
+### Removed
+  
+  
+  
 ## [0.5.0] - 2022-02-02
 
 ### Added
 -	A settings function to export the `phpbb_mot_hangman_words` table as a XML file
--	A function to display the term in clear after loosing a game, function is selectble in the ACP
+-	A function to display the term in clear after loosing a game, function is selectable in the ACP
 -	A system (including ACP setting) to block players from playing if their ratio of game points to term input points exceeds a value
 	defined by the administrator (in the ACP)
 -	A function to `event/listener.php` to delete `mot_hangman_score_table` entries if a user gets deleted
@@ -17,10 +35,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 -	Shifted the setting for 'Count a game as lost if game is left?' to the 'Game settings' section
 -	The search term input field from 'text' to 'textarea' in order to make it look more comfortable with long terms
-
-### Fixed
-
-### Removed
   
   
 ## [0.4.0] - 2022-01-18
@@ -41,8 +55,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   
 ### Fixed
 -	A faulty error message for a missing category (no ' in the `lang()` statement) in `styles/prosilver/template/hangman_input_word.html`
-  
-### Removed
   
   
 ## [0.3.0] - 2021-10-20
@@ -83,10 +95,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -	All links to Hangman tabs are using routes now (courtesy of Dr.Death), and these are defined only once and these definitions are used throughout
 	`controller/main.php`
 -	Layout of all three tabs is responsive
-	
-### Fixed
-
-### Removed
   
   
 ## [0.2.4] - 2021-03-17
@@ -142,14 +150,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 -	A migration file `v_0_2_2.php` to update config version number
 
-### Changed
-
 ### Fixed
 -	A bug which counted points and lives if a letter was selected by keyboard more than once (keyboard input wasn't monitored). Solved by monitoring used
 	letters in a new array and checking each input against this array, affected file is `styles/all/template/hangman_game.js`
 -	Displaying the Hangman tabs to parties not logged into the board by checking whether user is logged in in `styles/prosilver/template/hangman.html`
-
-### Removed
 
 
 ## [0.2.1] - 2021-03-01
@@ -160,10 +164,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 -	Display of start game button affecting `styles/prosilver/template/hangman_game.html` and `styles/prosilver/theme/hangman.css` files
-
-### Fixed
-
-### Removed
 
 
 ## [0.2.0] - 2021-02-28
@@ -177,8 +177,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 -	The game form
 -	The Javascript code to play the game
-
-### Fixed
 
 ### Removed
 -	French language pack

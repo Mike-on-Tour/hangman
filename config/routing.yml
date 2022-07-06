@@ -1,7 +1,7 @@
 mot_hangman_main_controller:
     path: /hangman
-    defaults: { _controller:mot.hangman.controller:display }
+    defaults: { _controller: mot.hangman.controller:display }
 
 mot_hangman_ajax_controller:
     path: /hangman_ajax_call
-    defaults: { _controller:mot.hangman.controller:hangman_ajax_response }
+    defaults: { _controller: mot.hangman.controller:hangman_ajax_response }

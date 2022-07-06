@@ -1,6 +1,6 @@
 # phpBB Hangman Game Extension
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-green)  
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.5.1-green)  
   
 ![phpBB 3.2.x Compatible](https://img.shields.io/badge/phpBB-3.2.x%20Compatible-009BDF)
 ![phpBB 3.3.x Compatible](https://img.shields.io/badge/phpBB-3.3.x%20Compatible-009BDF)  
