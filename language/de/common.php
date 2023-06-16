@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.5.0
+* @package Hangman v0.7.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2022 Mike-on-Tour
+* @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -73,7 +73,9 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
 	'MOT_HANGMAN_FAILED_TRIES'		=> 'Falsche Versuche',
 	'MOT_HANGMAN_CORRECT_TRIES'		=> 'Richtige Versuche',
-	'MOT_HANGMAN_YOU_WIN'			=> '<strong>Du hast gewonnen!</strong><br>Erreichte Punktzahl: ',
+	'MOT_HANGMAN_WIN_EXTRA_POINTS'	=> 'Fehlerfrei!!!<br>Du erhälst %1$d Zusatzpunkte!<br>',
+	'MOT_HANGMAN_YOU_WIN'			=> '<strong>Du hast gewonnen!</strong><br>',
+	'MOT_HANGMAN_YOU_WIN_PTS'		=> 'Erreichte Punktzahl: ',
 	'MOT_HANGMAN_NEW_QUOTE_TO'		=> 'Klicke erst auf ´Spielstart´ zum Start!',
 	'MOT_HANGMAN_YOU_LOSE'			=> '<strong>Du hast leider verloren!</strong><br>Erreichte Punktzahl: ',
 	'MOT_HANGMAN_SHOW_TERM'			=> '<br><br>Der Suchbegriff lautete:<br><i>',
@@ -116,4 +118,11 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_USER_TERMS'		=> 'Von dir eingegebene, verfügbare Suchbegriffe',
 	'MOT_HANGMAN_TERM'				=> 'Suchbegriff',
 	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
+	// Display players
+	'MOT_HANGMAN_PLAYERS'			=> 'Hangman-Spieler',
+	'MOT_HANGMAN_TOTAL_PLAYERS'		=> [
+		0	=> 'Es gibt derzeit keine aktiven Hangman-Spieler',
+		1	=> 'Es gibt derzeit %1$d aktiven Hangman-Spieler: ',
+		2	=> 'Es gibt derzeit %1$d aktive Hangman-Spieler: ',
+	],
 ]);

@@ -18,19 +18,19 @@
 			<th style="text-align: center;">{{ lang('MOT_HANGMAN_GAME_POINTS') }}</th>
 			<th style="text-align: center;">{{ lang('MOT_HANGMAN_WORD_POINTS') }}</th>
 		</tr>
-	{% for ranking in rankings %}
+		{% for ranking in rankings %}
+			<tr>
+				<td style="text-align: center;">{{ ranking.RANK }}</td>
+				<td {% if ranking.USER_COLOUR %}style="color: #{{ ranking.USER_COLOUR }}; font-weight: bold;"{% endif %}>{{ ranking.USERNAME }}</td>
+				<td style="text-align: center;">{{ ranking.MOT_HANGMAN_TOTAL_POINTS }}</td>
+				<td style="text-align: center;">{{ ranking.MOT_HANGMAN_GAME_POINTS }}</td>
+				<td style="text-align: center;">{{ ranking.MOT_HANGMAN_WORD_POINTS }}</td>
+			</tr>
+		{% else %}
 		<tr>
-			<td style="text-align: center;">{{ ranking.RANK }}</td>
-			<td {% if ranking.USER_COLOUR %}style="color: #{{ ranking.USER_COLOUR }}; font-weight: bold;"{% endif %}>{{ ranking.USERNAME }}</td>
-			<td style="text-align: center;">{{ ranking.MOT_HANGMAN_TOTAL_POINTS }}</td>
-			<td style="text-align: center;">{{ ranking.MOT_HANGMAN_GAME_POINTS }}</td>
-			<td style="text-align: center;">{{ ranking.MOT_HANGMAN_WORD_POINTS }}</td>
+			<td colspan="5" style="text-align: center;">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</td>
 		</tr>
-	{% else %}
-	<tr>
-		<td colspan="5" style="text-align: center;">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</td>
-	</tr>
-	{% endfor %}
+		{% endfor %}
 	</tbody>
 </table>
 

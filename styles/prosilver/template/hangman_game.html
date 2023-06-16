@@ -16,11 +16,15 @@
 	motHangman.jsLetterPoints = {{ LETTER_POINTS }};
 	motHangman.jsWinPoints = {{ WIN_POINTS }};
 	motHangman.jsWinString = "{{ lang('MOT_HANGMAN_YOU_WIN')|e('js') }}";
+	motHangman.jsWinStringPts = "{{ lang('MOT_HANGMAN_YOU_WIN_PTS')|e('js') }}";
 	motHangman.jsLoosePoints = {{ LOOSE_POINTS }};
 	motHangman.jsPunishEvaders = '{{ ENABLE_EVADE_PUNISH }}';
 	motHangman.jsLooseString = "{{ lang('MOT_HANGMAN_YOU_LOSE')|e('js') }}";
 	motHangman.jsShowTerm = '{{ SHOW_TERM_WHEN_LOST }}';
 	motHangman.jsShowTermMsg = "{{ lang('MOT_HANGMAN_SHOW_TERM')|e('js') }}";
+	motHangman.jsEnableExtraPoints = '{{ ENABLE_EXTRA_POINTS }}';
+	motHangman.jsExtraPoints = {{ MOT_HANGMAN_EXTRA_POINTS }};
+	motHangman.jsExtraPointsMsg = "{{ lang('MOT_HANGMAN_WIN_EXTRA_POINTS', MOT_HANGMAN_EXTRA_POINTS)|e('js') }}";
 	motHangman.jsAction = "{{ U_ACTION|e('js') }}";
 	motHangman.jsAjaxCall = "{{ AJAX_CALL|e('js') }}";
 // ]]>
@@ -87,7 +91,7 @@
 			<div id="row2"></div>
 		</div>
 	</div>
-	
+
 	<fieldset>
 		<input type="text" id="word_id" name="word_id" value="0" hidden="true">
 		<input type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden="true">

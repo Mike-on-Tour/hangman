@@ -1,0 +1,6 @@
+{% if S_DISPLAY_HANGMAN_ONLINE_LIST && !S_IS_BOT && S_USER_LOGGED_IN %}
+	<h3>{{ lang('MOT_HANGMAN_PLAYERS') }}</h3>
+	<p>
+		{{ TOTAL_HANGMAN_USERS_ONLINE }}
+	</p>
+{% endif %}

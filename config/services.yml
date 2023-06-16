@@ -23,8 +23,10 @@ services:
     mot.hangman.listener:
         class: mot\hangman\event\listener
         arguments:
+            - '@config'
             - '@dbal.conn'
             - '@controller.helper'
+            - '@language'
             - '@template'
             - '%mot.hangman.tables.mot_hangman_score%'
         tags:

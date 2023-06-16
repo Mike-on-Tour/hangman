@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* @package Hangman v0.6.0
+* @package Hangman v0.7.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2022 Mike-on-Tour
+* @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -17,6 +17,7 @@ class ext extends \phpbb\extension\base
 	protected $phpbb_min_ver = '3.2.0';
 	protected $phpbb_below_ver = '3.4.0@dev';
 	protected $php_min_ver = '7.2.0';
+	protected $php_below_ver = '8.3.0';
 
 	public function is_enableable()
 	{
@@ -41,7 +42,7 @@ class ext extends \phpbb\extension\base
 
 		if (!$this->php_requirement())
 		{
-			$this->error_message[] = $language->lang('MOT_HANGMAN_PHP_VERSION_ERROR', $this->php_min_ver);
+			$this->error_message[] = $language->lang('MOT_HANGMAN_PHP_VERSION_ERROR', $this->php_min_ver, $this->php_below_ver);
 		}
 
 		if (!empty($this->error_message))
@@ -65,11 +66,6 @@ class ext extends \phpbb\extension\base
 
 	protected function php_requirement()
 	{
-		return phpbb_version_compare(PHP_VERSION, $this->php_min_ver, '>');
-	}
-
-	private function get_adm_back_link()
-	{
-		return adm_back_link(append_sid('index.' . $this->container->getParameter('core.php_ext'), 'i=acp_extensions&amp;mode=main'));
+		return phpbb_version_compare(PHP_VERSION, $this->php_min_ver, '>') && phpbb_version_compare(PHP_VERSION, $this->php_below_ver, '<');
 	}
 }

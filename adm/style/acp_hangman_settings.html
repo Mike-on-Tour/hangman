@@ -1,3 +1,4 @@
+{% set SLIDERS = true %}	{# Set this to 'false' and then purge the cache in order to get the old radio buttons. #}
 {% include 'overall_header.html' %}
 {% INCLUDEJS '@mot_hangman/admin_mot_hangman.js' %}
 {% INCLUDECSS '@mot_hangman/mot_hangman_acp.css' %}
@@ -9,30 +10,25 @@
 		<legend>{{ lang('ACP_MOT_HANGMAN_EXT_SETTINGS') }}</legend>
  		<dl>
 			<dt><label for="mot_hangman_autodelete">{{ lang('ACP_MOT_HANGMAN_AUTODELETE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_AUTODELETE_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_autodelete" id="mot_hangman_autodelete" value="1"{{ ACP_MOT_HANGMAN_AUTODELETE == 1 ? 'checked' }}> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_autodelete" id="mot_hangman_autodelete" value="0"{{ ACP_MOT_HANGMAN_AUTODELETE == 0 ? 'checked' }}> {{ lang('NO') }}</label></dd>
+			<dd>{{ _self.switch('mot_hangman_autodelete', ACP_MOT_HANGMAN_AUTODELETE, SLIDERS) }}</dd>
 		</dl>
  		<dl>
 			<dt><label for="mot_hangman_category_enable">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_category_enable" id="mot_hangman_category_enable" value="1"{{ ACP_MOT_HANGMAN_CATEGORY_ENABLE == 1 ? 'checked' }}> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_category_enable" id="mot_hangman_category_enable" value="0"{{ ACP_MOT_HANGMAN_CATEGORY_ENABLE == 0 ? 'checked' }}> {{ lang('NO') }}</label></dd>
+			<dd>{{ _self.switch('mot_hangman_category_enable', ACP_MOT_HANGMAN_CATEGORY_ENABLE, SLIDERS) }}</dd>
 		</dl>
 		<div id="mot_hangman_category_enforce_field" hidden="true">
 			<dl>
 				<dt><label for="mot_hangman_category_enforce">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE_EXP') }}</p></dt>
-				<dd><label><input type="radio" class="radio" name="mot_hangman_category_enforce" id="mot_hangman_category_enforce" value="1"{{ ACP_MOT_HANGMAN_CATEGORY_ENFORCE == 1 ? 'checked' }}> {{ lang('YES') }}</label>
-					<label><input type="radio" class="radio" name="mot_hangman_category_enforce" id="mot_hangman_category_enforce" value="0"{{ ACP_MOT_HANGMAN_CATEGORY_ENFORCE == 0 ? 'checked' }}> {{ lang('NO') }}</label></dd>
+			<dd>{{ _self.switch('mot_hangman_category_enforce', ACP_MOT_HANGMAN_CATEGORY_ENFORCE, SLIDERS) }}</dd>
 			</dl>
 		</div>
 		<dl>
 			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_SHOW_TERM') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_SHOW_TERM_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_show_term" id="mot_hangman_show_term" value="1"{{ ACP_MOT_HANGMAN_SHOW_TERM == 1 ? 'checked' }}> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_show_term" id="mot_hangman_show_term" value="0"{{ ACP_MOT_HANGMAN_SHOW_TERM == 0 ? 'checked' }}> {{ lang('NO') }}</label></dd>
+			<dd>{{ _self.switch('mot_hangman_show_term', ACP_MOT_HANGMAN_SHOW_TERM, SLIDERS) }}</dd>
 		</dl>
  		<dl>
 			<dt><label for="mot_hangman_enforce_term">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_enforce_term" id="mot_hangman_enforce_term" value="1"{{ ACP_MOT_HANGMAN_ENFORCE_TERM == 1 ? 'checked' }}> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_enforce_term" id="mot_hangman_enforce_term" value="0"{{ ACP_MOT_HANGMAN_ENFORCE_TERM == 0 ? 'checked' }}> {{ lang('NO') }}</label></dd>
+			<dd>{{ _self.switch('mot_hangman_enforce_term', ACP_MOT_HANGMAN_ENFORCE_TERM, SLIDERS) }}</dd>
 		</dl>
 		<div id="mot_hangman_enforce_term_ratio_field" hidden="true">
 			<dl>
@@ -40,6 +36,10 @@
 				<dd><input id="mot_hangman_enforce_term_ratio" type="number" min="0" max="1000" name="mot_hangman_enforce_term_ratio" value={{ ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO }}></dd>
 			</dl>
 		</div>
+		<dl>
+			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_display_online', ACP_MOT_HANGMAN_DISPLAY_ONLINE, SLIDERS) }}</dd>
+		</dl>
 		<dl>
 			<dt><label for="mot_hangman_rows_per_page">{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP') }}</p></dt>
 			<dd><input id="mot_hangman_rows_per_page" type="number" min="2" max="50" name="mot_hangman_rows_per_page" value="{{ ACP_MOT_HANGMAN_ROWS_PER_PAGE }}"></dd>
@@ -71,9 +71,18 @@
 		</dl>
  		<dl>
 			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
-			<dd><label><input type="radio" class="radio" name="mot_hangman_evade_enable" id="mot_hangman_evade_enable" value="1"{{ ACP_MOT_HANGMAN_EVADE_ENABLE == 1 ? 'checked' }}> {{ lang('YES') }}</label>
-				<label><input type="radio" class="radio" name="mot_hangman_evade_enable" id="mot_hangman_evade_enable" value="0"{{ ACP_MOT_HANGMAN_EVADE_ENABLE == 0 ? 'checked' }}> {{ lang('NO') }}</label></dd>
+			<dd>{{ _self.switch('mot_hangman_evade_enable', ACP_MOT_HANGMAN_EVADE_ENABLE, SLIDERS) }}</dd>
 		</dl>
+ 		<dl>
+			<dt><label for="mot_hangman_extra_points_enable">{{ lang('MOT_HANGMAN_EXTRA_POINTS_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_extra_points_enable', MOT_HANGMAN_EXTRA_POINTS_ENABLE, SLIDERS) }}</dd>
+		</dl>
+		<div id="mot_hangman_extra_points_field" hidden="true">
+			<dl>
+				<dt><label for="mot_hangman_extra_points">{{ lang('MOT_HANGMAN_EXTRA_POINTS') }}{{ lang('COLON') }}</label><p>{{ lang('MOT_HANGMAN_EXTRA_POINTS_EXP') }}</p></dt>
+				<dd><input id="mot_hangman_extra_points" type="number" min="1" max="50" name="mot_hangman_extra_points" value="{{ MOT_HANGMAN_EXTRA_POINTS }}"></dd>
+			</dl>
+		</div>
 	</fieldset>
 
 	<fieldset>
@@ -170,3 +179,12 @@
 </script>
 
 {% include 'overall_footer.html' %}
+
+{% macro switch(name, checked = false, slider) %}
+	{% if slider %}
+		<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
+	{% else %}
+        <label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
+        <label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
+	{% endif %}
+{% endmacro %}

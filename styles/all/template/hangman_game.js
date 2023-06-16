@@ -190,6 +190,12 @@ motHangman.seek = function(letter) {
 			const matches = this.showText.match(/[_]/g);
 			if (matches === null) {
 				this.points += this.jsWinPoints;
+				if (this.jsEnableExtraPoints && this.livesUsed == 0) {
+					this.jsWinString += this.jsExtraPointsMsg + this.jsWinStringPts;
+					this.points += this.jsExtraPoints;
+				} else {
+					this.jsWinString += this.jsWinStringPts;
+				}
 				$("#score").val(this.points);
 				this.running = false;		// to prevent the action while unloading
 				this.modalWindow(this.jsWinString + this.points);

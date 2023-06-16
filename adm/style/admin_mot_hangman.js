@@ -1,7 +1,7 @@
 /**
 *
-* package Hangman v0.5.0
-* copyright (c) 2021 - 2022 Mike-on-Tour
+* package Hangman v0.7.0
+* copyright (c) 2021 - 2023 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -14,10 +14,21 @@
 * Check the 'Category' setting and hide or show the 'Enforce Catgory Input' setting accordingly
 */
 $("input[name='mot_hangman_category_enable']").click(function() {
-	if ($(this).val() == 1) {
-		$("#mot_hangman_category_enforce_field").show();
-	} else {
-		$("#mot_hangman_category_enforce_field").hide();
+	// Check radio buttons
+	if ($(this).attr('type') == 'radio') {
+		if ($(this).val() == 1) {
+			$("#mot_hangman_category_enforce_field").show();
+		} else {
+			$("#mot_hangman_category_enforce_field").hide();
+		}
+	}
+	// Check checkbox
+	if ($(this).attr('type') == 'checkbox') {
+		if ($(this).is(":checked")) {
+			$("#mot_hangman_category_enforce_field").show();
+		} else {
+			$("#mot_hangman_category_enforce_field").hide();
+		}
 	}
 });
 
@@ -29,15 +40,52 @@ if ($("input[name='mot_hangman_category_enable']:checked").val() == 1) {
 * Check the 'Enforce term' setting and hide or show the 'Enforce Term Ratio' setting accordingly
 */
 $("input[name='mot_hangman_enforce_term']").click(function() {
-	if ($(this).val() == 1) {
-		$("#mot_hangman_enforce_term_ratio_field").show();
-	} else {
-		$("#mot_hangman_enforce_term_ratio_field").hide();
+	// Check radio buttons
+	if ($(this).attr('type') == 'radio') {
+		if ($(this).val() == 1) {
+			$("#mot_hangman_enforce_term_ratio_field").show();
+		} else {
+			$("#mot_hangman_enforce_term_ratio_field").hide();
+		}
+	}
+	// Check checkbox
+	if ($(this).attr('type') == 'checkbox') {
+		if ($(this).is(":checked")) {
+			$("#mot_hangman_enforce_term_ratio_field").show();
+		} else {
+			$("#mot_hangman_enforce_term_ratio_field").hide();
+		}
 	}
 });
 
 if ($("input[name='mot_hangman_enforce_term']:checked").val() == 1) {
 	$("#mot_hangman_enforce_term_ratio_field").show();
+}
+
+/*
+* Check the 'Enable extra points' setting and hide or show the 'Extra points' setting accordingly
+*/
+$("input[name='mot_hangman_extra_points_enable']").click(function() {
+	// Check radio buttons
+	if ($(this).attr('type') == 'radio') {
+		if ($(this).val() == 1) {
+			$("#mot_hangman_extra_points_field").show();
+		} else {
+			$("#mot_hangman_extra_points_field").hide();
+		}
+	}
+	// Check checkbox
+	if ($(this).attr('type') == 'checkbox') {
+		if ($(this).is(":checked")) {
+			$("#mot_hangman_extra_points_field").show();
+		} else {
+			$("#mot_hangman_extra_points_field").hide();
+		}
+	}
+});
+
+if ($("input[name='mot_hangman_extra_points_enable']:checked").val() == 1) {
+	$("#mot_hangman_extra_points_field").show();
 }
 
 /*

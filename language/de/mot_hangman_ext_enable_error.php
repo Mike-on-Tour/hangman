@@ -23,5 +23,5 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_EXT_NAME'						=> 'Hangman',
 	'MOT_HANGMAN_ERROR_EXTENSION_NOT_ENABLE'	=> 'Die Erweiterung „%1$s“ kann nicht aktiviert werden. Prüfe die Voraussetzungen, die für die Erweiterung notwendig sind.',
 	'MOT_HANGMAN_ERROR_MESSAGE_PHPBB_VERSION'	=> 'Minimum ist phpBB %1$s, aber kleiner als „%2$s“',
-	'MOT_HANGMAN_PHP_VERSION_ERROR'				=> 'Minimum PHP-Version ist „%1$s“',
+	'MOT_HANGMAN_PHP_VERSION_ERROR'				=> 'Minimum PHP-Version ist „%1$s“, aber kleiner als „%2$s“',
 ]);

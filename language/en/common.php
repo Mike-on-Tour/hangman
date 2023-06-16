@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.5.0
+* @package Hangman v0.7.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2022 Mike-on-Tour
+* @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -73,7 +73,9 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_CATEGORY'			=> 'Category',
 	'MOT_HANGMAN_FAILED_TRIES'		=> 'Failed Tries',
 	'MOT_HANGMAN_CORRECT_TRIES'		=> 'Correct Tries',
-	'MOT_HANGMAN_YOU_WIN'			=> '<strong>You Win!</strong><br>Points gained: ',
+	'MOT_HANGMAN_WIN_EXTRA_POINTS'	=> 'No failures!!!<br>You gain additional %1$d points!<br>',
+	'MOT_HANGMAN_YOU_WIN'			=> '<strong>You Win!</strong><br>',
+	'MOT_HANGMAN_YOU_WIN_PTS'		=> 'Points gained: ',
 	'MOT_HANGMAN_NEW_QUOTE_TO'		=> 'Click ´Start Game´ to start Hangman Game!',
 	'MOT_HANGMAN_YOU_LOSE'			=> '<strong>You lose!</strong><br>Points gained: ',
 	'MOT_HANGMAN_SHOW_TERM'			=> '<br><br>The term read:<br><i>',
@@ -115,4 +117,11 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_USER_TERMS'		=> 'Available terms entered by yourself',
 	'MOT_HANGMAN_TERM'				=> 'Term',
 	'MOT_HANGMAN_CATEGORY'			=> 'Category',
+	// Display players
+	'MOT_HANGMAN_PLAYERS'			=> 'Hangman players',
+	'MOT_HANGMAN_TOTAL_PLAYERS'		=> [
+		0	=> 'Currently there is no member playing Hangman',
+		1	=> 'Currently there is %1$d member playing Hangman: ',
+		2	=> 'Currently there are %1$d members playing Hangman: ',
+	],
 ]);

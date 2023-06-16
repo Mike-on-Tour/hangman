@@ -4,6 +4,21 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.7.0] - 2023-06-15
+
+### Added
+-	A setting to enable displaying of hangman players in the "who is online" section
+-	Additional points for solving the riddle without failure including according settings
+
+### Changed
+-	The radio buttons in `adm/style/acp_hangman_settings.html` to sliders with the possibility to change back to radio buttons by setting a variable to false
+-	The check for PHP version during activation to check for maximum version, too
+
+### Fixed
+
+### Removed
+  
+  
 ## [0.6.0] - 2022-07-04
 
 ### Added
@@ -19,7 +34,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 	were deleted
 
 ### Removed
-  
   
   
 ## [0.5.0] - 2022-02-02

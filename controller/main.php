@@ -100,10 +100,10 @@ class main
 			login_box('', $this->language->lang('NO_AUTH_OPERATION'));
 		}
 
-		$this->game_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '1']);
-		$this->word_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '2']);
-		$this->rank_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '3']);
-		$this->summary_action = $this->helper->route('mot_hangman_main_controller', ['tab' => '4']);
+		$this->game_action = $this->helper->route('mot_hangman_main_controller', ['tab' => 'game']);
+		$this->word_action = $this->helper->route('mot_hangman_main_controller', ['tab' => 'word']);
+		$this->rank_action = $this->helper->route('mot_hangman_main_controller', ['tab' => 'rank']);
+		$this->summary_action = $this->helper->route('mot_hangman_main_controller', ['tab' => 'summ']);
 
 		// Get the possible letters from the default language file
 		$lang_arr = [];
@@ -121,12 +121,11 @@ class main
 		// Define some variables
 		$allow_user = true;	// Assume that this player is not blocked
 
-		$tab = $this->request->variable('tab', 0);
+		$tab = $this->request->variable('tab', '');
 		switch ($tab)
 		{
-			case 0:
-			case 1:
 			default:
+			case 'game':
 				add_form_key('hangman_game_frm');
 
 				if ($this->request->is_set_post('submit'))
@@ -261,13 +260,15 @@ class main
 					'LOOSE_POINTS'				=> $this->config['mot_hangman_points_loose'],
 					'ENABLE_EVADE_PUNISH'		=> $this->config['mot_hangman_evade_enable'] == 1 ? true : false,
 					'SHOW_TERM_WHEN_LOST'		=> $this->config['mot_hangman_show_term'] == 1 ? true : false,
+					'ENABLE_EXTRA_POINTS'		=> $this->config['mot_hangman_extra_points_enable'] == 1 ? true : false,
+					'MOT_HANGMAN_EXTRA_POINTS'	=> $this->config['mot_hangman_extra_points'],
 					'U_ACTION'					=> $this->game_action,
 					'AJAX_CALL'					=> $this->helper->route('mot_hangman_ajax_controller'),
 				]);
 				$selected_tab = 1;
 				break;
 
-			case 2:
+			case 'word':
 				add_form_key('hangman_quote_input');
 
 				$this->u_action = $this->word_action;
@@ -362,7 +363,7 @@ class main
 				$selected_tab = 2;
 				break;
 
-			case 3:
+			case 'rank':
 				// set parameter for pagination
 				$start = $this->request->is_set('start') ? $this->request->variable('start', 0) : 0;
 				$limit = $this->config['mot_hangman_rows_per_page'];	// max lines per page
@@ -414,7 +415,7 @@ class main
 				$selected_tab = 3;
 				break;
 
-			case 4:
+			case 'summ':
 				// set parameter for pagination
 				$start = $this->request->is_set('start') ? $this->request->variable('start', 0) : 0;
 				$limit = $this->config['mot_hangman_rows_per_page'];	// max lines per page
