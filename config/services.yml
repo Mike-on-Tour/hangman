@@ -11,12 +11,14 @@ services:
             - '@ext.manager'
             - '@controller.helper'
             - '@language'
+            - '@notification_manager'
             - '@pagination'
             - '@request'
             - '@template'
             - '@user'
             - '%core.root_path%'
             - '%core.php_ext%'
+            - '%mot.hangman.tables.mot_hangman_fame%'
             - '%mot.hangman.tables.mot_hangman_score%'
             - '%mot.hangman.tables.mot_hangman_words%'
 
@@ -48,3 +50,12 @@ services:
             - '%mot.hangman.tables.mot_hangman_score%'
             - '%mot.hangman.tables.mot_hangman_words%'
             - '%mot.hangman.tables.old_hangman_words%'
+
+    mot.hangman.notification.type.rank_lost:
+        class: mot\hangman\notification\type\mot_hangman_rank_lost
+        shared: false
+        parent: notification.type.base
+        tags: [{ name: notification.type }]
+        calls:
+            - [set_config, ['@config']]
+            - [set_user_loader, ['@user_loader']]

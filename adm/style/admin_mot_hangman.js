@@ -1,6 +1,6 @@
 /**
 *
-* package Hangman v0.7.0
+* package Hangman v0.8.0
 * copyright (c) 2021 - 2023 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -60,6 +60,32 @@ $("input[name='mot_hangman_enforce_term']").click(function() {
 
 if ($("input[name='mot_hangman_enforce_term']:checked").val() == 1) {
 	$("#mot_hangman_enforce_term_ratio_field").show();
+}
+
+/*
+* Check the 'Enable hall of fame' setting and hide or show the 'Number of players' setting accordingly
+*/
+$("input[name='mot_hangman_enable_fame']").click(function() {
+	// Check radio buttons
+	if ($(this).attr('type') == 'radio') {
+		if ($(this).val() == 1) {
+			$("#mot_hangman_rank_limit_field").show();
+		} else {
+			$("#mot_hangman_rank_limit_field").hide();
+		}
+	}
+	// Check checkbox
+	if ($(this).attr('type') == 'checkbox') {
+		if ($(this).is(":checked")) {
+			$("#mot_hangman_rank_limit_field").show();
+		} else {
+			$("#mot_hangman_rank_limit_field").hide();
+		}
+	}
+});
+
+if ($("input[name='mot_hangman_enable_fame']:checked").val() == 1) {
+	$("#mot_hangman_rank_limit_field").show();
 }
 
 /*

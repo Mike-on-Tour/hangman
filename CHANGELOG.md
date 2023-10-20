@@ -4,6 +4,26 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.8.0] - 2023-10-20
+
+### Added
+-	A (by default disabled) modal window to congratulate the user if improving the ranking by gaining either game or word points, this feature can be enabled in the ACP
+-	Notifications if a user looses the ranking (by default disabled), this feature can be enabled in the ACP
+-	A Hall of Fame displaying the best players of current month and year and the best players of the last months and the last years (by default disabled), this
+	feature (displaying the tab, storing points in the applicable table is enabled and can not be disabled) can be enabled in the ACP as well as select the number of players to
+	be displayed
+-	A link to the breadcrumbs
+-	A copyright in the overall footer if Hangman game is displayed
+
+### Changed
+-	Various code improvements
+-	Renamed language file `info_acp_hangman.php` into `info_acp_mot_hangman`
+
+### Fixed
+
+### Removed
+  
+  
 ## [0.7.0] - 2023-06-15
 
 ### Added

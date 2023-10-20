@@ -1,0 +1,7 @@
+Subject: You have lost your rank
+
+Hello {USERNAME},
+
+„{WINNER}“ displaced you from your Hangman Game ranking.
+
+{EMAIL_SIG}

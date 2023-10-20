@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.7.0
+* @package Hangman v0.8.0
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -53,7 +53,7 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN_ENFORCE_TERM'				=> 'Spieler mit zu wenigen Eingabepunkten blockieren',
 	'ACP_MOT_HANGMAN_ENFORCE_TERM_EXP'			=> 'Wenn aktiviert, werden Spieler, bei denen das Verhältnis der Spielepunkte zu den Begriffseingabepunkten
 													eine bestimmte Grenze überschreitet, aufgefordert vor einem neuen Spiel zunächst neue Suchbegriffe einzugeben.
-													So können Sie Spieler erziehen, die das Eingaben von Suchbegriffen vernachlässigen.<br>
+													So können Sie Spieler erziehen, die das Eingeben von Suchbegriffen vernachlässigen.<br>
 													Das Verhältnis Spielepunkte zu Begriffseingabepunkten können Sie in der nächsten Einstellung auswählen, sie
 													wird angezeigt sobald Sie hier ´Ja´ auswählen.',
 	'ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO'		=> 'Verhältnis Spielepunkte zu Begriffseingabepunkten',
@@ -71,6 +71,18 @@ $lang = array_merge($lang, [
 													von 3,125, aufgerundet 4. Damit muss jeder Spieler für (fast) jeden verwendeten Begriff einen
 													neuen eingeben; dies erscheint als gesundes Verhältnis, wenn verwendete Begriffe gelöscht
 													werden, ist dies nicht der Fall, kann das Verhältnis auch deutlich höher gewählt werden.',
+	'ACP_MOT_HANGMAN_GAIN_RANK'					=> 'Verbesserung Ranglistenplatz anzeigen',
+	'ACP_MOT_HANGMAN_GAIN_RANK_EXP'				=> 'Bei Aktivierung dieser Einstellung wird einem Spieler nach dem Spiel ein Glückwunsch-Fenster angezeigt, wenn er mit dem Ergebnis
+													seinen Ranglistenplatz verbessert hat',
+	'ACP_MOT_HANGMAN_LOOSE_RANK'				=> 'Benachrichtigung bei Verlust Ranglistenplatz',
+	'ACP_MOT_HANGMAN_LOOSE_RANK_EXP'			=> 'Bei Aktivierung dieser Einstellung erhält jeder Spieler eine Benachrichtigung, wenn er seinen Ranglistenplatz durch das
+													Spielergebnis eines anderen Spielers verliert',
+	'ACP_MOT_HANGMAN_ENABLE_FAME'				=> '»Hall of Fame« anzeigen',
+	'ACP_MOT_HANGMAN_ENABLE_FAME_EXP'			=> 'Wenn aktiviert, wird neben der Rangliste ein weiterer Reiter angezeigt, auf dem die monatlichen und jährlichen Spieler mit den
+													meisten Punkten im jeweiligen Zeitraum angezeigt werden.<br>
+													Wenn aktiviert, wird ein weiteres Eingabefeld angezeigt, mit dem die Anzahl der anzuzeigenden Spieler ausgewählt wird.',
+	'ACP_MOT_HANGMAN_RANK_LIMIT'				=> 'Anzahl der anzuzeigenden Spieler pro laufender Tabelle',
+	'ACP_MOT_HANGMAN_RANK_LIMIT_EXP'			=> 'Hier können Sie auswählen wie viele Spieler in den Tabellen für den laufenden Monat und das laufende Jahr angezeigt werden sollen.',
 	'ACP_MOT_HANGMAN_DISPLAY_ONLINE'			=> 'Anzeige der aktuell aktiven Hangman-Spieler',
 	'ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP'		=> 'Bei Aktivierung dieser Einstellung werden auf der Foren-Übersicht im Bereich „Wer ist online“ die Gesamtanzahl und die Namen
 													der Mitglieder angezeigt, die gerade eine Funktion von Hangman nutzen.',
@@ -101,11 +113,11 @@ $lang = array_merge($lang, [
 													verlassen wollen und erst bei Bejahen dieser Frage mit der ´Punktezahl bei Verlieren´ bestraft. Abhängig von
 													der Einstellung ´Benutzte Begriffe löschen´ wird der in diesem Spiel verwendete Suchbegriff ggf. gelöscht.<br>
 													Ist diese Option ausgeschaltet, wird die verlangte Seite ohne weitere Maßnahmen geladen.',
-	'MOT_HANGMAN_EXTRA_POINTS_ENABLE'			=> 'Extrapunkte bei fehlerfreiem Lösen',
-	'MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP'		=> 'Wenn Sie die Hangman-Spieler mit Extrapunkten für das Lösen ohne falsche Versuche belohnen möchten, können Sie das hier
+	'ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE'		=> 'Extrapunkte bei fehlerfreiem Lösen',
+	'ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP'	=> 'Wenn Sie die Hangman-Spieler mit Extrapunkten für das Lösen ohne falsche Versuche belohnen möchten, können Sie das hier
 													aktivieren; nach Aktivierung können Sie in einer weiteren, dann sichtbaren Einstellung die Anzahl der Extrapunkte eingeben.',
-	'MOT_HANGMAN_EXTRA_POINTS'					=> 'Extrapunkte für fehlerfreies Lösen',
-	'MOT_HANGMAN_EXTRA_POINTS_EXP'				=> 'Hier können Sie die Anzahl der Extrapunkte eingeben, Minimum ist ein Extrapunkt, Maximum sind 50 Extrapunkte.',
+	'ACP_MOT_HANGMAN_EXTRA_POINTS'				=> 'Extrapunkte für fehlerfreies Lösen',
+	'ACP_MOT_HANGMAN_EXTRA_POINTS_EXP'			=> 'Hier können Sie die Anzahl der Extrapunkte eingeben, Minimum ist ein Extrapunkt, Maximum sind 50 Extrapunkte.',
 	//Term settings
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS'			=> 'Einstellungen für Suchbegriff',
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP'		=> 'Hier können Sie Einstellungen für die Eingabe der Suchbegriffe vornehmen.',

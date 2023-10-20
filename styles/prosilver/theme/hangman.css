@@ -304,6 +304,27 @@ table.table1 thead th {
 }
 
 /*
+* Hall of Fame
+*/
+.flex-container {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: row;
+	align-items: top;
+	justify-content: center;
+}
+.table-container {
+	width: 50%;
+	margin: 20px;
+}
+
+@media  only screen and (max-width: 500px), only screen and (max-device-width: 500px) {
+	.flex-container {
+		flex-direction: column;
+	}
+}
+
+/*
 * Summary
 */
 .summary_content fieldset {

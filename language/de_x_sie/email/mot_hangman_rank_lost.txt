@@ -1,0 +1,7 @@
+Subject: Du hast deinen Ranglistenplatz verloren
+
+Hallo {USERNAME},
+
+Sie wurden beim Hangman Spiel von „{WINNER}“ von Ihrem Ranglistenplatz verdrängt.
+
+{EMAIL_SIG}

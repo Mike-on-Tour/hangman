@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.7.0
+* @package Hangman v0.8.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -44,12 +44,16 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_TAB_GAME'			=> 'Game',
 	'MOT_HANGMAN_TAB_WORD'			=> 'Search Term Input',
 	'MOT_HANGMAN_TAB_SCORE'			=> 'Highscore',
+	'MOT_HANGMAN_TAB_FAME'			=> 'Hall of Fame',
 	'MOT_HANGMAN_TAB_SUMMARY'		=> 'Summary',
+
 	// Back menu
 	'MOT_HANGMAN_TO_GAME'			=> 'Start Game',
 	'MOT_HANGMAN_TO_WORD_INPUT'		=> 'Submit a new search term',
 	'MOT_HANGMAN_TO_SCORE_TABLE'	=> 'View Highscore',
+	'MOT_HANGMAN_TO_FAME'			=> 'View Hall of Fame',
 	'MOT_HANGMAN_TO_SUMMARY'		=> 'Summary',
+
 	// Game
 	'MOT_HANGMAN'					=> 'Hangman',
 	'MOT_HANGMAN_TITLE'				=> 'Hangman Game',
@@ -85,6 +89,8 @@ $lang = array_merge($lang, [
 										terms prior to playing again.<br><br>
 										According to your current score you must enter at least <strong>%1$d term(s)</strong> in order to
 										play again.',
+	'MOT_HANGMAN_RANK_GAINED'		=> '<strong>Congratulations!</strong><br><br>You rose from %1$d. to %2$d. rank!',
+
 	// Term definition
 	'MOT_HANGMAN_QUOTE_INPUT_HEAD'	=> 'Enter a new term',
 	'MOT_HANGMAN_QUOTE_INPUT_EXPL'	=> 'You can enter a new term in this form. This term may contain the letters %1$s (upper and lower case), spaces and the
@@ -103,12 +109,26 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_TERM_TOO_SHORT'	=> 'Term is too short! Minimum number of letters is: ',
 	'MOT_HANGMAN_CATEGORY_MISSING'	=> 'Category must not be empty!',
 	'MOT_HANGMAN_WORD_EXISTS'		=> '<strong>The term you have entered already exists!</strong> Please try again with another term.',
+
 	// Ranking table
 	'MOT_HANGMAN_RANKING_TABLE'		=> 'Highscore',
 	'MOT_HANGMAN_TOTAL_POINTS'		=> 'Total points',
 	'MOT_HANGMAN_GAME_POINTS'		=> 'Game points',
 	'MOT_HANGMAN_WORD_POINTS'		=> 'Term input points',
 	'MOT_HANGMAN_NO_ENTRIES'		=> 'No entries',
+
+	// Hall of Fame
+	'MOT_HANGMAN_CURRENT_MONTH'		=> 'Current month',
+	'MOT_HANGMAN_CURRENT_YEAR'		=> 'Current year',
+	'MOT_HANGMAN_LAST_MONTHS'		=> [
+		1	=> 'Last month',
+		2	=> 'Last %1$d months',
+	],
+	'MOT_HANGMAN_LAST_YEARS'		=> [
+		1	=> 'Last year',
+		2	=> 'Last %1$d years',
+	],
+
 	// Summary
 	'MOT_HANGMAN_SUMMARY'			=> 'Summary',
 	'ACP_MOT_HANGMAN_TERMS'			=> 'Terms',
@@ -117,6 +137,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_USER_TERMS'		=> 'Available terms entered by yourself',
 	'MOT_HANGMAN_TERM'				=> 'Term',
 	'MOT_HANGMAN_CATEGORY'			=> 'Category',
+
 	// Display players
 	'MOT_HANGMAN_PLAYERS'			=> 'Hangman players',
 	'MOT_HANGMAN_TOTAL_PLAYERS'		=> [
@@ -124,4 +145,21 @@ $lang = array_merge($lang, [
 		1	=> 'Currently there is %1$d member playing Hangman: ',
 		2	=> 'Currently there are %1$d members playing Hangman: ',
 	],
+
+	// Notification text
+	'MOT_HANGMAN_NOTIFICATION_RANK_LOST'	=> '<strong>You slipped a notch!</strong><br>„%1$s“ displaced you from your Hangman Game ranking.',
+
+	// Months
+	'JANUARY'		=> 'January',
+	'FEBRUARY'		=> 'February',
+	'MARCH'			=> 'March',
+	'APRIL'			=> 'April',
+	'MAY'			=> 'May',
+	'JUNE'			=> 'June',
+	'JULY'			=> 'July',
+	'AUGUST'		=> 'August',
+	'SEPTEMBER'		=> 'September',
+	'OCTOBER'		=> 'October',
+	'NOVEMBER'		=> 'November',
+	'DECEMBER'		=> 'December',
 ]);

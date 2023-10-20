@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.7.0
+* @package Hangman v0.8.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -44,12 +44,16 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_TAB_GAME'			=> 'Spiel',
 	'MOT_HANGMAN_TAB_WORD'			=> 'Eingabe Suchbegriff',
 	'MOT_HANGMAN_TAB_SCORE'			=> 'Rangliste',
+	'MOT_HANGMAN_TAB_FAME'			=> 'Ruhmeshalle',
 	'MOT_HANGMAN_TAB_SUMMARY'		=> 'Übersicht',
+
 	// Back menu
 	'MOT_HANGMAN_TO_GAME'			=> 'Neues Spiel',
 	'MOT_HANGMAN_TO_WORD_INPUT'		=> 'Einen neuen Suchbegriff eingeben',
 	'MOT_HANGMAN_TO_SCORE_TABLE'	=> 'Zur Rangliste',
+	'MOT_HANGMAN_TO_FAME'			=> 'Zur Ruhmeshalle',
 	'MOT_HANGMAN_TO_SUMMARY'		=> 'Zur Übersicht',
+
 	// Game
 	'MOT_HANGMAN'					=> 'Hangman',
 	'MOT_HANGMAN_TITLE'				=> 'Hangman Spiel',
@@ -86,6 +90,8 @@ $lang = array_merge($lang, [
 										Suchbegriffe eingeben.<br><br>
 										Entsprechend Ihrem aktuellen Punktestand müssen Sie mindestens <strong>%1$d Begriff(e)</strong>
 										eingeben, damit Sie wieder spielen können.',
+	'MOT_HANGMAN_RANK_GAINED'		=> '<strong>Herzlichen Glückwunsch!</strong><br><br>Sie haben sich in der Rangliste vom %1$d. auf den %2$d. Platz verbessert!',
+
 	// Term definition
 	'MOT_HANGMAN_QUOTE_INPUT_HEAD'	=> 'Eingabe eines neuen Suchbegriffes',
 	'MOT_HANGMAN_QUOTE_INPUT_EXPL'	=> 'Hier können Sie einen neuen Suchbegriff eingeben. Dieser Suchbegriff darf die Buchstaben %1$s (groß und klein), Leerzeichen
@@ -104,12 +110,26 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_TERM_TOO_SHORT'	=> 'Der Suchbegriff ist zu kurz! Erforderliche Anzahl an Buchstaben: ',
 	'MOT_HANGMAN_CATEGORY_MISSING'	=> 'Kategorie muss ausgefüllt sein!',
 	'MOT_HANGMAN_WORD_EXISTS'		=> '<strong>Der eingegebene Suchbegriff existiert bereits!</strong> Geben Sie bitte einen anderen Begriff ein.',
+
 	// Ranking table
 	'MOT_HANGMAN_RANKING_TABLE'		=> 'Rangliste',
 	'MOT_HANGMAN_TOTAL_POINTS'		=> 'Gesamtpunktzahl',
 	'MOT_HANGMAN_GAME_POINTS'		=> 'Spielepunkte',
 	'MOT_HANGMAN_WORD_POINTS'		=> 'Begriffseingabepunkte',
 	'MOT_HANGMAN_NO_ENTRIES'		=> 'Keine Einträge',
+
+	// Hall of Fame
+	'MOT_HANGMAN_CURRENT_MONTH'		=> 'Laufender Monat',
+	'MOT_HANGMAN_CURRENT_YEAR'		=> 'Laufendes Jahr',
+	'MOT_HANGMAN_LAST_MONTHS'		=> [
+		1	=> 'Letzter Monat',
+		2	=> 'Letzte %1$d Monate',
+	],
+	'MOT_HANGMAN_LAST_YEARS'		=> [
+		1	=> 'Letztes Jahr',
+		2	=> 'Letzte %1$d Jahre',
+	],
+
 	// Summary
 	'MOT_HANGMAN_SUMMARY'			=> 'Übersicht',
 	'ACP_MOT_HANGMAN_TERMS'			=> 'Suchbegriffe',
@@ -118,6 +138,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_USER_TERMS'		=> 'Von Ihnen eingegebene, verfügbare Suchbegriffe',
 	'MOT_HANGMAN_TERM'				=> 'Suchbegriff',
 	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
+
 	// Display players
 	'MOT_HANGMAN_PLAYERS'			=> 'Hangman-Spieler',
 	'MOT_HANGMAN_TOTAL_PLAYERS'		=> [
@@ -125,4 +146,21 @@ $lang = array_merge($lang, [
 		1	=> 'Es gibt derzeit %1$d aktiven Hangman-Spieler: ',
 		2	=> 'Es gibt derzeit %1$d aktive Hangman-Spieler: ',
 	],
+
+	// Notification text
+	'MOT_HANGMAN_NOTIFICATION_RANK_LOST'	=> '<strong>In der Rangliste abgerutscht!</strong><br>Sie wurden von „%1$s“ von Ihrem Ranglistenplatz beim Hangman Spiel verdrängt.',
+
+	// Months
+	'JANUARY'		=> 'Januar',
+	'FEBRUARY'		=> 'Februar',
+	'MARCH'			=> 'März',
+	'APRIL'			=> 'April',
+	'MAY'			=> 'Mai',
+	'JUNE'			=> 'Juni',
+	'JULY'			=> 'Juli',
+	'AUGUST'		=> 'August',
+	'SEPTEMBER'		=> 'September',
+	'OCTOBER'		=> 'Oktober',
+	'NOVEMBER'		=> 'November',
+	'DECEMBER'		=> 'Dezember',
 ]);

@@ -37,7 +37,25 @@
 			</dl>
 		</div>
 		<dl>
-			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP') }}</p></dt>
+			<dt><label for="mot_hangman_gain_rank">{{ lang('ACP_MOT_HANGMAN_GAIN_RANK') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_GAIN_RANK_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_gain_rank', ACP_MOT_HANGMAN_GAIN_RANK, SLIDERS) }}</dd>
+		</dl>
+		<dl>
+			<dt><label for="mot_hangman_loose_rank">{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_loose_rank', ACP_MOT_HANGMAN_LOOSE_RANK, SLIDERS) }}</dd>
+		</dl>
+		<dl>
+			<dt><label for="mot_hangman_enable_fame">{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_enable_fame', ACP_MOT_HANGMAN_ENABLE_FAME, SLIDERS) }}</dd>
+		</dl>
+		<div id="mot_hangman_rank_limit_field" hidden="true">
+			<dl>
+				<dt><label for="mot_hangman_rank_limit">{{ lang('ACP_MOT_HANGMAN_RANK_LIMIT') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_RANK_LIMIT_EXP') }}</p></dt>
+				<dd><input id="mot_hangman_rank_limit" type="number" min="1" max="10" name="mot_hangman_rank_limit" value={{ ACP_MOT_HANGMAN_RANK_LIMIT }}></dd>
+			</dl>
+		</div>
+		<dl>
+			<dt><label for="mot_hangman_display_online">{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP') }}</p></dt>
 			<dd>{{ _self.switch('mot_hangman_display_online', ACP_MOT_HANGMAN_DISPLAY_ONLINE, SLIDERS) }}</dd>
 		</dl>
 		<dl>
@@ -74,13 +92,13 @@
 			<dd>{{ _self.switch('mot_hangman_evade_enable', ACP_MOT_HANGMAN_EVADE_ENABLE, SLIDERS) }}</dd>
 		</dl>
  		<dl>
-			<dt><label for="mot_hangman_extra_points_enable">{{ lang('MOT_HANGMAN_EXTRA_POINTS_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_extra_points_enable', MOT_HANGMAN_EXTRA_POINTS_ENABLE, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_extra_points_enable">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_extra_points_enable', ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE, SLIDERS) }}</dd>
 		</dl>
 		<div id="mot_hangman_extra_points_field" hidden="true">
 			<dl>
-				<dt><label for="mot_hangman_extra_points">{{ lang('MOT_HANGMAN_EXTRA_POINTS') }}{{ lang('COLON') }}</label><p>{{ lang('MOT_HANGMAN_EXTRA_POINTS_EXP') }}</p></dt>
-				<dd><input id="mot_hangman_extra_points" type="number" min="1" max="50" name="mot_hangman_extra_points" value="{{ MOT_HANGMAN_EXTRA_POINTS }}"></dd>
+				<dt><label for="mot_hangman_extra_points">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_EXP') }}</p></dt>
+				<dd><input id="mot_hangman_extra_points" type="number" min="1" max="50" name="mot_hangman_extra_points" value="{{ ACP_MOT_HANGMAN_EXTRA_POINTS }}"></dd>
 			</dl>
 		</div>
 	</fieldset>

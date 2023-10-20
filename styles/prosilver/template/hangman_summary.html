@@ -21,6 +21,12 @@
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_POINTS_LETTER }}</dd>
 		</dl>
+		{% if MOT_HANGMAN_EXTRA_POINTS %}
+			<dl>
+				<dt><label>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS') }}{{ lang('COLON') }}</label></dt>
+				<dd>{{ MOT_HANGMAN_EXTRA_POINTS }}</dd>
+			</dl>
+		{% endif %}
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_POINTS_WORD }}</dd>
@@ -50,7 +56,7 @@
 					</div>
 					<div><p>&nbsp;</p></div>
 				{% endif %}
-				
+
 				<table class="table1 zebra-list">
 					<tbody>
 						<tr>
@@ -69,7 +75,7 @@
 					{% endfor %}
 					</tbody>
 				</table>
-				
+
 				{% if pagination %}
 					<div>&nbsp;</div>
 					<div class="pagination">

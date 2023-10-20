@@ -68,4 +68,60 @@ class ext extends \phpbb\extension\base
 	{
 		return phpbb_version_compare(PHP_VERSION, $this->php_min_ver, '>') && phpbb_version_compare(PHP_VERSION, $this->php_below_ver, '<');
 	}
+
+	public function enable_step($old_state)
+	{
+		switch ($old_state)
+		{
+			case '': // Empty means nothing has run yet
+				$phpbb_notifications = $this->container->get('notification_manager');
+				$phpbb_notifications->enable_notifications('mot.hangman.notification.type.rank_lost');
+				return 'notifications';
+				break;
+
+			default:
+				return parent::enable_step($old_state);
+				break;
+		}
+	}
+
+	public function disable_step($old_state)
+	{
+		switch ($old_state)
+		{
+			case '': // Empty means nothing has run yet
+				$phpbb_notifications = $this->container->get('notification_manager');
+				$phpbb_notifications->disable_notifications('mot.hangman.notification.type.rank_lost');
+				return 'notifications';
+				break;
+
+			default:
+				return parent::disable_step($old_state);
+				break;
+		}
+	}
+
+	public function purge_step($old_state)
+	{
+		switch ($old_state)
+		{
+			case '': // Empty means nothing has run yet
+				try
+				{
+					$phpbb_notifications = $this->container->get('notification_manager');
+					$phpbb_notifications->purge_notifications('mot.hangman.notification.type.rank_lost');
+				}
+				catch (\phpbb\notification\exception $e)
+				{
+					// continue
+				}
+
+				return 'notifications';
+				break;
+
+			default:
+				return parent::purge_step($old_state);
+				break;
+		}
+	}
 }

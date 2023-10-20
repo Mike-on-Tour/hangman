@@ -51,7 +51,7 @@ motHangman.modalWindow = function(htmlText) {
 }
 
 /*
-* Wait for the user to either press the the 'Esc' or 'Enter' button or mouse click on the modal window's 'Ok' button to close the modal window and carry on with the script
+* Wait for the user to either press the 'Esc' or 'Enter' button or mouse click on the modal window's 'Ok' button to close the modal window and carry on with the script
 *
 * @params	boolean	backToPhp	if true we not only close the modal window but go back to the PHP script as well
 */

@@ -1,7 +1,7 @@
 /**
 *
-* package Hangman v 0.3.0
-* copyright (c) 2020 - 2021 Mike-on-Tour
+* package Hangman v 0.5.0
+* copyright (c) 2020 - 2023 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */

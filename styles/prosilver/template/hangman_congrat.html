@@ -1,0 +1,27 @@
+{% include 'overall_header.html' %}
+{% INCLUDECSS '@mot_hangman/hangman.css' %}
+{% include '@mot_hangman/hangman_modal.html' %}
+{% INCLUDEJS '@mot_hangman/hangman_congrat.js' %}
+
+<script>
+// <![CDATA[
+	var motHangman = {};
+// ]]>
+</script>
+
+<div hidden="true">
+	<form id="mot_hangman_congrat" name="mot_hangman_congrat" method="post" action="{{ U_ACTION }}">
+		<input type="hidden" id="congrat" name="congrat" value="true">
+		<input type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden="true">
+		{{ S_FORM_TOKEN }}
+	</form>
+</div>
+
+{% include 'overall_footer.html' %}
+
+<script>
+// <![CDATA[
+	motHangman.congratWindow("{{ MOT_HANGMAN_CONGR|e('js') }}");
+	motHangman.waitToClose();
+// ]]>
+</script>

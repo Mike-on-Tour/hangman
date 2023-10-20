@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.7.0
+* @package Hangman v0.8.0
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -51,7 +51,7 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN_SHOW_TERM'					=> 'Display the term when closing a lost game',
 	'ACP_MOT_HANGMAN_SHOW_TERM_EXP'				=> 'If activated the term will be displayed in clear with the message about the lost game.',
 	'ACP_MOT_HANGMAN_ENFORCE_TERM'				=> 'Block players with an insufficient number of term input points',
-	'ACP_MOT_HANGMAN_ENFORCE_TERM_EXP'			=> 'If you select ´Yes´ players with a game points to term input points ratio exceeding the
+	'ACP_MOT_HANGMAN_ENFORCE_TERM_EXP'			=> 'If activated players with a game points to term input points ratio exceeding the
 													set limit will be prompted to enter a new term prior to playing. This is a means to train
 													players neclecting the input of new terms.<br>
 													You can select the game points to term input points ratio in the next setting which will
@@ -69,38 +69,53 @@ $lang = array_merge($lang, [
 													would be 3.125 or 4 to bring up a round figure. With a ratio of 4 a player must enter a new term for
 													(nearly) every won game which seems to be a healthy figure if used terms are deleted. You can select
 													a higher value if used terms remain in the database.',
+	'ACP_MOT_HANGMAN_GAIN_RANK'					=> 'Display improvement of rank',
+	'ACP_MOT_HANGMAN_GAIN_RANK_EXP'				=> 'If you enable this setting players will see a congratulations box if the points gained during the concluded game result in an
+													improvement of their rank.',
+	'ACP_MOT_HANGMAN_LOOSE_RANK'				=> 'Notification when loosing current rank',
+	'ACP_MOT_HANGMAN_LOOSE_RANK_EXP'			=> 'If enabled every player who is loosing the current rank through the points gained by another player will receive a notification
+													to this effect.',
+	'ACP_MOT_HANGMAN_ENABLE_FAME'				=> 'Display »Hall of Fame«',
+	'ACP_MOT_HANGMAN_ENABLE_FAME_EXP'			=> 'If enabled another tab is displayed beside the highscore tab with a monthly and yearly hall of fame showing the players gaining
+													the most points within those time frames.<br>
+													If enabled another setting will be displayed where you can choose the number of players to be displayed.',
+	'ACP_MOT_HANGMAN_RANK_LIMIT'				=> 'Number of players to be displayed',
+	'ACP_MOT_HANGMAN_RANK_LIMIT_EXP'			=> 'You can select the number of players to be displayed in the tables for the current month and year..',
+	'ACP_MOT_HANGMAN_DISPLAY_ONLINE'			=> 'Display currently active Hangman players',
+	'ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP'		=> 'Activating this setting will display the total number and the names of all members currently active on one of the Hangman tabs
+													within the „Who is online“ section.',
 	'ACP_MOT_HANGMAN_ROWS_PER_PAGE'				=> 'Rows per table page',
 	'ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP'			=> 'Choose the number of rows to be displayed per table page',
-	'ACP_MOT_HANGMAN_GAME_SETTINGS'				=> 'Ustawienia gry',
+	'ACP_MOT_HANGMAN_GAME_SETTINGS'				=> 'Game settings',
 	'ACP_MOT_HANGMAN_GAME_SETTINGS_EXP'			=> 'Here you can configure the settings for the number of lives to play with (failed tries) and for points to gain.<br>
 													All inputs are subject to getting checked according to the individual hints and changed if necessary.',
-	'ACP_MOT_HANGMAN_LIVES'						=> 'Ilość prób (żyć)',
+	'ACP_MOT_HANGMAN_LIVES'						=> 'Number of failed tries (lives)',
 	'ACP_MOT_HANGMAN_LIVES_EXP'					=> 'Number of failed tries until the player dances on air and loses the game<br>
 													(integer between 4 and 10)',
-	'ACP_MOT_HANGMAN_POINTS_WIN'				=> 'Punkty za wygraną',
+	'ACP_MOT_HANGMAN_POINTS_WIN'				=> 'Points if winning',
 	'ACP_MOT_HANGMAN_POINTS_WIN_EXP'			=> 'Number of points to gain if the player solves the puzzle<br>
 													(integer greater than zero)',
-	'ACP_MOT_HANGMAN_POINTS_LOOSE'				=> 'Punkty za przegraną lub ucieczkę',
+	'ACP_MOT_HANGMAN_POINTS_LOOSE'				=> 'Points if losing',
 	'ACP_MOT_HANGMAN_POINTS_LOOSE_EXP'			=> 'Number of points debited if the player fails to solve the puzzle<br>
 													(integer smaller than or equal to zero)',
-	'ACP_MOT_HANGMAN_POINTS_LETTER'				=> 'Punkty za zgadniętą literę',
+	'ACP_MOT_HANGMAN_POINTS_LETTER'				=> 'Number of points to gain with correct letter',
 	'ACP_MOT_HANGMAN_POINTS_LETTER_EXP'			=> 'Number of points to gain by selecting a letter belonging to the puzzle<br>
 													(integer greater than or equal to zero)',
-	'ACP_MOT_HANGMAN_POINTS_WORD'				=> 'Punkty za dodane nowe hasło',
+	'ACP_MOT_HANGMAN_POINTS_WORD'				=> 'Points for a new quote',
 	'ACP_MOT_HANGMAN_POINTS_WORD_EXP'			=> 'Number of points to gain by entering a term or quote into the database<br>
 													(integer greater than or equal to zero)',
-	'ACP_MOT_HANGMAN_EVADE_ENABLE'				=> 'Licz ucieczkę z gry jak przegraną?',
+	'ACP_MOT_HANGMAN_EVADE_ENABLE'				=> 'Count a game as lost if game is left?',
 	'ACP_MOT_HANGMAN_EVADE_ENABLE_EXP'			=> 'If activated players leaving a running game (e.g. by klicking a link or refreshing the page) will be
 													scored the ´Points if losing´.<br>
 													If this option is enabled players will be asked via a popup window whether they really want to leave the game
 													page. If they affirm this action they will be scored (punished by) the ´Points if losing´. According to the
 													setting ´Delete used terms´ the search term used in this game may be deleted from the database.<br>
 													If this option is disabled the player wil be relayed to the selected page without further action.',
-	'MOT_HANGMAN_EXTRA_POINTS_ENABLE'			=> 'Enable additional points for solving without failed tries',
-	'MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP'		=> 'If you want to reward Hangman players for solving the riddle without failed tries please activate this setting;
+	'ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE'		=> 'Enable additional points for solving without failed tries',
+	'ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP'	=> 'If you want to reward Hangman players for solving the riddle without failed tries please activate this setting;
 													if activated you can choose the number of additional points in another, then visible setting.',
-	'MOT_HANGMAN_EXTRA_POINTS'					=> 'Additional points for solving without failed tries',
-	'MOT_HANGMAN_EXTRA_POINTS_EXP'				=> 'Please choose the number of additional points, minimum number is one additional point, maximum number are 50 additional points.',
+	'ACP_MOT_HANGMAN_EXTRA_POINTS'				=> 'Additional points for solving without failed tries',
+	'ACP_MOT_HANGMAN_EXTRA_POINTS_EXP'			=> 'Please choose the number of additional points, minimum number is one additional point, maximum number are 50 additional points.',
 	//Term settings
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS'			=> 'Term input settings',
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP'		=> 'Here you can configure the settings for the input of search terms.',

@@ -1,15 +1,15 @@
 <?php
 /**
 *
-* @package Hangman v0.5.0
-* @copyright (c) 2021 - 2022 Mike-on-Tour
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+* @package Hangman v0.8.0
+* @author Mike-on-Tour
+* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+* @language file [Deutsch / Du]
 *
 */
 
-/**
-* DO NOT CHANGE
-*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,8 +31,12 @@ if (empty($lang) || !is_array($lang))
 // You do not need this where single placeholders are used, e.g. 'Message %d' is fine
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ » „ “ — …
+//
 
 $lang = array_merge($lang, [
-	// User permissions
-	'ACL_U_MOT_HANGMAN_CREATE_SEARCH_TERM'	=> 'Może wprowadzić nowe hasło do słownika gry Wisielec.',
+	'MOT_HANGMAN_NOTIFICATION_CATEGORY'		=> 'Benachrichtigungen zum Hangman Spiel',
+	'MOT_HANGMAN_NOTIFICATION_TYPE'			=> 'Benachrichtigung zum Verlust des Ranglistenplatzes',
 ]);
