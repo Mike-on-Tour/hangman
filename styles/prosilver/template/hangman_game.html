@@ -5,8 +5,6 @@
 // <![CDATA[
 	motHangman.jsShowCategory = '{{ SHOW_CATEGORY }}';
 	motHangman.jsHangmanLetters = {{ MOT_HANGMAN_LETTERS }};
-	motHangman.jsHangmanTotalLetters = {{ HANGMAN_TOTAL_LETTERS }};
-	motHangman.jsLetterRow = {{ HANGMAN_LETTER_ROW }};
 	motHangman.jsImagePath = "{{ IMAGE_PATH|e('js') }}";
 	motHangman.jsAllowedPunctMarks = "{{ ALLOWED_PUNCT_MARKS|e('js') }}";
 	motHangman.jsClickStart = '{{ CLICK_START_FIRST|e('js') }}';
@@ -39,6 +37,9 @@
 
 	<div id="game_content">
 		<div id="status">
+			{% if SHOW_CATEGORY %}
+				<dl style="padding: 4px 0;"><dt><label>&nbsp;</label></dt><dd></dd></dl>
+			{% endif %}
 			<div id="hm_picture">
 				<img src="{{ IMAGE_PATH }}10.svg" width="75" height="125">
 			</div>
@@ -65,30 +66,37 @@
 			<fieldset>
 				{% if SHOW_CATEGORY %}
 					<dl>
-						<dt><label>{{ lang('MOT_HANGMAN_CATEGORY') }}{{ lang('COLON') }}</label></dt>
-						<dd><span id="hangman_category" class="bg2"><span></dd>
+						<dt class="mot-hangman-dt"><label>{{ lang('MOT_HANGMAN_CATEGORY') ~ lang('COLON') }}</label></dt>
+						<dd><span id="hangman_category" class="bg2"></span></dd>
 					</dl>
 				{% endif %}
 				<dl>
+					<dt class="mot-hangman-dt"><label>{{ lang('MOT_HANGMAN_CREATOR') ~ lang('COLON') }}</label></dt>
+					<dd><span id="mot_hangman_creator" class="bg2"></span></dd>
+				</dl>
+
+				<dl>
 					<textarea class="bg2 tarea" onfocus="word.blur();" id="hangman_word" name="word" cols="100" rows="2">{{ lang('MOT_HANGMAN_NEW_QUOTE_START') }}</textarea>
 				</dl>
+
 				<dl>
-					<dt><label>{{ lang('MOT_HANGMAN_FAILED_TRIES') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('MOT_HANGMAN_FAILED_TRIES') ~ lang('COLON') }}</label></dt>
 					<dd><input id="tried" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="tried" readonly /></dd>
 				</dl>
+
 				<dl>
-					<dt><label>{{ lang('MOT_HANGMAN_CORRECT_TRIES') }}{{ lang('COLON') }}</label></dt>
+					<dt><label>{{ lang('MOT_HANGMAN_CORRECT_TRIES') ~ lang('COLON') }}</label></dt>
 					<dd><input id="correct" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="correct" readonly /></dd>
 				<dl>
 			</fieldset>
 		</div>
-
 	</div>
 
 	<div class="letter_table">
-		<div align="center">
+		<div class="row_container">
 			<div id="row1"></div>
 			<div id="row2"></div>
+			<div id="row3"></div>
 		</div>
 	</div>
 

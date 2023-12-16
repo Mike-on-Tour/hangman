@@ -1,65 +1,65 @@
-{% set SLIDERS = true %}	{# Set this to 'false' and then purge the cache in order to get the old radio buttons. #}
 {% include 'overall_header.html' %}
 {% INCLUDEJS '@mot_hangman/admin_mot_hangman.js' %}
 {% INCLUDECSS '@mot_hangman/mot_hangman_acp.css' %}
+{% set switch_type = TOGGLECTRL_TYPE ?? 'toggle' %}
 
 <h1>{{ lang('ACP_MOT_HANGMAN_SETTINGS') }}</h1>
 
-<form id="acp_hangman_settings" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
+<form id="acp_hangman_settings" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION_MOT_HANGMAN_SETTINGS }}">
 	<fieldset>
 		<legend>{{ lang('ACP_MOT_HANGMAN_EXT_SETTINGS') }}</legend>
  		<dl>
-			<dt><label for="mot_hangman_autodelete">{{ lang('ACP_MOT_HANGMAN_AUTODELETE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_AUTODELETE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_autodelete', ACP_MOT_HANGMAN_AUTODELETE, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_autodelete">{{ lang('ACP_MOT_HANGMAN_AUTODELETE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_AUTODELETE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_autodelete', ACP_MOT_HANGMAN_AUTODELETE, switch_type) }}</dd>
 		</dl>
  		<dl>
-			<dt><label for="mot_hangman_category_enable">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_category_enable', ACP_MOT_HANGMAN_CATEGORY_ENABLE, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_category_enable">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_category_enable', ACP_MOT_HANGMAN_CATEGORY_ENABLE, switch_type) }}</dd>
 		</dl>
 		<div id="mot_hangman_category_enforce_field" hidden="true">
 			<dl>
-				<dt><label for="mot_hangman_category_enforce">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_category_enforce', ACP_MOT_HANGMAN_CATEGORY_ENFORCE, SLIDERS) }}</dd>
+				<dt><label for="mot_hangman_category_enforce">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_category_enforce', ACP_MOT_HANGMAN_CATEGORY_ENFORCE, switch_type) }}</dd>
 			</dl>
 		</div>
 		<dl>
-			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_SHOW_TERM') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_SHOW_TERM_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_show_term', ACP_MOT_HANGMAN_SHOW_TERM, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_SHOW_TERM') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_SHOW_TERM_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_show_term', ACP_MOT_HANGMAN_SHOW_TERM, switch_type) }}</dd>
 		</dl>
  		<dl>
-			<dt><label for="mot_hangman_enforce_term">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_enforce_term', ACP_MOT_HANGMAN_ENFORCE_TERM, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_enforce_term">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_enforce_term', ACP_MOT_HANGMAN_ENFORCE_TERM, switch_type) }}</dd>
 		</dl>
 		<div id="mot_hangman_enforce_term_ratio_field" hidden="true">
 			<dl>
-				<dt><label for="mot_hangman_enforce_term_ratio">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO_EXP') }}</p></dt>
+				<dt><label for="mot_hangman_enforce_term_ratio">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO_EXP') }}</p></dt>
 				<dd><input id="mot_hangman_enforce_term_ratio" type="number" min="0" max="1000" name="mot_hangman_enforce_term_ratio" value={{ ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO }}></dd>
 			</dl>
 		</div>
 		<dl>
-			<dt><label for="mot_hangman_gain_rank">{{ lang('ACP_MOT_HANGMAN_GAIN_RANK') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_GAIN_RANK_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_gain_rank', ACP_MOT_HANGMAN_GAIN_RANK, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_gain_rank">{{ lang('ACP_MOT_HANGMAN_GAIN_RANK') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_GAIN_RANK_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_gain_rank', ACP_MOT_HANGMAN_GAIN_RANK, switch_type) }}</dd>
 		</dl>
 		<dl>
-			<dt><label for="mot_hangman_loose_rank">{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_loose_rank', ACP_MOT_HANGMAN_LOOSE_RANK, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_loose_rank">{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_loose_rank', ACP_MOT_HANGMAN_LOOSE_RANK, switch_type) }}</dd>
 		</dl>
 		<dl>
-			<dt><label for="mot_hangman_enable_fame">{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_enable_fame', ACP_MOT_HANGMAN_ENABLE_FAME, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_enable_fame">{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_enable_fame', ACP_MOT_HANGMAN_ENABLE_FAME, switch_type) }}</dd>
 		</dl>
 		<div id="mot_hangman_rank_limit_field" hidden="true">
 			<dl>
-				<dt><label for="mot_hangman_rank_limit">{{ lang('ACP_MOT_HANGMAN_RANK_LIMIT') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_RANK_LIMIT_EXP') }}</p></dt>
+				<dt><label for="mot_hangman_rank_limit">{{ lang('ACP_MOT_HANGMAN_RANK_LIMIT') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_RANK_LIMIT_EXP') }}</p></dt>
 				<dd><input id="mot_hangman_rank_limit" type="number" min="1" max="10" name="mot_hangman_rank_limit" value={{ ACP_MOT_HANGMAN_RANK_LIMIT }}></dd>
 			</dl>
 		</div>
 		<dl>
-			<dt><label for="mot_hangman_display_online">{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_display_online', ACP_MOT_HANGMAN_DISPLAY_ONLINE, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_display_online">{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_display_online', ACP_MOT_HANGMAN_DISPLAY_ONLINE, switch_type) }}</dd>
 		</dl>
 		<dl>
-			<dt><label for="mot_hangman_rows_per_page">{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP') }}</p></dt>
+			<dt><label for="mot_hangman_rows_per_page">{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP') }}</p></dt>
 			<dd><input id="mot_hangman_rows_per_page" type="number" min="2" max="50" name="mot_hangman_rows_per_page" value="{{ ACP_MOT_HANGMAN_ROWS_PER_PAGE }}"></dd>
 		</dl>
 	</fieldset>
@@ -68,36 +68,36 @@
 		<legend>{{ lang('ACP_MOT_HANGMAN_GAME_SETTINGS') }}</legend>
 		<p>{{ lang('ACP_MOT_HANGMAN_GAME_SETTINGS_EXP') }}</p>
 		<dl>
-			<dt><label for="acp_hangman_lives">{{ lang('ACP_MOT_HANGMAN_LIVES') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LIVES_EXP') }}</p></dt>
+			<dt><label for="acp_hangman_lives">{{ lang('ACP_MOT_HANGMAN_LIVES') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LIVES_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_lives" type="number" min="4" max="10" name="acp_hangman_lives" value="{{ ACP_MOT_HANGMAN_LIVES }}"></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_points_win">{{ lang('ACP_MOT_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WIN_EXP') }}</p></dt>
+			<dt><label for="acp_hangman_points_win">{{ lang('ACP_MOT_HANGMAN_POINTS_WIN') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WIN_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_points_win" type="number" min="1" name="acp_hangman_points_win" value="{{ ACP_MOT_HANGMAN_POINTS_WIN }}"></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_points_loose">{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE_EXP') }}</p></dt>
+			<dt><label for="acp_hangman_points_loose">{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_points_loose" type="number" max="0" name="acp_hangman_points_loose" value="{{ ACP_MOT_HANGMAN_POINTS_LOOSE }}"></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp^_hangman_points_letter">{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER_EXP') }}</p></dt>
+			<dt><label for="acp^_hangman_points_letter">{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_points_letter" type="number" min="0" name="acp_hangman_points_letter" value="{{ ACP_MOT_HANGMAN_POINTS_LETTER }}"></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_points_word">{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
+			<dt><label for="acp_hangman_points_word">{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_points_word" type="number" min="0" name="acp_hangman_points_word" value="{{ ACP_MOT_HANGMAN_POINTS_WORD }}"></dd>
 		</dl>
  		<dl>
-			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_evade_enable', ACP_MOT_HANGMAN_EVADE_ENABLE, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_evade_enable', ACP_MOT_HANGMAN_EVADE_ENABLE, switch_type) }}</dd>
 		</dl>
  		<dl>
-			<dt><label for="mot_hangman_extra_points_enable">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_extra_points_enable', ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE, SLIDERS) }}</dd>
+			<dt><label for="mot_hangman_extra_points_enable">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP') }}</p></dt>
+			<dd>{{ _self.switch('mot_hangman_extra_points_enable', ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE, switch_type) }}</dd>
 		</dl>
 		<div id="mot_hangman_extra_points_field" hidden="true">
 			<dl>
-				<dt><label for="mot_hangman_extra_points">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_EXP') }}</p></dt>
+				<dt><label for="mot_hangman_extra_points">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_EXP') }}</p></dt>
 				<dd><input id="mot_hangman_extra_points" type="number" min="1" max="50" name="mot_hangman_extra_points" value="{{ ACP_MOT_HANGMAN_EXTRA_POINTS }}"></dd>
 			</dl>
 		</div>
@@ -107,11 +107,11 @@
 		<legend>{{ lang('ACP_MOT_HANGMAN_INPUT_SETTINGS') }}</legend>
 		<p>{{ lang('ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP') }}</p>
 		<dl>
-			<dt><label for="acp_hangman_term_length">{{ lang('ACP_MOT_HANGMAN_TERM_LENGTH') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_TERM_LENGTH_EXP') }}</p></dt>
+			<dt><label for="acp_hangman_term_length">{{ lang('ACP_MOT_HANGMAN_TERM_LENGTH') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_TERM_LENGTH_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_term_length" type="number" min="1" name="acp_hangman_term_length" value="{{ ACP_MOT_HANGMAN_TERM_LENGTH }}"></dd>
 		</dl>
 		<dl>
-			<dt><label for="acp_hangman_punctuation_marks">{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP') }}</p></dt>
+			<dt><label for="acp_hangman_punctuation_marks">{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP') }}</p></dt>
 			<dd><input id="acp_hangman_punctuation_marks" type="text" name="acp_hangman_punctuation_marks" value="{{ ACP_MOT_HANGMAN_PUNCTUATION_MARKS }}"></dd>
 		</dl>
 	</fieldset>
@@ -121,56 +121,84 @@
 			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}">
 		</p>
-	{{ S_FORM_TOKEN }}
 	</fieldset>
-
+	{{ S_FORM_TOKEN }}
 </form>
 
 <hr>
 
 <fieldset>
 	<legend>{{ lang('ACP_MOT_HANGMAN_MIGRATION_SETTINGS') }}</legend>
-	<form id="acp_mot_hangman_file_upload" method="post" action="{{ U_ACTION }}" enctype="multipart/form-data">
+	<form id="acp_mot_hangman_file_upload" method="post" action="{{ U_ACTION_MOT_HANGMAN_UPLOAD_XML }}" enctype="multipart/form-data">
 		<dl>
-			<dt><label for="acp_mot_hangman_file">{{ lang('ACP_MOT_HANGMAN_UPLOAD_XML') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_UPLOAD_XML_EXP') }}</p></dt>
+			<dt><label for="acp_mot_hangman_file">{{ lang('ACP_MOT_HANGMAN_UPLOAD_XML') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_UPLOAD_XML_EXP') }}</p></dt>
 			<dd>
 				<input type="file" id="acp_mot_hangman_file" name="acp_mot_hangman_file" class="inputbox autowidth" accept=".xml">&nbsp;
-				<input id="acp_mot_hangman_upload_file" class="button2" type="submit" name="acp_mot_hangman_upload_file" value="{{ lang('ACP_MOT_HANGMAN_UPLOAD') }}">
+				<input id="mot_hangman_upload_file" class="dt-button button1" type="submit" name="mot_hangman_upload_file" value="{{ lang('ACP_MOT_HANGMAN_UPLOAD') }}">
 			</dd>
 		</dl>
 	</form>
+
 	{% if ACP_MOT_HANGMAN_IMPORT_OLD_TABLE %}
-		<form id="acp_mot_hangman_table_import" method="post" action="{{ U_ACTION }}">
+		<form id="acp_mot_hangman_table_import" method="post" action="{{ U_ACTION_MOT_HANGMAN_IMPORT_TABLE }}">
 			<dl>
-				<dt><label for="acp_mot_hangman_import_table">{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE_EXP') }}</p></dt>
+				<dt><label for="mot_hangman_import_table">{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE_EXP') }}</p></dt>
 				<dd>
-					<input id="acp_mot_hangman_import_table" class="button2" type="submit" name="acp_mot_hangman_import_table" value="{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE_BUTTON') }}">
+					<input id="mot_hangman_import_table" class="dt-button button1" type="submit" name="mot_hangman_import_table" value="{{ lang('ACP_MOT_HANGMAN_IMPORT_TABLE_BUTTON') }}">
 				</dd>
 			</dl>
+			{{ S_FORM_TOKEN }}
 		</form>
 	{% endif %}
 </fieldset>
 
-<fieldset>
-	<legend>{{ lang('ACP_MOT_HANGMAN_DATA_EXPORT') }}</legend>
-	<form id="acp_mot_hangman_data_export" method="post" action="{{ U_ACTION }}">
+<form id="acp_mot_hangman_data_export" method="post" action="{{ U_ACTION_MOT_HANGMAN_DATA_EXPORT }}">
+	<fieldset>
+		<legend>{{ lang('ACP_MOT_HANGMAN_DATA_EXPORT') }}</legend>
 		<dl>
-			<dt><label for="acp_mot_hangman_export_file">{{ lang('ACP_MOT_HANGMAN_EXPORT_TERMS') }}{{ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXPORT_TERMS_EXP') }}</p>
-			<dd><input id="acp_mot_hangman_export_file" class="button2" type="submit" name="acp_mot_hangman_export_file" value="{{ lang('ACP_MOT_HANGMAN_SUBMIT_EXPORT') }}"></dd>
+			<dt><label for="mot_hangman_export_file">{{ lang('ACP_MOT_HANGMAN_EXPORT_TERMS') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXPORT_TERMS_EXP') }}</p>
+			<dd><input id="mot_hangman_export_file" class="dt-button button1" type="submit" name="mot_hangman_export_file" value="{{ lang('ACP_MOT_HANGMAN_SUBMIT_EXPORT') }}"></dd>
 		</dl>
-	</form>
-</fieldset>
+	</fieldset>
+	{{ S_FORM_TOKEN }}
+</form>
 
 <hr>
 
-<fieldset>
-	<form id="reset_highscore_action" method="post" action="{{ U_ACTION }}" data-ajax="true">
+<form id="reset_highscore_action" method="post" action="{{ U_ACTION_MOT_HANGMAN_RESET_HIGHSCORE }}">
+	<fieldset>
 		<dl>
-			<dt><label for="reset_highscore">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE') }}{{ lang('COLON') }}</label><p class="warning_text">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION') }}</p></dt>
-			<dd><input type="hidden" name="reset_highscore" value="online"><input class="button2" type="submit" id="reset_highscore" name="reset_highscore" value="{{ lang('RUN') }}"></dd>
+			<dt><label for="mot_hangman_reset_highscorereset_highscore">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE') ~ lang('COLON') }}</label><p class="warning_text">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION') }}</p></dt>
+			<dd><input class="dt-button button1" type="submit" id="mot_hangman_reset_highscore" name="mot_hangman_reset_highscore" value="{{ lang('RUN') }}"></dd>
 		</dl>
-	</form>
-</fieldset>
+	</fieldset>
+	{{ S_FORM_TOKEN }}
+</form>
+
+<form id="reset_fame_action" method="post" action="{{ U_ACTION_MOT_HANGMAN_CLEAR_FAME }}">
+	<fieldset>
+		<dl>
+			<dt>
+				<label for="mot_hangman_clear_fame">{{ lang('ACP_MOT_HANGMAN_CLEAR_FAME') ~ lang('COLON') }}</label>
+				<p>{{ lang('ACP_MOT_HANGMAN_CLEAR_FAME_EXPL') }}</p>
+				<p class="warning_text">{{ lang('ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION') }}</p>
+			</dt>
+			<dd>
+				{% if ACP_HANGMAN_FAME_YEAR_COUNT %}
+					<select class="no-scroll" id="mot_hangman_clear_fame_select" name="mot_hangman_clear_fame_select[]" size="{{ ACP_HANGMAN_FAME_YEAR_COUNT }}" multiple="multiple">
+						{{ ACP_HANGMAN_FAME_YEARS }}
+					</select>&nbsp;
+					<input class="dt-button button1" type="submit" id="mot_hangman_clear_fame" name="mot_hangman_clear_fame" value="{{ lang('DELETE') }}">
+				{% else %}
+					{{ lang('ACP_MOT_HANGMAN_NO_FAME_YEARS') }}
+				{% endif %}
+			</dd>
+		</dl>
+	</fieldset>
+	{{ S_FORM_TOKEN }}
+</form>
+
+<hr>
 
 <fieldset>
 	<dl>
@@ -198,11 +226,11 @@
 
 {% include 'overall_footer.html' %}
 
-{% macro switch(name, checked = false, slider) %}
-	{% if slider %}
-		<input type="checkbox" class="toggle" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
-	{% else %}
-        <label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
-        <label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
-	{% endif %}
-{% endmacro %}
+{% macro switch(name, checked = false, type = 'toggle') -%}
+	{% if type == 'toggle' || type == 'checkbox' -%}
+		<input type="checkbox" class="{{ type }}" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
+	{%- elseif type == 'radio' -%}
+		<label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
+		<label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
+	{%- endif %}
+{%- endmacro %}

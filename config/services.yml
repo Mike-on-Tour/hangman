@@ -16,9 +16,12 @@ services:
             - '@request'
             - '@template'
             - '@user'
+            - '@mot.hangman.functions'
             - '%core.root_path%'
             - '%core.php_ext%'
             - '%mot.hangman.tables.mot_hangman_fame%'
+            - '%mot.hangman.tables.mot_hangman_fame_month%'
+            - '%mot.hangman.tables.mot_hangman_fame_year%'
             - '%mot.hangman.tables.mot_hangman_score%'
             - '%mot.hangman.tables.mot_hangman_words%'
 
@@ -30,6 +33,7 @@ services:
             - '@controller.helper'
             - '@language'
             - '@template'
+            - '%mot.hangman.tables.mot_hangman_fame%'
             - '%mot.hangman.tables.mot_hangman_score%'
         tags:
             - { name: event.listener }
@@ -46,7 +50,9 @@ services:
             - '@request'
             - '@template'
             - '@user'
+            - '@mot.hangman.functions'
             - '%core.root_path%'
+            - '%mot.hangman.tables.mot_hangman_fame%'
             - '%mot.hangman.tables.mot_hangman_score%'
             - '%mot.hangman.tables.mot_hangman_words%'
             - '%mot.hangman.tables.old_hangman_words%'
@@ -59,3 +65,12 @@ services:
         calls:
             - [set_config, ['@config']]
             - [set_user_loader, ['@user_loader']]
+
+    mot.hangman.functions:
+        class: mot\hangman\includes\mot_hangman_functions
+        arguments:
+            - '@config'
+            - '@dbal.conn'
+            - '%mot.hangman.tables.mot_hangman_fame%'
+            - '%mot.hangman.tables.mot_hangman_fame_month%'
+            - '%mot.hangman.tables.mot_hangman_fame_year%'

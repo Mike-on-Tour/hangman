@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.8.0
+* @package Hangman v0.9.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -41,8 +41,14 @@ class hangman_acp
 	/** @var \phpbb\user */
 	protected $user;
 
+	/** @var \mot\hangman\includes\mot_hangman_functions */
+	protected $mot_hangman_functions;
+
 	/** @var string phpBB root path */
 	protected $root_path;
+
+	/** @var string mot.hangman.tables.mot_hangman_fame */
+	protected $mot_hangman_fame_table;
 
 	/** @var string mot.hangman.tables.mot_hangman_score */
 	protected $mot_hangman_score_table;
@@ -58,7 +64,8 @@ class hangman_acp
 	 */
 	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\db\tools\tools_interface $db_tools,
 								\phpbb\language\language $language, \phpbb\log\log $log, \phpbb\extension\manager $phpbb_extension_manager,
-								\phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\user $user, $root_path,
+								\phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\user $user,
+								\mot\hangman\includes\mot_hangman_functions $mot_hangman_functions, $root_path, $mot_hangman_fame_table,
 								$mot_hangman_score_table, $mot_hangman_words_table, $old_hangman_words_table)
 	{
 		$this->config = $config;
@@ -70,7 +77,9 @@ class hangman_acp
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
+		$this->mot_hangman_functions = $mot_hangman_functions;
 		$this->root_path = $root_path;
+		$this->hangman_fame_table = $mot_hangman_fame_table;
 		$this->hangman_score_table = $mot_hangman_score_table;
 		$this->hangman_words_table = $mot_hangman_words_table;
 		$this->old_hangman_words_table = $old_hangman_words_table;
@@ -82,134 +91,168 @@ class hangman_acp
 
 	public function settings()
 	{
-		add_form_key('acp_hangman_settings');
+		// Check first for a new month or year and update FAME_MONTH_TABLE  and FAME_YEAR_TABLE if applicable
+		$this->mot_hangman_functions->check_month_year();
 
-		if ($this->request->is_set_post('submit'))
+		$form_key = 'acp_hangman_settings';
+		add_form_key($form_key);
+
+		$action = $this->request->variable('action', '');
+		switch ($action)
 		{
-			if (!check_form_key('acp_hangman_settings'))
-			{
-				trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
-
-			// save the settings to the phpbb_config table
-			$this->config->set('mot_hangman_autodelete', $this->request->variable('mot_hangman_autodelete', 0));
-			$this->config->set('mot_hangman_category_enable', $this->request->variable('mot_hangman_category_enable', 0));
-			$this->config->set('mot_hangman_category_enforce', $this->request->variable('mot_hangman_category_enforce', 0));
-			$this->config->set('mot_hangman_show_term', $this->request->variable('mot_hangman_show_term', 0));
-			$this->config->set('mot_hangman_enforce_term', $this->request->variable('mot_hangman_enforce_term', 0));
-			$this->config->set('mot_hangman_enforce_term_ratio', $this->request->variable('mot_hangman_enforce_term_ratio', 0));
-			$this->config->set('mot_hangman_display_online', $this->request->variable('mot_hangman_display_online', 0));
-			$this->config->set('mot_hangman_gain_rank', $this->request->variable('mot_hangman_gain_rank', 0));
-			$this->config->set('mot_hangman_loose_rank', $this->request->variable('mot_hangman_loose_rank', 0));
-			$this->config->set('mot_hangman_enable_fame', $this->request->variable('mot_hangman_enable_fame', 0));
-			$this->config->set('mot_hangman_rank_limit', $this->request->variable('mot_hangman_rank_limit', 0));
-			$this->config->set('mot_hangman_rows_per_page', $this->request->variable('mot_hangman_rows_per_page', 0));
-			$this->config->set('mot_hangman_lives', $this->request->variable('acp_hangman_lives', 0));
-			$this->config->set('mot_hangman_points_letter', $this->request->variable('acp_hangman_points_letter', 0));
-			$this->config->set('mot_hangman_points_loose', $this->request->variable('acp_hangman_points_loose', 0));
-			$this->config->set('mot_hangman_points_win', $this->request->variable('acp_hangman_points_win', 0));
-			$this->config->set('mot_hangman_points_word', $this->request->variable('acp_hangman_points_word', 0));
-			$this->config->set('mot_hangman_evade_enable', $this->request->variable('mot_hangman_evade_enable', 0));
-			$this->config->set('mot_hangman_extra_points_enable', $this->request->variable('mot_hangman_extra_points_enable', 0));
-			$this->config->set('mot_hangman_extra_points', $this->request->variable('mot_hangman_extra_points', 0));
-			$this->config->set('mot_hangman_term_length', $this->request->variable('acp_hangman_term_length', 0));
-			$this->config->set('mot_hangman_punctuation_marks', $this->request->variable('acp_hangman_punctuation_marks', ''));
-
-			trigger_error($this->language->lang('ACP_MOT_HANGMAN_SETTING_SAVED') . adm_back_link($this->u_action));
-		}
-
-		if ($this->request->is_set_post('reset_highscore'))
-		{
-			// Correctly handle empty table
-			switch ($this->db->get_sql_layer())
-			{
-				case 'sqlite3':
-					$this->db->sql_query('DELETE FROM ' . $this->hangman_score_table);
-				break;
-
-				default:
-					$this->db->sql_query('TRUNCATE TABLE ' . $this->hangman_score_table);
-				break;
-			}
-
-			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED');
-
-			if ($this->request->is_ajax())
-			{
-				trigger_error($this->language->lang('ACP_MOT_HANGMAN_HIGHSCORE_TABLE_CLEARED'));
-			}
-		}
-
-		if ($this->request->is_set_post('acp_mot_hangman_upload_file'))
-		{
-			$file_info = $this->request->file('acp_mot_hangman_file');
-			$filename = $file_info['name'];
-			$temp_file = $file_info['tmp_name'];
-
-			// Set some variables we will need for checking
-			$this->hangman_letters = explode(',', $this->language->lang_raw('MOT_HANGMAN_LETTERS'));
-			$this->hangman_punctuation_marks = str_split($this->config['mot_hangman_punctuation_marks']);
-			$this->hangman_punctuation_marks[] = ' ';
-
-			// Check for valid file extension
-			$path_parts = pathinfo($filename);
-			if (strtolower($path_parts['extension']) != 'xml' || !isset($path_parts['extension']))
-			{
-				trigger_error($this->language->lang('ACP_MOT_HANGMAN_INVALID_FILE_EXT') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
-
-			// load temp file (no need to store the file somewhere else since we only want the search terms and - if they exist - the category
-			$xml = simplexml_load_file($temp_file);
-			if ($xml === false)
-			{
-				trigger_error($this->language->lang('ACP_MOT_HANGMAN_INVALID_FILE_CONTENT') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
-			else
-			{
-				$term = [];
-				switch ($xml->getName())
+			case 'save_settings':
+				if (!check_form_key($form_key))
 				{
-					// xml file from " die-muellers.org"
-					case 'hangdb':
-						foreach ($xml->children() as $row)
-						{
-							$term[] = [
-								'creator_id'		=> $this->user->data['user_id'],
-								'hangman_word'		=> str_replace('_', ' ', $row->word),
-								'hangman_word_hash'	=> $this->get_hash((string) $row->word),
-								'hangman_category'	=> (string) $row->help,
-							];
-						}
-						break;
+					trigger_error($this->language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
 
-					case 'wordList':
-						foreach ($xml->children() as $difficulty)
-						{
-							foreach ($difficulty->children() as $category)
+				// save the settings to the phpbb_config table
+				$this->config->set('mot_hangman_autodelete', $this->request->variable('mot_hangman_autodelete', 0));
+				$this->config->set('mot_hangman_category_enable', $this->request->variable('mot_hangman_category_enable', 0));
+				$this->config->set('mot_hangman_category_enforce', $this->request->variable('mot_hangman_category_enforce', 0));
+				$this->config->set('mot_hangman_show_term', $this->request->variable('mot_hangman_show_term', 0));
+				$this->config->set('mot_hangman_enforce_term', $this->request->variable('mot_hangman_enforce_term', 0));
+				$this->config->set('mot_hangman_enforce_term_ratio', $this->request->variable('mot_hangman_enforce_term_ratio', 0));
+				$this->config->set('mot_hangman_display_online', $this->request->variable('mot_hangman_display_online', 0));
+				$this->config->set('mot_hangman_gain_rank', $this->request->variable('mot_hangman_gain_rank', 0));
+				$this->config->set('mot_hangman_loose_rank', $this->request->variable('mot_hangman_loose_rank', 0));
+				$this->config->set('mot_hangman_enable_fame', $this->request->variable('mot_hangman_enable_fame', 0));
+				$this->config->set('mot_hangman_rank_limit', $this->request->variable('mot_hangman_rank_limit', 0));
+				$this->config->set('mot_hangman_rows_per_page', $this->request->variable('mot_hangman_rows_per_page', 0));
+				$this->config->set('mot_hangman_lives', $this->request->variable('acp_hangman_lives', 0));
+				$this->config->set('mot_hangman_points_letter', $this->request->variable('acp_hangman_points_letter', 0));
+				$this->config->set('mot_hangman_points_loose', $this->request->variable('acp_hangman_points_loose', 0));
+				$this->config->set('mot_hangman_points_win', $this->request->variable('acp_hangman_points_win', 0));
+				$this->config->set('mot_hangman_points_word', $this->request->variable('acp_hangman_points_word', 0));
+				$this->config->set('mot_hangman_evade_enable', $this->request->variable('mot_hangman_evade_enable', 0));
+				$this->config->set('mot_hangman_extra_points_enable', $this->request->variable('mot_hangman_extra_points_enable', 0));
+				$this->config->set('mot_hangman_extra_points', $this->request->variable('mot_hangman_extra_points', 0));
+				$this->config->set('mot_hangman_term_length', $this->request->variable('acp_hangman_term_length', 0));
+				$this->config->set('mot_hangman_punctuation_marks', $this->request->variable('acp_hangman_punctuation_marks', ''));
+
+				trigger_error($this->language->lang('ACP_MOT_HANGMAN_SETTING_SAVED') . adm_back_link($this->u_action));
+
+				break;
+
+			case 'mot_hangman_upload_file':
+				$file_info = $this->request->file('acp_mot_hangman_file');
+				$filename = $file_info['name'];
+				$temp_file = $file_info['tmp_name'];
+
+				// Set some variables we will need for checking
+				$this->hangman_letters = explode(',', $this->language->lang_raw('MOT_HANGMAN_LETTERS'));
+				$this->hangman_punctuation_marks = str_split($this->config['mot_hangman_punctuation_marks']);
+				$this->hangman_punctuation_marks[] = ' ';
+
+				// Check for valid file extension
+				$path_parts = pathinfo($filename);
+				if (strtolower($path_parts['extension']) != 'xml' || !isset($path_parts['extension']))
+				{
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_INVALID_FILE_EXT') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+
+				// load temp file (no need to store the file somewhere else since we only want the search terms and - if they exist - the category
+				$xml = simplexml_load_file($temp_file);
+				if ($xml === false)
+				{
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_INVALID_FILE_CONTENT') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+				else
+				{
+					$term = [];
+					switch ($xml->getName())
+					{
+						// xml file from " die-muellers.org"
+						case 'hangdb':
+							foreach ($xml->children() as $row)
 							{
-								$cat_text = $category['cat'];
-								foreach ($category->children() as $word)
+								$term[] = [
+									'creator_id'		=> $this->user->data['user_id'],
+									'hangman_word'		=> str_replace('_', ' ', $row->word),
+									'hangman_word_hash'	=> $this->get_hash((string) $row->word),
+									'hangman_category'	=> (string) $row->help,
+								];
+							}
+							break;
+
+						case 'wordList':
+							foreach ($xml->children() as $difficulty)
+							{
+								foreach ($difficulty->children() as $category)
 								{
-									$term[] = [
-										'creator_id'		=> $this->user->data['user_id'],
-										'hangman_word'		=> (string) $word,
-										'hangman_word_hash'	=> $this->get_hash((string) $word),
-										'hangman_category'	=> (string) $cat_text,
-									];
+									$cat_text = $category['cat'];
+									foreach ($category->children() as $word)
+									{
+										$term[] = [
+											'creator_id'		=> $this->user->data['user_id'],
+											'hangman_word'		=> (string) $word,
+											'hangman_word_hash'	=> $this->get_hash((string) $word),
+											'hangman_category'	=> (string) $cat_text,
+										];
+									}
+								}
+							}
+							break;
+					}
+					if (!empty($term))
+					{
+						$i = 0;
+						foreach ($term as $term_row)
+						{
+							if ($this->is_valid_hangman_word($term_row['hangman_word']))
+							{
+								$sql_arr = [
+									'hangman_word_hash'	=> $term_row['hangman_word_hash'],
+								];
+								$sql = 'SELECT word_id FROM ' . $this->hangman_words_table . '
+										WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
+								$result = $this->db->sql_query($sql);
+								$row = $this->db->sql_fetchrow($result);
+								$this->db->sql_freeresult($result);
+
+								if (empty($row) && $term_row['hangman_word'] != '')
+								{
+									// quote doesn't exist, insert it into the table
+									$sql_arr = $term_row;
+									$sql = 'INSERT INTO ' . $this->hangman_words_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
+									$this->db->sql_query($sql);
+									$i++;
 								}
 							}
 						}
-						break;
+						trigger_error($this->language->lang('ACP_MOT_HANGMAN_XML_IMPORTED', $i, $filename) . adm_back_link($this->u_action));
+					}
+					else
+					{
+						trigger_error($this->language->lang('ACP_MOT_HANGMAN_XML_NO_IMPORT', $filename) . adm_back_link($this->u_action), E_USER_WARNING);
+					}
 				}
-				if (!empty($term))
+
+				break;
+
+			case 'mot_hangman_import_table':
+				// Set some variables we will need for checking
+				$this->hangman_letters = explode(',', $this->language->lang_raw('MOT_HANGMAN_LETTERS'));
+				$this->hangman_punctuation_marks = str_split($this->config['mot_hangman_punctuation_marks']);
+				$this->hangman_punctuation_marks[] = ' ';
+
+				// Read all terms from phpbb_hangman_words table
+				$sql = 'SELECT user_id, hangman_word, hangman_help FROM ' . $this->old_hangman_words_table;
+				$result = $this->db->sql_query($sql);
+				$old_hangmans = $this->db->sql_fetchrowset($result);
+				$this->db->sql_freeresult($result);
+
+				if (isset($old_hangmans) && count($old_hangmans) > 0)
 				{
 					$i = 0;
-					foreach ($term as $term_row)
+					foreach ($old_hangmans as $term)
 					{
-						if ($this->is_valid_hangman_word($term_row['hangman_word']))
+						$term['hangman_word'] = str_replace('_', ' ', $term['hangman_word']);
+						if ($this->is_valid_hangman_word($term['hangman_word']))
 						{
+							$term['hangman_word_hash'] = $this->get_hash($term['hangman_word']);
 							$sql_arr = [
-								'hangman_word_hash'	=> $term_row['hangman_word_hash'],
+								'hangman_word_hash'	=> $term['hangman_word_hash'],
 							];
 							$sql = 'SELECT word_id FROM ' . $this->hangman_words_table . '
 									WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
@@ -217,113 +260,122 @@ class hangman_acp
 							$row = $this->db->sql_fetchrow($result);
 							$this->db->sql_freeresult($result);
 
-							if (empty($row) && $term_row['hangman_word'] != '')
+							if (empty($row) && $term['hangman_word'] != '')
 							{
-								// quote doesn't exist, insert it into the table
-								$sql_arr = $term_row;
+								// quote doesn't exist, insert it into the table if 'hangman_word' adheres to the rules defined in the settings
+								$sql_arr = [
+									'creator_id'		=> $term['user_id'],
+									'hangman_word'		=> $term['hangman_word'],
+									'hangman_word_hash'	=> $term['hangman_word_hash'],
+									'hangman_category'	=> $term['hangman_help'],
+								];
 								$sql = 'INSERT INTO ' . $this->hangman_words_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
 								$this->db->sql_query($sql);
 								$i++;
 							}
 						}
 					}
-					trigger_error($this->language->lang('ACP_MOT_HANGMAN_XML_IMPORTED', $i, $filename) . adm_back_link($this->u_action));
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_IMPORTED', $i, $this->old_hangman_words_table) . adm_back_link($this->u_action));
 				}
 				else
 				{
-					trigger_error($this->language->lang('ACP_MOT_HANGMAN_XML_NO_IMPORT', $filename) . adm_back_link($this->u_action), E_USER_WARNING);
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_NO_IMPORT', $this->old_hangman_words_table) . adm_back_link($this->u_action), E_USER_WARNING);
 				}
-			}
-		}
 
-		if ($this->request->is_set_post('acp_mot_hangman_import_table'))
-		{
-			// Set some variables we will need for checking
-			$this->hangman_letters = explode(',', $this->language->lang_raw('MOT_HANGMAN_LETTERS'));
-			$this->hangman_punctuation_marks = str_split($this->config['mot_hangman_punctuation_marks']);
-			$this->hangman_punctuation_marks[] = ' ';
+				break;
 
-			// Read all terms from phpbb_hangman_words table
-			$sql = 'SELECT user_id, hangman_word, hangman_help FROM ' . $this->old_hangman_words_table;
-			$result = $this->db->sql_query($sql);
-			$old_hangmans = $this->db->sql_fetchrowset($result);
-			$this->db->sql_freeresult($result);
+			case 'mot_hangman_export_file':
+				$sql = 'SELECT hangman_word, hangman_category FROM ' . $this->hangman_words_table;
+				$result = $this->db->sql_query($sql);
+				$hangmans = $this->db->sql_fetchrowset($result);
+				$this->db->sql_freeresult($result);
 
-			if (isset($old_hangmans) && count($old_hangmans) > 0)
-			{
-				$i = 0;
-				foreach ($old_hangmans as $term)
+				$dom = new \DOMDocument('1.0', 'utf-8');
+				$dom->formatOutput = true;
+				$root = $dom->createElement('hangdb');
+				$dom->appendChild($root);
+
+				foreach ($hangmans as $row)
 				{
-					$term['hangman_word'] = str_replace('_', ' ', $term['hangman_word']);
-					if ($this->is_valid_hangman_word($term['hangman_word']))
-					{
-						$term['hangman_word_hash'] = $this->get_hash($term['hangman_word']);
-						$sql_arr = [
-							'hangman_word_hash'	=> $term['hangman_word_hash'],
-						];
-						$sql = 'SELECT word_id FROM ' . $this->hangman_words_table . '
-								WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
-						$result = $this->db->sql_query($sql);
-						$row = $this->db->sql_fetchrow($result);
-						$this->db->sql_freeresult($result);
-
-						if (empty($row) && $term['hangman_word'] != '')
-						{
-							// quote doesn't exist, insert it into the table if 'hangman_word' adheres to the rules defined in the settings
-							$sql_arr = [
-								'creator_id'		=> $term['user_id'],
-								'hangman_word'		=> $term['hangman_word'],
-								'hangman_word_hash'	=> $term['hangman_word_hash'],
-								'hangman_category'	=> $term['hangman_help'],
-							];
-							$sql = 'INSERT INTO ' . $this->hangman_words_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
-							$this->db->sql_query($sql);
-							$i++;
-						}
-					}
+					$root->appendChild($node = $dom->createElement('hangman'));
+					$node->appendChild($dom->createElement('word', $row['hangman_word']));
+					$node->appendChild($dom->createElement('help', $row['hangman_category']));
 				}
-				trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_IMPORTED', $i, $this->old_hangman_words_table) . adm_back_link($this->u_action));
-			}
-			else
-			{
-				trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_NO_IMPORT', $this->old_hangman_words_table) . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+
+				$filename = "hangman_" . date('Ymd-Gis') . ".xml";
+				$file = fopen('php://memory', 'w');
+				$bytes_written = fwrite($file, $dom->saveXML());
+				if ($bytes_written !== false)
+				{
+					fseek($file, 0);
+					header('Content-Type: text/xml');
+					header('Content-Disposition: attachment; filename="' . $filename . '";');
+					fpassthru($file);
+					exit;
+				}
+				else
+				{
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_NO_EXPORT') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+
+				break;
+
+			case 'mot_hangman_reset_highscore':
+				if (confirm_box(true))
+				{
+					$this->reset_highscore();
+					$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED');
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_HIGHSCORE_TABLE_CLEARED') . adm_back_link($this->u_action));
+				}
+				else
+				{
+					confirm_box(false, $this->language->lang('ACP_MOT_HANGMAN_CLEAR_SCORE_CONFIRM'), build_hidden_fields([
+						'u_action'	=> $this->u_action . '&amp;action=mot_hangman_reset_highscore',
+					]));
+				}
+
+				break;
+
+			case 'mot_hangman_clear_fame':
+				$years_to_delete = $this->request->variable('mot_hangman_clear_fame_select', [0]);
+
+				if (empty($years_to_delete))
+				{
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_CLEAR_FAME_ERROR') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+
+				if (confirm_box(true))
+				{
+					$sql = 'DELETE FROM ' . $this->hangman_fame_table . '
+							WHERE ' . $this->db->sql_in_set('year', $years_to_delete);
+					$this->db->sql_query($sql);
+					trigger_error($this->language->lang('ACP_MOT_HANGMAN_CLEAR_FAME_SUCCESS') . adm_back_link($this->u_action));
+				}
+				else
+				{
+					confirm_box(false,$this->language->lang('ACP_MOT_HANGMAN_CLEAR_FAME_CONFIRM', count($years_to_delete)), build_hidden_fields([
+						'u_action'							=> $this->u_action . '&amp;action=mot_hangman_clear_fame',
+						'mot_hangman_clear_fame_select'		=> $years_to_delete,
+					]));
+				}
+
+				break;
+
+			default:
+				break;
 		}
 
-		if ($this->request->is_set_post('acp_mot_hangman_export_file'))
+		// Get the past year(s) from the HANGMAN_FAME_TABLE which are eligible for deletion
+		$sql = 'SELECT DISTINCT year FROM ' . $this->hangman_fame_table . '
+				WHERE year < ' . (int) $this->config['mot_hangman_current_year'];
+		$result = $this->db->sql_query($sql);
+		$years = $this->db->sql_fetchrowset($result);
+		$this->db->sql_freeresult($result);
+
+		$fame_years = '';
+		foreach ($years as $row)
 		{
-			$sql = 'SELECT hangman_word, hangman_category FROM ' . $this->hangman_words_table;
-			$result = $this->db->sql_query($sql);
-			$hangmans = $this->db->sql_fetchrowset($result);
-			$this->db->sql_freeresult($result);
-
-			$dom = new \DOMDocument('1.0', 'utf-8');
-			$dom->formatOutput = true;
-			$root = $dom->createElement('hangdb');
-			$dom->appendChild($root);
-
-			foreach ($hangmans as $row)
-			{
-				$root->appendChild($node = $dom->createElement('hangman'));
-				$node->appendChild($dom->createElement('word', $row['hangman_word']));
-				$node->appendChild($dom->createElement('help', $row['hangman_category']));
-			}
-
-			$filename = "hangman_" . date('Ymd-Gis') . ".xml";
-			$file = fopen('php://memory', 'w');
-			$bytes_written = fwrite($file, $dom->saveXML());
-			if ($bytes_written !== false)
-			{
-				fseek($file, 0);
-				header('Content-Type: text/xml');
-				header('Content-Disposition: attachment; filename="' . $filename . '";');
-				fpassthru($file);
-				exit;
-			}
-			else
-			{
-				trigger_error($this->language->lang('ACP_MOT_HANGMAN_TABLE_NO_EXPORT') . adm_back_link($this->u_action), E_USER_WARNING);
-			}
+			$fame_years .= '<option value="' . $row['year'] . '">' . $row['year'] . '</option>';
 		}
 
 		$this->template->assign_vars([
@@ -350,7 +402,15 @@ class hangman_acp
 			'ACP_MOT_HANGMAN_TERM_LENGTH'			=> $this->config['mot_hangman_term_length'],
 			'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'		=> $this->config['mot_hangman_punctuation_marks'],
 			'ACP_MOT_HANGMAN_IMPORT_OLD_TABLE'		=> $this->db_tools->sql_table_exists($this->old_hangman_words_table),
+			'ACP_HANGMAN_FAME_YEAR_COUNT'			=> count($years),
+			'ACP_HANGMAN_FAME_YEARS'				=> $fame_years,
 			'U_ACTION'								=> $this->u_action,
+			'U_ACTION_MOT_HANGMAN_SETTINGS'			=> $this->u_action . '&amp;action=save_settings',
+			'U_ACTION_MOT_HANGMAN_UPLOAD_XML'		=> $this->u_action . '&amp;action=mot_hangman_upload_file',
+			'U_ACTION_MOT_HANGMAN_IMPORT_TABLE'		=> $this->u_action . '&amp;action=mot_hangman_import_table',
+			'U_ACTION_MOT_HANGMAN_DATA_EXPORT'		=> $this->u_action . '&amp;action=mot_hangman_export_file',
+			'U_ACTION_MOT_HANGMAN_RESET_HIGHSCORE'	=> $this->u_action . '&amp;action=mot_hangman_reset_highscore',
+			'U_ACTION_MOT_HANGMAN_CLEAR_FAME'		=> $this->u_action . '&amp;action=mot_hangman_clear_fame',
 			'HANGMAN_VERSION'						=> $this->language->lang('ACP_MOT_HANGMAN_VERSION', $this->mot_hangman_version, date('Y')),
 		]);
 	}
@@ -416,5 +476,28 @@ class hangman_acp
 		}
 
 		return true;
+	}
+
+	/**
+	* Delete all data from the HANGMAN_SCORE_TABLE
+	*
+	* @param	none
+	* @return	none
+	*/
+	private function reset_highscore()
+	{
+		// Correctly handle empty table
+		switch ($this->db->get_sql_layer())
+		{
+			case 'sqlite3':
+				$this->db->sql_query('DELETE FROM ' . $this->hangman_score_table);
+				break;
+
+			default:
+				$this->db->sql_query('TRUNCATE TABLE ' . $this->hangman_score_table);
+				break;
+		}
+
+		return;
 	}
 }

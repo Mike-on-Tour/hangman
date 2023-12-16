@@ -9,6 +9,10 @@
 	font-size: 1.0em;
 }
 
+.dt-button {
+	padding: 5px !important;
+}
+
 /* phpBB ACP Toggles - A CSS class that makes it easy to display checkboxes as toggles.
    Source     : https://danklammer.com/articles/simple-css-toggle-switch/
    Reworked by: Kirk (adapted and optimized for phpBB), LukeWCS (optimized) */

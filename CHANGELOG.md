@@ -4,6 +4,51 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.9.0] - 2023-12-15
+
+### Added
+-	The usage of either toggles, checkboxes or radio buttons according to a general template variable called `TOGGLECTRL_TYPE` which will be implemented with a future
+	ext `lukewcs/togglectrl`, default is still 'toggles'; affected file is `adm/style/acp_hangman_settings.html`
+-	A shadow to the modal window (many thanks to IMC for the css), affected file is `styles/prosilver/theme/hangman.css`
+-	A confirm box to the 'reset highscore' function to prevent an unintended usage; affected file is `controller/hangman_acp.php`
+-	The creator's username to the game tab (under the category); affected files are `controller/main.php`, `styles/all/template/hangman_game.js`,
+	`styles/prosilver/template/hangman_game.html`, `styles/prosilver/theme/hangman.css` and all language files `language/xx/common.php`
+-	A new function to the summary tab which enables a player to remove his own terms from the database; affected files are `controller/main.php`,
+	`styles/prosilver/template/hangman_summary.html` and all language files `language/xx/common.php`
+-	Two new tables to hold the monthly and annual high scores for the hall of fame (`MOT_HANGMAN_FAME_MONTH_TABLE` and `MOT_HANGMAN_FAME_YEAR_TABLE`)
+-	A new class (`mot_hangman_functions`) to save the best players of the previous month and year into the proper table
+-	A new functionality to delete hall of fame data of previous years; affected files are `controller/hangman_acp.php`, `adm/style/acp_hangman_settings.html` and all
+	language files `language/xx/info_acp_mot_hangman.php`
+
+### Changed
+-	Required minimum phpBB version raised to 3.2.11
+-	The buttons on the ACP settings page so that they do not look so cramped anymore,
+	affected files are `adm/style/acp_hangman_settings.html` and `adm/style/mot_hangman_acp.css`
+-	The size of the letter buttons on the game tab to be 30px x 30px to improve fingertip operation on mobile devices, affected file is `styles/prosilver/theme/hangman.css`
+-	The calculation of rows needed to display the letters is now done in the JS script instead of the PHP script and depends on the screen width,
+	affected files are `controller/main.php`, `styles/prosilver/template/hangman_game.html`, `styles/prosilver/theme/hangman.css` and `styles/all/template/hangman_game.js`
+-	The table layout on the hall of fame tab, affected files are `styles/prosilver/template/hangman_fame.html` and `styles/prosilver/theme/hangman.css`
+-	Some code changes
+
+### Fixed
+
+### Removed
+  
+  
+## [0.8.1] - 2023-10-22
+
+### Added
+
+### Changed
+-	The title of the Hangman online players list is a link to the highscore
+
+### Fixed
+-	A problem with displaying users in the Hangman players online list if these users have activated the "Remember me" feature
+-	The missing deletion of deleted users from the HANGMAN_FAME_TABLE
+
+### Removed
+  
+  
 ## [0.8.0] - 2023-10-20
 
 ### Added

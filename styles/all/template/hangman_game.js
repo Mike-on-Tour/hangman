@@ -70,22 +70,24 @@ motHangman.waitToClose = function(backToPhp) {
 }
 
 /*
-* Fills the two table rows for the letters retrieved from a language variable to ensure compatibility with national alphabets
+* Fills the table rows for the letters retrieved from a language variable to ensure compatibility with national alphabets
 *
 * @params	array		letters		contains the letters from the language file
-*		integer	letterCount		total number of letters
-*		integer	letterRow		number of letters for first row
 *
 */
-motHangman.fillLetterTable = function(letters, letterCount, letterRow) {
-	var i = 0;
+motHangman.fillLetterTable = function(letters) {
+	var letterTableWidth = $(".letter_table").width();
+	var letterCount = letters.length;
+	var rowCount = letterTableWidth > 451 ? 2 : 3;
 
-	for (i = 0; i < letterRow; i++) {
-		$("#row1").html($("#row1").html() + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="motHangman.seek(\'' + letters[i] + '\');">');
-	}
+	var letterRow = ((letterCount % rowCount) > 0) ? (Math.floor(letterCount / rowCount) + 1) : (letterCount / rowCount);
 
-	for (i = letterRow; i < letterCount; i++) {
-		$("#row2").html($("#row2").html() + '<input type="button" class="button letter-button" id="' + letters[i] + '" value=" ' + letters[i] + ' "	onclick="motHangman.seek(\'' + letters[i] + '\');">');
+	for (var i = 1; i <= rowCount; i++) {
+		var startLetter = letterRow * (i - 1);
+		var stopLetter = letterRow * i < letterCount ? letterRow : letterCount - (letterRow * (i - 1));
+		for (var j = 0; j < stopLetter; j++) {
+			$("#row" + i).html($("#row" + i).html() + '<input type="button" class="button letter-button" id="' + letters[j + startLetter] + '" value=" ' + letters[j + startLetter] + ' "	onclick="motHangman.seek(\'' + letters[j + startLetter] + '\');">');
+		}
 	}
 }
 
@@ -128,6 +130,9 @@ $("#start_button").click(function() {
 			if (motHangman.jsShowCategory) {
 				$("#hangman_category").html(motHangman.jsQuote['hangman_category']);
 			}
+
+			// show the creator
+			$("#mot_hangman_creator").html(motHangman.jsQuote['username']);
 
 			// and hide the start button
 			$("#start_button").hide();
@@ -291,6 +296,6 @@ if (motHangman.jsPunishEvaders) {
 }
 
 // Start immediately with displaying the letter table
-motHangman.fillLetterTable(motHangman.jsHangmanLetters, motHangman.jsHangmanTotalLetters, motHangman.jsLetterRow);
+motHangman.fillLetterTable(motHangman.jsHangmanLetters);
 
 })(jQuery); // Avoid conflicts with other libraries

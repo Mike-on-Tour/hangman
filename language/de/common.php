@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.8.0
+* @package Hangman v0.9.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -36,7 +36,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ »« “ ” …
 //
 
 $lang = array_merge($lang, [
@@ -75,6 +75,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_NEW_QUOTE_START'	=> 'Klicke auf ´Spielstart´, um das Hangman Spiel zu starten',
 	'MOT_HANGMAN_NO_QUOTE'			=> 'Es sind keine Begriffe verfügbar. Versuche es bitte später noch einmal.',
 	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
+	'MOT_HANGMAN_CREATOR'			=> 'Ersteller',
 	'MOT_HANGMAN_FAILED_TRIES'		=> 'Falsche Versuche',
 	'MOT_HANGMAN_CORRECT_TRIES'		=> 'Richtige Versuche',
 	'MOT_HANGMAN_WIN_EXTRA_POINTS'	=> 'Fehlerfrei!!!<br>Du erhälst %1$d Zusatzpunkte!<br>',
@@ -138,6 +139,9 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_USER_TERMS'		=> 'Von dir eingegebene, verfügbare Suchbegriffe',
 	'MOT_HANGMAN_TERM'				=> 'Suchbegriff',
 	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
+	'MOT_HANGMAN_DELETE_TERM_MSG'	=> 'Bist du sicher, dass du den Begriff »%1$s« löschen willst?',
+	'MOT_HANGMAN_TERM_DELETED'		=> 'Der Begriff »%1$s« wurde aus der Datenbank gelöscht.',
+
 	// Display players
 	'MOT_HANGMAN_PLAYERS'			=> 'Hangman-Spieler',
 	'MOT_HANGMAN_TOTAL_PLAYERS'		=> [

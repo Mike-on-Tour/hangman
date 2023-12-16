@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.8.0
+* @package Hangman v0.9.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -75,6 +75,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_NEW_QUOTE_START'	=> 'Click the ´Start Game´ button to start Hangman',
 	'MOT_HANGMAN_NO_QUOTE'			=> 'Currently there are no terms available. Please try again later.',
 	'MOT_HANGMAN_CATEGORY'			=> 'Category',
+	'MOT_HANGMAN_CREATOR'			=> 'Creator',
 	'MOT_HANGMAN_FAILED_TRIES'		=> 'Failed Tries',
 	'MOT_HANGMAN_CORRECT_TRIES'		=> 'Correct Tries',
 	'MOT_HANGMAN_WIN_EXTRA_POINTS'	=> 'No failures!!!<br>You gain additional %1$d points!<br>',
@@ -137,6 +138,8 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_USER_TERMS'		=> 'Available terms entered by yourself',
 	'MOT_HANGMAN_TERM'				=> 'Term',
 	'MOT_HANGMAN_CATEGORY'			=> 'Category',
+	'MOT_HANGMAN_DELETE_TERM_MSG'	=> 'Do you really want to delete the term »%1$s« from the database?',
+	'MOT_HANGMAN_TERM_DELETED'		=> 'The term »%1$s« successfully removed from the database.',
 
 	// Display players
 	'MOT_HANGMAN_PLAYERS'			=> 'Hangman players',

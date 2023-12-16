@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.7.0
+* @package Hangman v0.9.0
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -37,6 +37,7 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN'							=> 'Hangman',
 	'ACP_HANGMAN_SETTINGS'						=> 'Einstellungen',
 	'ACP_MOT_HANGMAN_SETTINGS'					=> 'Einstellungen',
+
 	// General settings
 	'ACP_MOT_HANGMAN_EXT_SETTINGS'				=> 'Programmeinstellungen',
 	'ACP_MOT_HANGMAN_AUTODELETE'				=> 'Benutzte Begriffe löschen?',
@@ -88,6 +89,7 @@ $lang = array_merge($lang, [
 													der Mitglieder angezeigt, die gerade eine Funktion von Hangman nutzen.',
 	'ACP_MOT_HANGMAN_ROWS_PER_PAGE'				=> 'Zeilen pro Tabellenseite',
 	'ACP_MOT_HANGMAN_ROWS_PER_PAGE_EXP'			=> 'Wähle hier die Anzahl der Zeilen, die in der Rangliste pro Tabellenseite angezeigt werden soll.',
+
 	// Game settings
 	'ACP_MOT_HANGMAN_GAME_SETTINGS'				=> 'Spieleinstellungen',
 	'ACP_MOT_HANGMAN_GAME_SETTINGS_EXP'			=> 'Hier kannst du alle Einstellungen zu Anzahl der Leben (Fehlversuche) und der zu zählenden Punkte eingeben.<br>
@@ -119,6 +121,7 @@ $lang = array_merge($lang, [
 													aktivieren; nach Aktivierung kannst du in einer weiteren, dann sichtbaren Einstellung die Anzahl der Extrapunkte eingeben.',
 	'ACP_MOT_HANGMAN_EXTRA_POINTS'				=> 'Extrapunkte für fehlerfreies Lösen',
 	'ACP_MOT_HANGMAN_EXTRA_POINTS_EXP'			=> 'Hier kannst du die Anzahl der Extrapunkte eingeben, Minimum ist ein Extrapunkt, Maximum sind 50 Extrapunkte.',
+
 	//Term settings
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS'			=> 'Einstellungen für Suchbegriff',
 	'ACP_MOT_HANGMAN_INPUT_SETTINGS_EXP'		=> 'Hier kannst du Einstellungen für die Eingabe der Suchbegriffe vornehmen.',
@@ -131,6 +134,7 @@ $lang = array_merge($lang, [
 													ACHTUNG: Beim Import von Suchbegriffen aus Dateien oder anderen Tabellen werden ebenfalls nur diese
 													Satzzeichen übernommen!',
 	'ACP_MOT_HANGMAN_SETTING_SAVED'				=> 'Die Einstellungen für das Hangman Spiel wurden erfolgreich gesichert.',
+
 	// Data migration
 	'ACP_MOT_HANGMAN_MIGRATION_SETTINGS'		=> 'Daten importieren',
 	'ACP_MOT_HANGMAN_UPLOAD_XML'				=> 'Eine lokale xml-Datei hochladen',
@@ -166,11 +170,25 @@ $lang = array_merge($lang, [
 													zum Download und lokalen Abspeichern angeboten.',
 	'ACP_MOT_HANGMAN_SUBMIT_EXPORT'				=> 'Daten exportieren',
 	'ACP_MOT_HANGMAN_TABLE_NO_EXPORT'			=> 'Export der Daten ist fehlgeschlagen, Datei konnte nicht erzeugt werden.',
+
 	// Misc
 	'ACP_MOT_HANGMAN_RESET_HIGHSCORE'			=> 'Rangliste löschen',
 	'ACP_MOT_HANGMAN_RESET_HIGHSCORE_CAUTION'	=> '<strong>ACHTUNG:</strong> Dieser Vorgang kann nicht rückgängig gemacht werden!',
+	'ACP_MOT_HANGMAN_CLEAR_SCORE_CONFIRM'		=> 'Willst du wirklich die Hangman Rangliste löschen?',
 	'ACP_MOT_HANGMAN_SCORE_TABLE_CLEARED'		=> '<strong>Hangman Rangliste gelöscht</strong>',
 	'ACP_MOT_HANGMAN_HIGHSCORE_TABLE_CLEARED'	=> 'Rangliste wurde gelöscht',
+	'ACP_MOT_HANGMAN_CLEAR_FAME'				=> 'Einträge aus Tabelle „Ruhmeshalle“ löschen',
+	'ACP_MOT_HANGMAN_CLEAR_FAME_EXPL'			=> 'Hier werden die vergangenen Jahre aufgelistet, für die noch Einträge in der Tabelle für die Ruhmeshalle vorhanden sind. Du
+													kannst aus dem Auswahlfeld rechts alle die Jahre auswählen (Mehrfachauswahl mit Klicken unter Halten der `Strg`-Taste), deren
+													Einträge du löschen möchtest. ALLE Einträge für diese Jahre werden dann gelöscht (die Bestenlisten für die zurückliegenden
+													Jahre und Monate sind in anderen Tabellen gespeichert, diese Daten gehen also nicht verloren).',
+	'ACP_MOT_HANGMAN_NO_FAME_YEARS'				=> 'Keine Einträge zum Löschen vorhanden',
+	'ACP_MOT_HANGMAN_CLEAR_FAME_ERROR'			=> 'Du hast keine Auswahl getroffen, Löschen deshalb nicht möglich!',
+	'ACP_MOT_HANGMAN_CLEAR_FAME_CONFIRM'		=> [
+		1	=> 'Willst du die Daten des ausgewählten Jahres für die „Ruhmeshalle“ wirklich löschen?',
+		2	=> 'Willst du die Daten der ausgewählten %1$d Jahre für die „Ruhmeshalle“ wirklich löschen?',
+	],
+	'ACP_MOT_HANGMAN_CLEAR_FAME_SUCCESS'		=> 'Daten erfolgreich aus der Tabelle für die „Ruhmeshalle“ gelöscht.',
 	'ACP_MOT_HANGMAN_SUPPORT_HANGMAN'			=> 'Wenn du die Entwicklung des Hangman Spiels unterstützen möchtest, kannst du das hier tun:<br>',
 	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic" /><br>&copy; 2021 - %2$d by Mike-on-Tour',
 ]);

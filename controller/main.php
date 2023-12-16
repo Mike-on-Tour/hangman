@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.8.0
+* @package Hangman v0.9.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -49,6 +49,9 @@ class main
 	/* @var \phpbb\user */
 	protected $user;
 
+	/** @var \mot\hangman\includes\mot_hangman_functions */
+	protected $mot_hangman_functions;
+
 	/** @var string phpBB root path */
 	protected $root_path;
 
@@ -57,6 +60,12 @@ class main
 
 	/** @var string mot.hangman.tables.mot_hangman_fame */
 	protected $mot_hangman_fame_table;
+
+	/** @var string mot.hangman.tables.mot_hangman_fame */
+	protected $mot_hangman_fame_month_table;
+
+	/** @var string mot.hangman.tables.mot_hangman_fame */
+	protected $mot_hangman_fame_year_table;
 
 	/** @var string mot.hangman.tables.mot_hangman_score */
 	protected $mot_hangman_score_table;
@@ -70,8 +79,8 @@ class main
 	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db,
 								\phpbb\extension\manager $phpbb_extension_manager, \phpbb\controller\helper $helper, \phpbb\language\language $language,
 								\phpbb\notification\manager $notification_manager, \phpbb\pagination $pagination, \phpbb\request\request_interface $request,
-								\phpbb\template\template $template, \phpbb\user $user, $root_path, $php_ext, $mot_hangman_fame_table,
-								$mot_hangman_score_table, $mot_hangman_words_table)
+								\phpbb\template\template $template, \phpbb\user $user, \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions, $root_path, $php_ext,
+								$mot_hangman_fame_table, $mot_hangman_fame_month_table, $mot_hangman_fame_year_table, $mot_hangman_score_table, $mot_hangman_words_table)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
@@ -84,9 +93,12 @@ class main
 		$this->request = $request;
 		$this->template = $template;
 		$this->user = $user;
+		$this->mot_hangman_functions = $mot_hangman_functions;
 		$this->root_path = $root_path;
 		$this->php_ext = $php_ext;
 		$this->hangman_fame_table = $mot_hangman_fame_table;
+		$this->hangman_fame_month_table = $mot_hangman_fame_month_table;
+		$this->hangman_fame_year_table = $mot_hangman_fame_year_table;
 		$this->hangman_score_table = $mot_hangman_score_table;
 		$this->hangman_words_table = $mot_hangman_words_table;
 
@@ -97,6 +109,9 @@ class main
 
 	public function display()
 	{
+		// Check first for a new month or year and update FAME_MONTH_TABLE  and FAME_YEAR_TABLE if applicable
+		$this->mot_hangman_functions->check_month_year();
+
 		//If user is a bot.... redirect to the index.
 		if ($this->user->data['is_bot'])
 		{
@@ -139,12 +154,13 @@ class main
 		{
 			default:
 			case 'game':
-				add_form_key('hangman_game_frm');
+				$form_key = 'hangman_game_frm';
+				add_form_key($form_key);
 
 				$congrat = $this->request->variable('congrat', false);
 				if ($this->request->is_set_post('submit'))
 				{
-					if (!check_form_key('hangman_game_frm'))
+					if (!check_form_key($form_key))
 					{
 						trigger_error($this->language->lang('FORM_INVALID') . $this->back_link($this->game_action, $this->language->lang('BACK_TO_PREV')), E_USER_WARNING);
 					}
@@ -270,18 +286,23 @@ class main
 					}
 				}
 
-				// Calculate the length of the rows to display usable letters
-				$total_letters = count ($letters);
-				$letter_row = $total_letters/2;
-				if ((int) $letter_row < $letter_row)
-				{
-					$letter_row = (int) $letter_row + 1;
-				}
-
 				// Get the quotes from the table
 				$sql_in = [$user_id];
-				$sql = 'SELECT word_id, hangman_word, hangman_category FROM ' . $this->hangman_words_table . '
-						WHERE ' . $this->db->sql_in_set('creator_id', $sql_in, true);
+				$sql_ary = [
+					'SELECT'		=> 'w.word_id, w.creator_id, w.hangman_word, w.hangman_category, u.username',
+
+					'FROM'			=> [$this->hangman_words_table	=> 'w'],
+
+					'LEFT_JOIN'		=> [
+							[
+								'FROM'	=> [USERS_TABLE	=> 'u'],
+								'ON'	=> 'u.user_id = w.creator_id',
+							],
+					],
+
+					'WHERE'			=> $this->db->sql_in_set('w.creator_id', $sql_in, true),
+				];
+				$sql = $this->db->sql_build_query('SELECT', $sql_ary);
 				$result = $this->db->sql_query($sql);
 				$quotes = $this->db->sql_fetchrowset($result);
 				$this->db->sql_freeresult($result);
@@ -298,8 +319,6 @@ class main
 					'ALLOW_USER'				=> $allow_user,
 					'GAME_DESC'					=> $game_desc,
 					'MOT_HANGMAN_LETTERS'		=> json_encode($letters),
-					'HANGMAN_TOTAL_LETTERS'		=> $total_letters,
-					'HANGMAN_LETTER_ROW'		=> $letter_row,
 					'MOT_HANGMAN_LIVES'			=> $this->language->lang('MOT_HANGMAN_LIVES', $this->config['mot_hangman_lives']),
 					'HANGMAN_NUMBER_OF_LIVES'	=> $this->config['mot_hangman_lives'],
 					'CLICK_START_FIRST'			=> $this->language->lang('MOT_HANGMAN_NEW_QUOTE_TO'),
@@ -315,7 +334,7 @@ class main
 					'U_ACTION'					=> $this->game_action,
 					'AJAX_CALL'					=> $this->helper->route('mot_hangman_ajax_controller'),
 				]);
-				$selected_tab = 1;
+				$selected_tab = 'game';
 				break;
 
 			case 'word':
@@ -447,7 +466,7 @@ class main
 					'TERM_MIN_LENGTH'				=> $this->config['mot_hangman_term_length'],
 					'U_ACTION'						=> $this->u_action . '&amp;action=submit',
 				]);
-				$selected_tab = 2;
+				$selected_tab = 'word';
 				break;
 
 			case 'rank':
@@ -499,7 +518,7 @@ class main
 				$start = $this->pagination->validate_start($start, $limit, $count_rankings);
 				$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $count_rankings, $limit, $start);
 
-				$selected_tab = 3;
+				$selected_tab = 'rank';
 				break;
 
 			case 'fame':
@@ -598,123 +617,88 @@ class main
 				}
 
 				// Get the best payers of the last months
-				// Get the $number_of_rows last months including their year (if the counting goes backwards over a year change) and store it in an array for further usage
-				$months = [];
-				for ($j = 1; $j <= $number_of_rows; $j++)
-				{
-					$date_mon = $date_arr['mon'] - $j;
-					$date_year = $date_arr['year'];
-					if ($date_mon <= 0)
-					{
-						$date_mon += 12;
-						$date_year--;
-					}
-					$months[] = [
-						'mon'	=> $date_mon,
-						'year'	=> $date_year,
-					];
-				}
+				$sql_arr = [
+					'SELECT'	=> 'f.year, f.month, f.user_id, f.points, u.username, u.user_colour',
+					'FROM'		=> [$this->hangman_fame_month_table	=> 'f'],
+					'LEFT_JOIN'	=> [
+						[
+							'FROM'	=> [USERS_TABLE	=> 'u'],
+							'ON'	=> 'u.user_id = f.user_id',
+						],
+					],
+					'ORDER_BY'		=> 'f.month_id DESC',
+				];
+				$sql = $this->db->sql_build_query('SELECT', $sql_arr);
+				$sql .= ' LIMIT ' . $number_of_rows;
+				$result = $this->db->sql_query($sql);
+				$months = $this->db->sql_fetchrowset($result);
+				$this->db->sql_freeresult($result);
+
 				// Now we can loop through this array and get the player with the most points for the respective months
-				$m = 0;
 				foreach ($months as $row)
 				{
-					$sql = 'SELECT f.user_id, f.points, u.username, u.user_colour FROM ' . $this->hangman_fame_table . ' AS f
-							LEFT JOIN ' . USERS_TABLE . ' AS u
-							ON u.user_id = f.user_id
-							WHERE f.year = ' . (int) $row['year'] . '
-							AND f.month = ' . (int) $row['mon'] . '
-							ORDER BY f.points DESC
-							LIMIT 1';
-					$result = $this->db->sql_query($sql);
-					$player = $this->db->sql_fetchrow($result);
-					$this->db->sql_freeresult($result);
-					if (!empty($player))
-					{
-						$m++;
-						$this->template->assign_block_vars('last_months', [
-							'MONTH'			=> $this->language->lang($months_arr[$row['mon']]) . ' ' . $row['year'],
-							'USERNAME'		=> $player['username'],
-							'USER_COLOUR'	=> $player['user_colour'],
-							'POINTS'		=> $player['points'],
-						]);
-					}
+					$this->template->assign_block_vars('last_months', [
+						'MONTH'			=> $this->language->lang($months_arr[$row['month']]) . ' ' . $row['year'],
+						'USERNAME'		=> $row['username'],
+						'USER_COLOUR'	=> $row['user_colour'],
+						'POINTS'		=> $row['points'],
+					]);
 				}
 
-				// Get best players of last years
-				// Get the $number_of_rows last years and store it in an array for further usage
-				$years = [];
-				for ($j = 1; $j <= $number_of_rows; $j++)
-				{
-					$years[] = [
-						'year'	=> $date_arr['year'] - $j,
-					];
-				}
-
-				// Now we can loop through this array and get the player with the most points for the respective years
-				$y = 0;
-				foreach ($years as $year_row)
-				{
-					// Get best players of each year
-					$sql_arr = [
-						'SELECT'	=> 'f.user_id, f.points, u.username, u.user_colour',
-						'FROM'		=> [$this->hangman_fame_table	=> 'f'],
-						'LEFT_JOIN'	=> [
-							[
-								'FROM'	=> [USERS_TABLE	=> 'u'],
-								'ON'	=> 'u.user_id = f.user_id',
-							],
+				// Get data for last years
+				$sql_arr = [
+					'SELECT'	=> 'f.year, f.user_id, f.points, u.username, u.user_colour',
+					'FROM'		=> [$this->hangman_fame_year_table	=> 'f'],
+					'LEFT_JOIN'	=> [
+						[
+							'FROM'	=> [USERS_TABLE	=> 'u'],
+							'ON'	=> 'u.user_id = f.user_id',
 						],
-						'WHERE'		=> 'f.year = ' . (int) $year_row['year'],
-					];
-					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
-					$result = $this->db->sql_query($sql);
-					$players = $this->db->sql_fetchrowset($result);
-					$this->db->sql_freeresult($result);
+					],
+					'ORDER_BY'		=> 'f.year DESC',
+				];
+				$sql = $this->db->sql_build_query('SELECT', $sql_arr);
+				$result = $this->db->sql_query($sql);
+				$years = $this->db->sql_fetchrowset($result);
+				$this->db->sql_freeresult($result);
 
-					if (!empty($players))
-					{
-						$year_arr = [];
-						foreach ($players as $row)
-						{
-							if (array_key_exists($row['user_id'], $year_arr))
-							{
-								$year_arr[$row['user_id']]['points'] += $row['points'];
-							}
-							else
-							{
-								$year_arr[$row['user_id']] = [
-									'points'		=> $row['points'],
-									'username'		=> $row['username'],
-									'user_colour'	=> $row['user_colour'],
-								];
-							}
-						}
-						usort($year_arr,
-							function ($item1, $item2)
-							{
-								return $item2['points'] <=> $item1['points'];
-							}
-						);
-
-						$this->template->assign_block_vars('last_years', [
-							'YEAR'			=> $year_row['year'],
-							'USERNAME'		=> $year_arr[0]['username'],
-							'USER_COLOUR'	=> $year_arr[0]['user_colour'],
-							'POINTS'		=> $year_arr[0]['points'],
-						]);
-						$y++;
-					}
+				foreach ($years as $row)
+				{
+					$this->template->assign_block_vars('last_years', [
+						'YEAR'			=> $row['year'],
+						'USERNAME'		=> $row['username'],
+						'USER_COLOUR'	=> $row['user_colour'],
+						'POINTS'		=> $row['points'],
+					]);
 				}
 
 				$this->template->assign_vars([
-					'MOT_HANGMAN_NUMBER_MONTHS'	=> $m,
-					'MOT_HANGMAN_NUMBER_YEARS'	=> $y,
+					'MOT_HANGMAN_NUMBER_MONTHS'	=> count($months),
+					'MOT_HANGMAN_NUMBER_YEARS'	=> count($years),
 				]);
 
-				$selected_tab = 5;
+				$selected_tab = 'fame';
 				break;
 
 			case 'summ':
+				if ($this->request->is_set('action') && $this->request->variable('action', '') == 'delete')
+				{
+					$word_id = $this->request->variable('id', 0);
+					$term = $this->request->variable('word', '', true);
+					if (confirm_box(true))
+					{
+						$this->delete_term($word_id);
+						meta_refresh(3, $this->summary_action);
+						trigger_error($this->language->lang('MOT_HANGMAN_TERM_DELETED', $term) . $this->back_link($this->summary_action, $this->language->lang('MOT_HANGMAN_TO_SUMMARY')));
+					}
+					else
+					{
+						confirm_box(false, $this->language->lang('MOT_HANGMAN_DELETE_TERM_MSG', $term), build_hidden_fields([
+							'u_action'	=> $this->summary_action . '&amp;action=delete&amp;id=' . $word_id . '&amp;word=' . $term,
+						]));
+					}
+				}
+
 				// set parameter for pagination
 				$start = $this->request->is_set('start') ? $this->request->variable('start', 0) : 0;
 				$limit = $this->config['mot_hangman_rows_per_page'];	// max lines per page
@@ -742,6 +726,7 @@ class main
 				foreach ($user_term as $row)
 				{
 					$this->template->assign_block_vars('terms', [
+						'U_DELETE'				=> $this->summary_action . '&amp;action=delete&amp;id=' . $row['word_id'] . '&amp;word=' . $row['hangman_word'],
 						'MOT_HANGMAN_TERM'		=> $row['hangman_word'],
 						'MOT_HANGMAN_CATEGORY'	=> $row['hangman_category'],
 					]);
@@ -764,11 +749,12 @@ class main
 					'MOT_HANGMAN_EVADE_ENABLE'			=> $this->config['mot_hangman_evade_enable'] == 1 ? $this->language->lang('YES') : $this->language->lang('NO'),
 					'MOT_HANGMAN_TERMS_AVAILABLE'		=> $term_count,
 					'MOT_HANGMAN_USER_TERMS_AVAILABLE'	=> $user_term_count,
+					'ICON_DELETE'						=> '<i class="icon acp-icon acp-icon-delete fa-times-circle fa-fw" title="' . $this->language->lang('DELETE') . '"></i>',
 				]);
 
 				$this->language->add_lang('info_acp_mot_hangman', 'mot/hangman');
 
-				$selected_tab = 4;
+				$selected_tab = 'summ';
 				break;
 
 		}
@@ -786,11 +772,11 @@ class main
 			'ALLOW_TERM_INPUT'		=> $this->auth->acl_get('u_mot_create_search_term'),
 			'DISPLAY_FAME'			=> $this->config['mot_hangman_enable_fame'],
 			'SELECTED_TAB'			=> $selected_tab,
-			'TAB_1'					=> $this->game_action,
-			'TAB_2'					=> $this->word_action,
-			'TAB_3'					=> $this->rank_action,
-			'TAB_4'					=> $this->summary_action,
-			'TAB_5'					=> $this->fame_action,
+			'TAB_GAME'				=> $this->game_action,
+			'TAB_WORD'				=> $this->word_action,
+			'TAB_RANK'				=> $this->rank_action,
+			'TAB_FAME'				=> $this->fame_action,
+			'TAB_SUMM'				=> $this->summary_action,
 			'IMAGE_PATH'			=> $image_path,
 			'ALLOWED_PUNCT_MARKS'	=> $this->config['mot_hangman_punctuation_marks'],
 			'MOT_HANGMAN_ACTIVE'	=> true,
@@ -967,10 +953,12 @@ class main
 	}
 
 	/**
+	* Add points to the players account of the current month
 	*
-	*
+	* @param	integer	points to add
+	*		bool		add (default) or subtract
 	*/
-	private function save_to_fame($points)
+	private function save_to_fame($points, $add = true)
 	{
 		// Get local date variables and user id first
 		$date_arr = getdate();
@@ -991,7 +979,7 @@ class main
 		if (!empty ($row))
 		{
 			$sql_arr = [
-				'points'		=> $row['points'] + $points,
+				'points'		=> $add ? $row['points'] + $points : $row['points'] - $points,
 			];
 			$sql = 'UPDATE ' . $this->hangman_fame_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
 					WHERE fame_id = ' . (int) $row['fame_id'];
@@ -1002,7 +990,7 @@ class main
 				'year'		=> $date_arr['year'],
 				'month'		=> $date_arr['mon'],
 				'user_id'	=> $user_id,
-				'points'	=> $points,
+				'points'	=> $add ? $points : ($points * -1),
 			];
 			$sql = 'INSERT INTO ' . $this->hangman_fame_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
 		}
@@ -1018,5 +1006,33 @@ class main
 		$sql = 'UPDATE ' . $this->hangman_score_table . '
 				SET old_rank = new_rank';
 		$this->db->sql_query($sql);
+	}
+
+	private function delete_term($word_id)
+	{
+		// Remove the term from the HANGMAN_WORDS_TABLE
+		$sql = 'DELETE FROM ' . $this->hangman_words_table . ' WHERE word_id = ' . (int) $word_id;
+		$this->db->sql_query($sql);
+
+		$points = $this->config['mot_hangman_points_word'];
+		// Subtract the word points from the HANGMAN_SCORE_TABLE
+		$sql = 'UPDATE ' . $this->hangman_score_table . '
+				SET total_pts = total_pts - ' . (int) $points . ', word_pts = word_pts - ' . (int) $points . '
+				WHERE user_id = ' . (int) $this->user->data['user_id'];
+		$this->db->sql_query($sql);
+
+		// Subtract the word points from the HANGMAN_FAME_TABLE
+		$this->save_to_fame($points, false);
+
+		// Update the new rankings and get the new rank of current user (false if no better rank gained)
+		$user_rank_status = $this->calc_new_ranks($this->user->data['user_id']);
+
+		// Trigger notifications about loosing current rank if applicable
+		$this->trigger_notification();
+
+		// All checks are done, now we can set the old ranks to the new ones
+		$this->set_ranks();
+
+		return;
 	}
 }

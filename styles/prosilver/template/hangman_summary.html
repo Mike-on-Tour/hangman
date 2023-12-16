@@ -62,11 +62,13 @@
 						<tr>
 							<th style="text-align: center;">{{ lang('MOT_HANGMAN_TERM') }}</th>
 							{% if SHOW_CATEGORY %}<th style="text-align: center;">{{ lang('MOT_HANGMAN_CATEGORY') }}</th>{% endif %}
+							<th style="text-align: center;">{{ lang('OPTIONS') }}</th>
 						</tr>
 					{% for term in terms %}
 						<tr>
 							<td style="text-align: center;">{{ term.MOT_HANGMAN_TERM }}</td>
 							{% if SHOW_CATEGORY %}<td style="text-align: center;">{{ term.MOT_HANGMAN_CATEGORY}}</td>{% endif %}
+							<td style="text-align: center;"><a href="{{ term.U_DELETE }}">{{ ICON_DELETE }}</a></td>
 						</tr>
 					{% else %}
 					<tr>

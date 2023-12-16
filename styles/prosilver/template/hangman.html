@@ -5,7 +5,7 @@
 <script>
 // <![CDATA[
 	var motHangman = {};
-	motHangman.tab = {{ SELECTED_TAB }};
+	motHangman.tab = "{{ SELECTED_TAB|e('js') }}";
 // ]]>
 </script>
 
@@ -28,23 +28,23 @@
 			<div class="panel bg1">
 				<div id="tabs" class="tabs">
 					<ul>
-						<li id="hangman_tab_1" class="tab"><a href="{{ TAB_1 }}">{{ lang('MOT_HANGMAN_TAB_GAME') }}</a></li>
+						<li id="hangman_tab_game" class="tab"><a href="{{ TAB_GAME }}">{{ lang('MOT_HANGMAN_TAB_GAME') }}</a></li>
 
 						{% if ALLOW_TERM_INPUT %}
-							<li id="hangman_tab_2" class="tab"><a href="{{ TAB_2 }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
+							<li id="hangman_tab_word" class="tab"><a href="{{ TAB_WORD }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
 						{% endif %}
 
-						<li id="hangman_tab_3" class="tab"><a href="{{ TAB_3 }}">{{ lang('MOT_HANGMAN_TAB_SCORE') }}</a></li>
+						<li id="hangman_tab_rank" class="tab"><a href="{{ TAB_RANK }}">{{ lang('MOT_HANGMAN_TAB_SCORE') }}</a></li>
 
 						{% if DISPLAY_FAME %}
-							<li id="hangman_tab_5" class="tab"><a href="{{ TAB_5 }}">{{ lang('MOT_HANGMAN_TAB_FAME') }}</a></li>
+							<li id="hangman_tab_fame" class="tab"><a href="{{ TAB_FAME }}">{{ lang('MOT_HANGMAN_TAB_FAME') }}</a></li>
 						{% endif %}
 
-						<li id="hangman_tab_4" class="tab"><a href="{{ TAB_4 }}">{{ lang('MOT_HANGMAN_TAB_SUMMARY') }}</a></li>
+						<li id="hangman_tab_summ" class="tab"><a href="{{ TAB_SUMM }}">{{ lang('MOT_HANGMAN_TAB_SUMMARY') }}</a></li>
 					</ul>
 				</div>
 				<div class="panel bg3">
-					<div id="hangman_box_1" class="inner" hidden="true">
+					<div id="hangman_box_game" class="inner" hidden="true">
 						{% if ALLOW_USER %}
 							{% include 'hangman_game.html' %}
 						{% else %}
@@ -53,21 +53,21 @@
 					</div>
 
 					{% if ALLOW_TERM_INPUT %}
-						<div id="hangman_box_2" class="inner" hidden="true">
+						<div id="hangman_box_word" class="inner" hidden="true">
 							{% include 'hangman_input_word.html' %}
 						</div>
 					{% endif %}
 
-					<div id="hangman_box_3" class="inner" hidden="true">
+					<div id="hangman_box_rank" class="inner" hidden="true">
 						{% include 'hangman_score.html' %}
 					</div>
 
 					{% if DISPLAY_FAME %}
-						<div id="hangman_box_5" class="inner" hidden="true">
+						<div id="hangman_box_fame" class="inner" hidden="true">
 							{% include 'hangman_fame.html' %}
 						</div>
 					{% endif %}
-					<div id="hangman_box_4" class="inner" hidden="true">
+					<div id="hangman_box_summ" class="inner" hidden="true">
 						{% include 'hangman_summary.html' %}
 					</div>
 				</div>
