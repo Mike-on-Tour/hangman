@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package Hangman v0.9.0
-* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @package Hangman v0.10.0
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -40,6 +40,9 @@ $lang = array_merge($lang, [
 
 	// General settings
 	'ACP_MOT_HANGMAN_EXT_SETTINGS'				=> 'Programmeinstellungen',
+	'ACP_MOT_HANGMAN_ENABLE'					=> 'Hangman aktivieren',
+	'ACP_MOT_HANGMAN_ENABLE_EXP'				=> 'Hangman für die berechtigten Mitglieder ein- bzw. ausschalten, zeigt je nach Einstellung den Link in der Navigationsleiste an.<br>
+													Diese Einstellung gilt nicht für Gründer, diese können Hangman immer sehen.',
 	'ACP_MOT_HANGMAN_AUTODELETE'				=> 'Benutzte Begriffe löschen?',
 	'ACP_MOT_HANGMAN_AUTODELETE_EXP'			=> 'Wenn aktiviert, werden beim Spiel verwendete Suchbegriffe bei Beendigung des Spiels aus der Datenbank gelöscht.',
 	'ACP_MOT_HANGMAN_CATEGORY_ENABLE'			=> 'Kategorien einschalten?',
@@ -78,6 +81,8 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN_LOOSE_RANK'				=> 'Benachrichtigung bei Verlust Ranglistenplatz',
 	'ACP_MOT_HANGMAN_LOOSE_RANK_EXP'			=> 'Bei Aktivierung dieser Einstellung erhält jeder Spieler eine Benachrichtigung, wenn er seinen Ranglistenplatz durch das
 													Spielergebnis eines anderen Spielers verliert',
+	'ACP_MOT_HANGMAN_ENABLE_RANK'				=> 'Rangliste anzeigen',
+	'ACP_MOT_HANGMAN_ENABLE_RANK_EXP'			=> 'Diese Einstellung schaltet die Anzeige der Rangliste ein oder aus.',
 	'ACP_MOT_HANGMAN_ENABLE_FAME'				=> '»Hall of Fame« anzeigen',
 	'ACP_MOT_HANGMAN_ENABLE_FAME_EXP'			=> 'Wenn aktiviert, wird neben der Rangliste ein weiterer Reiter angezeigt, auf dem die monatlichen und jährlichen Spieler mit den
 													meisten Punkten im jeweiligen Zeitraum angezeigt werden.<br>
@@ -130,7 +135,7 @@ $lang = array_merge($lang, [
 													(Satz- und Leerzeichen werden nicht mitgezählt).',
 	'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'			=> 'Erlaubte Satzzeichen',
 	'ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP'		=> 'Die Satzzeichen, die bei der Eingabe eines Suchbegriffes neben den Buchstaben und dem Leerzeichen erlaubt
-													sind. Sie werden im Spiel im Suchbegriff angezeigt.<br>
+													sind. Sie werden im Spiel im Suchbegriff angezeigt. Einfache und doppelte Anführungsstriche sowie der Unterstrich sind nicht erlaubt!<br>
 													ACHTUNG: Beim Import von Suchbegriffen aus Dateien oder anderen Tabellen werden ebenfalls nur diese
 													Satzzeichen übernommen!',
 	'ACP_MOT_HANGMAN_SETTING_SAVED'				=> 'Die Einstellungen für das Hangman Spiel wurden erfolgreich gesichert.',
@@ -190,5 +195,5 @@ $lang = array_merge($lang, [
 	],
 	'ACP_MOT_HANGMAN_CLEAR_FAME_SUCCESS'		=> 'Daten erfolgreich aus der Tabelle für die „Ruhmeshalle“ gelöscht.',
 	'ACP_MOT_HANGMAN_SUPPORT_HANGMAN'			=> 'Wenn Sie die Entwicklung des Hangman Spiels unterstützen möchtest, können Sie das hier tun:<br>',
-	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic" /><br>&copy; 2021 - %2$d by Mike-on-Tour',
+	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic"><br>&copy; 2021 - %2$d by Mike-on-Tour',
 ]);

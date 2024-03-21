@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package Hangman v0.9.0
-* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @package Hangman v0.10.0
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -40,6 +40,9 @@ $lang = array_merge($lang, [
 
 	// General settings
 	'ACP_MOT_HANGMAN_EXT_SETTINGS'				=> 'Extension settings',
+	'ACP_MOT_HANGMAN_ENABLE'					=> 'Enable Hangman',
+	'ACP_MOT_HANGMAN_ENABLE_EXP'				=> 'Enable/disable Hangman for authorised members, displays the link in the navigation bar depending on status.<br>
+													This settong does not affect founders, they always can see Hangman.',
 	'ACP_MOT_HANGMAN_AUTODELETE'				=> 'Delete used terms?',
 	'ACP_MOT_HANGMAN_AUTODELETE_EXP'			=> 'If activated a term used in a game will be deleted from the database after this game is finished.',
 	'ACP_MOT_HANGMAN_CATEGORY_ENABLE'			=> 'Enable categories?',
@@ -76,6 +79,8 @@ $lang = array_merge($lang, [
 	'ACP_MOT_HANGMAN_LOOSE_RANK'				=> 'Notification when loosing current rank',
 	'ACP_MOT_HANGMAN_LOOSE_RANK_EXP'			=> 'If enabled every player who is loosing the current rank through the points gained by another player will receive a notification
 													to this effect.',
+	'ACP_MOT_HANGMAN_ENABLE_RANK'				=> 'Display highscore',
+	'ACP_MOT_HANGMAN_ENABLE_RANK_EXP'			=> 'This setting enables or disables the highscore tab.',
 	'ACP_MOT_HANGMAN_ENABLE_FAME'				=> 'Display »Hall of Fame«',
 	'ACP_MOT_HANGMAN_ENABLE_FAME_EXP'			=> 'If enabled another tab is displayed beside the highscore tab with a monthly and yearly hall of fame showing the players gaining
 													the most points within those time frames.<br>
@@ -128,7 +133,7 @@ $lang = array_merge($lang, [
 													(punctuation marks and spaces will not be counted).',
 	'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'			=> 'Permitted puncuation marks',
 	'ACP_MOT_HANGMAN_PUNCTUATION_MARKS_EXP'		=> 'Those puncuation marks permitted for input with a new term besides letters and spaces. They will be
-													displayed in the game tab as part of the term.<br>
+													displayed in the game tab as part of the term. Single and double quotes and underscores are not permitted!<br>
 													ATTENTION: While importing terms from files or other database tables only these puncuation marks will be
 													regarded!',
 	'ACP_MOT_HANGMAN_SETTING_SAVED'				=> 'Settings for the Hangman Game successfully saved.',
@@ -187,5 +192,5 @@ $lang = array_merge($lang, [
 	],
 	'ACP_MOT_HANGMAN_CLEAR_FAME_SUCCESS'		=> 'Successfully deleted items from the „Hall of Fame“ table.',
 	'ACP_MOT_HANGMAN_SUPPORT_HANGMAN'			=> 'If you want to support Hangman´s development please use this link to donate:<br>',
-	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic" /><br>&copy; 2021 - %2$d by Mike-on-Tour',
+	'ACP_MOT_HANGMAN_VERSION'					=> '<img src="https://img.shields.io/badge/Version-%1$s-green.svg?style=plastic"><br>&copy; 2021 - %2$d by Mike-on-Tour',
 ]);

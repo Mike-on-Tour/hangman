@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.9.0
+* @package Hangman v0.10.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -107,6 +107,7 @@ class hangman_acp
 				}
 
 				// save the settings to the phpbb_config table
+				$this->config->set('mot_hangman_enable', $this->request->variable('mot_hangman_enable', 0));
 				$this->config->set('mot_hangman_autodelete', $this->request->variable('mot_hangman_autodelete', 0));
 				$this->config->set('mot_hangman_category_enable', $this->request->variable('mot_hangman_category_enable', 0));
 				$this->config->set('mot_hangman_category_enforce', $this->request->variable('mot_hangman_category_enforce', 0));
@@ -116,6 +117,7 @@ class hangman_acp
 				$this->config->set('mot_hangman_display_online', $this->request->variable('mot_hangman_display_online', 0));
 				$this->config->set('mot_hangman_gain_rank', $this->request->variable('mot_hangman_gain_rank', 0));
 				$this->config->set('mot_hangman_loose_rank', $this->request->variable('mot_hangman_loose_rank', 0));
+				$this->config->set('mot_hangman_enable_rank', $this->request->variable('mot_hangman_enable_rank', 0));
 				$this->config->set('mot_hangman_enable_fame', $this->request->variable('mot_hangman_enable_fame', 0));
 				$this->config->set('mot_hangman_rank_limit', $this->request->variable('mot_hangman_rank_limit', 0));
 				$this->config->set('mot_hangman_rows_per_page', $this->request->variable('mot_hangman_rows_per_page', 0));
@@ -379,6 +381,7 @@ class hangman_acp
 		}
 
 		$this->template->assign_vars([
+			'ACP_MOT_HANGMAN_ENABLE'				=> $this->config['mot_hangman_enable'],
 			'ACP_MOT_HANGMAN_AUTODELETE'			=> $this->config['mot_hangman_autodelete'],
 			'ACP_MOT_HANGMAN_CATEGORY_ENABLE'		=> $this->config['mot_hangman_category_enable'],
 			'ACP_MOT_HANGMAN_CATEGORY_ENFORCE'		=> $this->config['mot_hangman_category_enforce'],
@@ -387,6 +390,7 @@ class hangman_acp
 			'ACP_MOT_HANGMAN_ENFORCE_TERM_RATIO'	=> $this->config['mot_hangman_enforce_term_ratio'],
 			'ACP_MOT_HANGMAN_GAIN_RANK'				=> $this->config['mot_hangman_gain_rank'],
 			'ACP_MOT_HANGMAN_LOOSE_RANK'			=> $this->config['mot_hangman_loose_rank'],
+			'ACP_MOT_HANGMAN_ENABLE_RANK'			=> $this->config['mot_hangman_enable_rank'],
 			'ACP_MOT_HANGMAN_ENABLE_FAME'			=> $this->config['mot_hangman_enable_fame'],
 			'ACP_MOT_HANGMAN_RANK_LIMIT'			=> $this->config['mot_hangman_rank_limit'],
 			'ACP_MOT_HANGMAN_DISPLAY_ONLINE'		=> $this->config['mot_hangman_display_online'],

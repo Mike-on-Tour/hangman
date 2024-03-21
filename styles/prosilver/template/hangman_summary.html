@@ -61,18 +61,18 @@
 					<tbody>
 						<tr>
 							<th style="text-align: center;">{{ lang('MOT_HANGMAN_TERM') }}</th>
-							{% if SHOW_CATEGORY %}<th style="text-align: center;">{{ lang('MOT_HANGMAN_CATEGORY') }}</th>{% endif %}
+							{% if MOT_HANGMAN_SHOW_CATEGORY %}<th style="text-align: center;">{{ lang('MOT_HANGMAN_CATEGORY') }}</th>{% endif %}
 							<th style="text-align: center;">{{ lang('OPTIONS') }}</th>
 						</tr>
 					{% for term in terms %}
 						<tr>
 							<td style="text-align: center;">{{ term.MOT_HANGMAN_TERM }}</td>
-							{% if SHOW_CATEGORY %}<td style="text-align: center;">{{ term.MOT_HANGMAN_CATEGORY}}</td>{% endif %}
+							{% if MOT_HANGMAN_SHOW_CATEGORY %}<td style="text-align: center;">{{ term.MOT_HANGMAN_CATEGORY}}</td>{% endif %}
 							<td style="text-align: center;"><a href="{{ term.U_DELETE }}">{{ ICON_DELETE }}</a></td>
 						</tr>
 					{% else %}
 					<tr>
-						<td {% if SHOW_CATEGORY %}colspan="2"{% else %}colspan="1"{% endif %} style="text-align: center;">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</td>
+						<td {% if MOT_HANGMAN_SHOW_CATEGORY %}colspan="3"{% else %}colspan="2"{% endif %} style="text-align: center;">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</td>
 					</tr>
 					{% endfor %}
 					</tbody>

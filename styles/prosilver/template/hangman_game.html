@@ -2,30 +2,28 @@
 {% INCLUDEJS '@mot_hangman/hangman_game.js' %}
 
 <script>
-// <![CDATA[
-	motHangman.jsShowCategory = '{{ SHOW_CATEGORY }}';
+	motHangman.jsShowCategory = {{ MOT_HANGMAN_SHOW_CATEGORY }};
 	motHangman.jsHangmanLetters = {{ MOT_HANGMAN_LETTERS }};
-	motHangman.jsImagePath = "{{ IMAGE_PATH|e('js') }}";
-	motHangman.jsAllowedPunctMarks = "{{ ALLOWED_PUNCT_MARKS|e('js') }}";
-	motHangman.jsClickStart = '{{ CLICK_START_FIRST|e('js') }}';
-	motHangman.jsNumberOfLives = {{ HANGMAN_NUMBER_OF_LIVES }};
-	motHangman.jsQuote = {{ HANGMAN_QUOTE }};
+	motHangman.jsImagePath = "{{ MOT_HANGMAN_IMAGE_PATH|e('js') }}";
+	motHangman.jsAllowedPunctMarks = "{{ MOT_HANGMAN_ALLOWED_PUNCT_MARKS|e('js') }}";
+	motHangman.jsClickStart = '{{ MOT_HANGMAN_CLICK_START_FIRST|e('js') }}';
+	motHangman.jsNumberOfLives = {{ MOT_HANGMAN_NUMBER_OF_LIVES }};
+	motHangman.jsQuote = {{ MOT_HANGMAN_QUOTE }};
 	motHangman.jsNoQuote = "{{ lang('MOT_HANGMAN_NO_QUOTE')|e('js') }}";
-	motHangman.jsLetterPoints = {{ LETTER_POINTS }};
-	motHangman.jsWinPoints = {{ WIN_POINTS }};
+	motHangman.jsLetterPoints = {{ MOT_HANGMAN_LETTER_POINTS }};
+	motHangman.jsWinPoints = {{ MOT_HANGMAN_WIN_POINTS }};
 	motHangman.jsWinString = "{{ lang('MOT_HANGMAN_YOU_WIN')|e('js') }}";
 	motHangman.jsWinStringPts = "{{ lang('MOT_HANGMAN_YOU_WIN_PTS')|e('js') }}";
-	motHangman.jsLoosePoints = {{ LOOSE_POINTS }};
-	motHangman.jsPunishEvaders = '{{ ENABLE_EVADE_PUNISH }}';
+	motHangman.jsLoosePoints = {{ MOT_HANGMAN_LOOSE_POINTS }};
+	motHangman.jsPunishEvaders = {{ MOT_HANGMAN_ENABLE_EVADE_PUNISH }};
 	motHangman.jsLooseString = "{{ lang('MOT_HANGMAN_YOU_LOSE')|e('js') }}";
-	motHangman.jsShowTerm = '{{ SHOW_TERM_WHEN_LOST }}';
+	motHangman.jsShowTerm = {{ MOT_HANGMAN_SHOW_TERM_WHEN_LOST }};
 	motHangman.jsShowTermMsg = "{{ lang('MOT_HANGMAN_SHOW_TERM')|e('js') }}";
-	motHangman.jsEnableExtraPoints = '{{ ENABLE_EXTRA_POINTS }}';
+	motHangman.jsEnableExtraPoints = {{ MOT_HANGMAN_ENABLE_EXTRA_POINTS }};
 	motHangman.jsExtraPoints = {{ MOT_HANGMAN_EXTRA_POINTS }};
 	motHangman.jsExtraPointsMsg = "{{ lang('MOT_HANGMAN_WIN_EXTRA_POINTS', MOT_HANGMAN_EXTRA_POINTS)|e('js') }}";
 	motHangman.jsAction = "{{ U_ACTION|e('js') }}";
 	motHangman.jsAjaxCall = "{{ AJAX_CALL|e('js') }}";
-// ]]>
 </script>
 
 <form id="hangman_game_frm" name="frm" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION }}">
@@ -33,26 +31,26 @@
 		<h2>{{ lang('MOT_HANGMAN_TITLE') }}</h2>
 	</div>
 
-	<p>{{ GAME_DESC }}<br></p>
+	<p>{{ MOT_HANGMAN_GAME_DESC }}<br></p>
 
 	<div id="game_content">
 		<div id="status">
-			{% if SHOW_CATEGORY %}
+			{% if MOT_HANGMAN_SHOW_CATEGORY %}
 				<dl style="padding: 4px 0;"><dt><label>&nbsp;</label></dt><dd></dd></dl>
 			{% endif %}
 			<div id="hm_picture">
-				<img src="{{ IMAGE_PATH }}10.svg" width="75" height="125">
+				<img src="{{ MOT_HANGMAN_IMAGE_PATH }}10.svg" width="75" height="125">
 			</div>
 			<div>
 				<p>{{ MOT_HANGMAN_LIVES }}</p>
 				<fieldset>
 					<dl>
 						<dt><label>{{ lang('MOT_HANGMAN_LIVES_USED') }}</label></dt>
-						<dd><input id="lives" class="bg2" type="text" size="2" onfocus="lives.blur();" value="0" name="lives" readonly /></dd>
+						<dd><input id="lives" class="bg2" type="text" size="2" onfocus="lives.blur();" value="0" name="lives" readonly></dd>
 					</dl>
 					<dl>
 						<dt><label>{{ lang('MOT_HANGMAN_SCORE') }}</label></dt>
-						<dd><input id="score" class="bg2" type="text" size="2" onfocus="score.blur();" value="0" name="score" readonly /></dd>
+						<dd><input id="score" class="bg2" type="text" size="2" onfocus="score.blur();" value="0" name="score" readonly></dd>
 					</dl>
 					<dl>
 						<dt><input class="button" id="start_button" type="button" value="{{ lang('MOT_HANGMAN_NEW_QUOTE') }}"></dt>
@@ -64,7 +62,7 @@
 
 		<div id="game_div">
 			<fieldset>
-				{% if SHOW_CATEGORY %}
+				{% if MOT_HANGMAN_SHOW_CATEGORY %}
 					<dl>
 						<dt class="mot-hangman-dt"><label>{{ lang('MOT_HANGMAN_CATEGORY') ~ lang('COLON') }}</label></dt>
 						<dd><span id="hangman_category" class="bg2"></span></dd>
@@ -81,12 +79,12 @@
 
 				<dl>
 					<dt><label>{{ lang('MOT_HANGMAN_FAILED_TRIES') ~ lang('COLON') }}</label></dt>
-					<dd><input id="tried" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="tried" readonly /></dd>
+					<dd><input id="tried" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="tried" readonly></dd>
 				</dl>
 
 				<dl>
 					<dt><label>{{ lang('MOT_HANGMAN_CORRECT_TRIES') ~ lang('COLON') }}</label></dt>
-					<dd><input id="correct" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="correct" readonly /></dd>
+					<dd><input id="correct" class="bg2" type="text" size="30" onfocus="tried.blur();" value="" name="correct" readonly></dd>
 				<dl>
 			</fieldset>
 		</div>

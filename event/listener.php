@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.8.1
+* @package Hangman v0.10.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -34,6 +34,9 @@ class listener implements EventSubscriberInterface
 		];
 	}
 
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
 	/** @var \phpbb\config\config */
 	protected $config;
 
@@ -49,6 +52,9 @@ class listener implements EventSubscriberInterface
 	/* @var \phpbb\template\template */
 	protected $template;
 
+	/** @var \phpbb\user */
+	protected $user;
+
 	/** @var string mot.hangman.tables.mot_hangman_fame */
 	protected $mot_hangman_fame_table;
 
@@ -61,14 +67,16 @@ class listener implements EventSubscriberInterface
 	* @param \phpbb\controller\helper	$helper	Controller helper object
 	* @param \phpbb\template		$template	Template object
 	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\controller\helper $helper, \phpbb\language\language $language,
-								\phpbb\template\template $template, $mot_hangman_fame_table, $mot_hangman_score_table)
+	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\controller\helper $helper,
+								\phpbb\language\language $language, \phpbb\template\template $template, \phpbb\user $user, $mot_hangman_fame_table, $mot_hangman_score_table)
 	{
+		$this->auth = $auth;
 		$this->config = $config;
 		$this->db = $db;
 		$this->helper = $helper;
 		$this->language = $language;
 		$this->template = $template;
+		$this->user = $user;
 		$this->hangman_fame_table = $mot_hangman_fame_table;
 		$this->hangman_score_table = $mot_hangman_score_table;
 	}
@@ -85,11 +93,14 @@ class listener implements EventSubscriberInterface
 
 	public function add_page_header_link()
 	{
-		$this->template->assign_var('U_HANGMAN', $this->helper->route('mot_hangman_main_controller'));
+		$this->template->assign_vars([
+			'U_MOT_HANGMAN'			=> $this->helper->route('mot_hangman_main_controller'),
+			'U_MOT_HANGMAN_PLAY'	=> ($this->config['mot_hangman_enable'] && $this->auth->acl_get('u_mot_play_hangman')) || $this->user->data['user_type'] == USER_FOUNDER,
+		]);
 	}
 
 	/**
-	*
+	* Get all users playing Hangman from the SESSIONS_TABLE
 	*
 	*/
 	public function get_visited_page()
@@ -128,9 +139,9 @@ class listener implements EventSubscriberInterface
 		}
 
 		$this->template->assign_vars([
-			'U_MOT_HANGMAN_RANK_LINK'		=> $this->helper->route('mot_hangman_main_controller', ['tab' => 'rank']),
-			'S_DISPLAY_HANGMAN_ONLINE_LIST'	=> $this->config['mot_hangman_display_online'],
-			'TOTAL_HANGMAN_USERS_ONLINE'	=> $hangman_users_count . $hangman_user_list,
+			'U_MOT_HANGMAN_RANK_LINK'			=> $this->helper->route('mot_hangman_main_controller', ['tab' => 'rank']),
+			'S_MOT_HANGMAN_DISPLAY_ONLINE_LIST'	=> $this->config['mot_hangman_display_online'],
+			'MOT_HANGMAN_TOTAL_USERS_ONLINE'	=> $hangman_users_count . $hangman_user_list,
 		]);
 	}
 
@@ -161,6 +172,7 @@ class listener implements EventSubscriberInterface
 	*/
 	public function load_permissions($event)
 	{
+		$event->update_subarray('permissions', 'u_mot_play_hangman', ['lang' => 'ACL_U_MOT_HANGMAN_PLAY_HANGMAN', 'cat' => 'misc']);
 		$event->update_subarray('permissions', 'u_mot_create_search_term', ['lang' => 'ACL_U_MOT_HANGMAN_CREATE_SEARCH_TERM', 'cat' => 'misc']);
 	}
 }

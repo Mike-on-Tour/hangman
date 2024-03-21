@@ -1,6 +1,6 @@
 /*
 *
-* @package Hangman Game v0.9.0
+* @package Hangman Game v0.9.1
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -8,10 +8,6 @@
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-
-* {
-  box-sizing: border-box;
-}
 
 /*
 * Formatting the content div holding the content boxes

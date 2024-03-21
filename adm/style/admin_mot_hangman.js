@@ -117,8 +117,8 @@ if ($("input[name='mot_hangman_extra_points_enable']:checked").val() == 1) {
 /*
 * Define the search patterns
 */
-var twoDigits = /\d{1,2}/;
-var negativeNumber = /-?\d{1,2}/;
+let twoDigits = /\d{1,2}/;
+let negativeNumber = /-?\d{1,2}/;
 
 /*
 * Checks the value of an input element with a regular expression to make certain we get the value we want
@@ -132,8 +132,8 @@ var negativeNumber = /-?\d{1,2}/;
 * @return:	writes either the default value or - if it matches the pattern and is within the boundaries - the given value into the DOM element's value
 */
 function motHmChkInput(domElement, matchString, defaultValue, minValue, maxValue) {
-	var elementValue = domElement.val();
-	var result = elementValue.match(matchString);
+	let elementValue = domElement.val();
+	let result = elementValue.match(matchString);
 	if (result == null) {
 		domElement.val(defaultValue);		// input doesn't match the pattern, we use the default value
 	} else {
@@ -164,14 +164,22 @@ $("#acp_hangman_points_letter").blur(function() {
 $("#acp_hangman_points_word").blur(function() {
 	motHmChkInput($(this), twoDigits, 8, 0, 99);
 });
+
+// Check whether the text input for allowed punctuation marks contains single or double quotes or an underscore anf if yes delete them since they make trouble
+$("#acp_hangman_punctuation_marks").blur(function() {
+	let elementValue = $(this).val();
+	elementValue = elementValue.replace(/["_'\d\w]/g, '');
+	$(this).val(elementValue);
+});
+
 /*
 $("#acp_mot_hangman_file").change(function(evt) {
-	var files = evt.target.files;
+	let files = evt.target.files;
 });
 */
 $("#acp_mot_hangman_file_upload").on('submit', (function(evt) {
-	var fd = new FormData();
-	var files = $('#acp_mot_hangman_file')[0].files;
+	let fd = new FormData();
+	let files = $('#acp_mot_hangman_file')[0].files;
 	if (files.length > 0 ) {
 		fd.append('file',files[0]);
 		$.post(motHangman.acpAction,

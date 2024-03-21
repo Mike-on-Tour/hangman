@@ -3,10 +3,8 @@
 {% INCLUDEJS '@mot_hangman/hangman.js' %}
 
 <script>
-// <![CDATA[
 	var motHangman = {};
-	motHangman.tab = "{{ SELECTED_TAB|e('js') }}";
-// ]]>
+	motHangman.tab = "{{ MOT_HANGMAN_SELECTED_TAB|e('js') }}";
 </script>
 
 {% if not S_IS_BOT and S_USER_LOGGED_IN %}
@@ -25,48 +23,55 @@
 					</li>
 				</ul>
 			</div>
+
 			<div class="panel bg1">
 				<div id="tabs" class="tabs">
 					<ul>
-						<li id="hangman_tab_game" class="tab"><a href="{{ TAB_GAME }}">{{ lang('MOT_HANGMAN_TAB_GAME') }}</a></li>
+						<li id="hangman_tab_game" class="tab"><a href="{{ MOT_HANGMAN_TAB_GAME }}">{{ lang('MOT_HANGMAN_TAB_GAME') }}</a></li>
 
-						{% if ALLOW_TERM_INPUT %}
-							<li id="hangman_tab_word" class="tab"><a href="{{ TAB_WORD }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
+						{% if MOT_HANGMAN_ALLOW_TERM_INPUT %}
+							<li id="hangman_tab_word" class="tab"><a href="{{ MOT_HANGMAN_TAB_WORD }}">{{ lang('MOT_HANGMAN_TAB_WORD') }}</a></li>
 						{% endif %}
 
-						<li id="hangman_tab_rank" class="tab"><a href="{{ TAB_RANK }}">{{ lang('MOT_HANGMAN_TAB_SCORE') }}</a></li>
-
-						{% if DISPLAY_FAME %}
-							<li id="hangman_tab_fame" class="tab"><a href="{{ TAB_FAME }}">{{ lang('MOT_HANGMAN_TAB_FAME') }}</a></li>
+						{% if MOT_HANGMAN_DISPLAY_RANK %}
+							<li id="hangman_tab_rank" class="tab"><a href="{{ MOT_HANGMAN_TAB_RANK }}">{{ lang('MOT_HANGMAN_TAB_SCORE') }}</a></li>
 						{% endif %}
 
-						<li id="hangman_tab_summ" class="tab"><a href="{{ TAB_SUMM }}">{{ lang('MOT_HANGMAN_TAB_SUMMARY') }}</a></li>
+						{% if MOT_HANGMAN_DISPLAY_FAME %}
+							<li id="hangman_tab_fame" class="tab"><a href="{{ MOT_HANGMAN_TAB_FAME }}">{{ lang('MOT_HANGMAN_TAB_FAME') }}</a></li>
+						{% endif %}
+
+						<li id="hangman_tab_summ" class="tab"><a href="{{ MOT_HANGMAN_TAB_SUMM }}">{{ lang('MOT_HANGMAN_TAB_SUMMARY') }}</a></li>
 					</ul>
 				</div>
+
 				<div class="panel bg3">
 					<div id="hangman_box_game" class="inner" hidden="true">
-						{% if ALLOW_USER %}
+						{% if MOT_HANGMAN_ALLOW_USER %}
 							{% include 'hangman_game.html' %}
 						{% else %}
 							{% include 'hangman_no_game.html' %}
 						{% endif %}
 					</div>
 
-					{% if ALLOW_TERM_INPUT %}
+					{% if MOT_HANGMAN_ALLOW_TERM_INPUT %}
 						<div id="hangman_box_word" class="inner" hidden="true">
 							{% include 'hangman_input_word.html' %}
 						</div>
 					{% endif %}
 
-					<div id="hangman_box_rank" class="inner" hidden="true">
-						{% include 'hangman_score.html' %}
-					</div>
+					{% if MOT_HANGMAN_DISPLAY_RANK %}
+						<div id="hangman_box_rank" class="inner" hidden="true">
+							{% include 'hangman_score.html' %}
+						</div>
+					{% endif %}
 
-					{% if DISPLAY_FAME %}
+					{% if MOT_HANGMAN_DISPLAY_FAME %}
 						<div id="hangman_box_fame" class="inner" hidden="true">
 							{% include 'hangman_fame.html' %}
 						</div>
 					{% endif %}
+
 					<div id="hangman_box_summ" class="inner" hidden="true">
 						{% include 'hangman_summary.html' %}
 					</div>

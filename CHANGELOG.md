@@ -4,6 +4,29 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.10.0] - 2024-03-21
+
+### Added
+-	An ACP switch to enable/disable the hangman game for users, founders still can see it everytime
+-	An ACP switch to enable/disable displaying the highscore tab
+-	A new permission controlling who can play Hangman, by default all phpBB default user roles get this permission
+-	The search term is now obscured before it is submitted into the download stream in order to prevent cheaters from reading it using browser developer tools
+-	A check whether the permitted punctuation marks contain single or double quotes or an underscore, if yes these will be removed before storing them into the database in order
+	to prevent chaos within the game through additional quotes which will irritate PHP's string operations
+
+### Changed
+-	Some code improvements
+-	All template variables are now prefixed with vendor and extension name
+
+### Fixed
+-	A wrong `colspan` statement in `styles/prosilver/template/hangman_summary.html`
+-	Some problems with Postgres databases in `controller/main.php`
+-	A bug which let people insert unauthorized punctuation mark if the term had less letters than required but a sufficient number of characters including the punctuation mark
+
+### Removed
+-	All XHTML remnants
+  
+  
 ## [0.9.0] - 2023-12-15
 
 ### Added

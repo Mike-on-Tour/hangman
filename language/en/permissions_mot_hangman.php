@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package Hangman v0.5.0
-* @copyright (c) 2021 - 2022 Mike-on-Tour
+* @package Hangman v0.10.0
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -34,5 +34,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, [
 	// User permissions
+	'ACL_U_MOT_HANGMAN_PLAY_HANGMAN'		=> 'Can play Hangman',
 	'ACL_U_MOT_HANGMAN_CREATE_SEARCH_TERM'	=> 'Can enter new terms for the Hangman game',
 ]);

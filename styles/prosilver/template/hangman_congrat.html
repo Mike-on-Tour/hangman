@@ -4,9 +4,7 @@
 {% INCLUDEJS '@mot_hangman/hangman_congrat.js' %}
 
 <script>
-// <![CDATA[
 	var motHangman = {};
-// ]]>
 </script>
 
 <div hidden="true">
@@ -20,8 +18,6 @@
 {% include 'overall_footer.html' %}
 
 <script>
-// <![CDATA[
 	motHangman.congratWindow("{{ MOT_HANGMAN_CONGR|e('js') }}");
 	motHangman.waitToClose();
-// ]]>
 </script>

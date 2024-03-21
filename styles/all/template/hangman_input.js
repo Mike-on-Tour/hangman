@@ -1,7 +1,7 @@
 /**
 *
-* package Hangman v0.3.0
-* copyright (c) 2021 Mike-on-Tour
+* package Hangman v0.10.0
+* copyright (c) 2021 - 2024 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -12,8 +12,8 @@
 
 $("#hangman_quote_text").focus();
 
-$("#hangman_quote_input").submit(function() {
-	var elementValue = '';
+$("#hangman_quote_input").submit(function(e) {
+	let elementValue = '';
 
 	elementValue = $("#hangman_quote_text").val();
 	// delete all digits
@@ -22,12 +22,12 @@ $("#hangman_quote_input").submit(function() {
 	elementValue = elementValue.replace(/ {2,}/g, ' ');
 
 	// check whether only authorized letters are used and count the authorized letters
-	var strLenght = elementValue.length;
-	var onlyAuthLetters = true;
-	var checkLetter;
-	var countLetters = 0;
-	var unauthLetters = new Array();
-	for (var i = 0; i < strLenght; i++) {
+	let strLenght = elementValue.length;
+	let onlyAuthLetters = true;
+	let checkLetter;
+	let countLetters = 0;
+	let unauthLetters = new Array();
+	for (let i = 0; i < strLenght; i++) {
 		// check one character after another
 		checkLetter = elementValue[i];
 		// check for unauthorized characters
@@ -42,20 +42,24 @@ $("#hangman_quote_input").submit(function() {
 	}
 
 	$("#hangman_quote_text").val(elementValue);
-	if (!onlyAuthLetters) {
-		phpbb.alert (motHangman.jsErrorTitle, motHangman.jsUnauthLetters + unauthLetters);
-		$("#hangman_quote_text").focus();
-	}
 
 	if (elementValue == '' || elementValue == ' ') {
 		$("#hangman_quote_text").focus();
 		onlyAuthLetters = false;
+		return (onlyAuthLetters);
 	}
 
 	if (countLetters < motHangman.jsMinTermLen) {
 		phpbb.alert (motHangman.jsErrorTitle, motHangman.jsTermTooShort + motHangman.jsMinTermLen);
 		$("#hangman_quote_text").focus();
 		onlyAuthLetters = false;
+		return (onlyAuthLetters);
+	}
+
+	if (!onlyAuthLetters) {
+		phpbb.alert (motHangman.jsErrorTitle, motHangman.jsUnauthLetters + unauthLetters);
+		$("#hangman_quote_text").focus();
+		return (onlyAuthLetters);
 	}
 
 	if (motHangman.jsShowCategory) {
@@ -65,10 +69,13 @@ $("#hangman_quote_input").submit(function() {
 		// delete multiple spaces
 		elementValue = elementValue.replace(/ {2,}/g, ' ');
 
+		$("#hangman_quote_category").val(elementValue);
+alert(motHangman.jsEnforceCategory);
 		if (motHangman.jsEnforceCategory && elementValue == '') {
 			phpbb.alert(motHangman.jsErrorTitle, motHangman.jsCategoryMissing);
 			$("#hangman_quote_category").focus();
 			onlyAuthLetters = false;
+			return (onlyAuthLetters);
 		}
 	}
 

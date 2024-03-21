@@ -28,11 +28,13 @@ services:
     mot.hangman.listener:
         class: mot\hangman\event\listener
         arguments:
+            - '@auth'
             - '@config'
             - '@dbal.conn'
             - '@controller.helper'
             - '@language'
             - '@template'
+            - '@user'
             - '%mot.hangman.tables.mot_hangman_fame%'
             - '%mot.hangman.tables.mot_hangman_score%'
         tags:

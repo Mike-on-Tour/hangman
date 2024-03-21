@@ -1,17 +1,15 @@
 {% INCLUDEJS '@mot_hangman/hangman_input.js' %}
 
 <script>
-// <![CDATA[
-	motHangman.jsShowCategory = '{{ SHOW_CATEGORY }}';
-	motHangman.jsEnforceCategory = '{{ ENFORCE_CATEGORY }}';
-	motHangman.jsLcLetters = {{ HANGMAN_LC_LETTERS }};
+	motHangman.jsShowCategory = {{ MOT_HANGMAN_SHOW_CATEGORY }};
+	motHangman.jsEnforceCategory = {{ MOT_HANGMAN_ENFORCE_CATEGORY }};
+	motHangman.jsLcLetters = {{ MOT_HANGMAN_LC_LETTERS }};
 	motHangman.jsErrorTitle = "{{ lang('ERROR')|e('js') }}";
 	motHangman.jsUnauthLetters = "{{ lang('MOT_HANGMAN_UNAUTH_LETTERS')|e('js') }}";
 	motHangman.jsCategoryMissing = "{{ lang('MOT_HANGMAN_CATEGORY_MISSING')|e('js') }}";
-	motHangman.jsMinTermLen = {{ TERM_MIN_LENGTH }};
+	motHangman.jsMinTermLen = {{ MOT_HANGMAN_TERM_MIN_LENGTH }};
 	motHangman.jsTermTooShort = "{{ lang('MOT_HANGMAN_TERM_TOO_SHORT')|e('js') }}";
-	motHangman.jsAllowedPunctMarks = "{{ ALLOWED_PUNCT_MARKS|e('js') }}";
-// ]]>
+	motHangman.jsAllowedPunctMarks = "{{ MOT_HANGMAN_ALLOWED_PUNCT_MARKS|e('js') }}";
 </script>
 
 <div class="centered_text">
@@ -20,7 +18,7 @@
 
 <p>
 	{{ MOT_HANGMAN_QUOTE_INPUT_EXPL }}<br>
-	{% if SHOW_CATEGORY %}
+	{% if MOT_HANGMAN_SHOW_CATEGORY %}
 		{{ lang('MOT_HANGMAN_CATEGORY_EXPL') }}<br>
 	{% endif %}
 	{{ MOT_HANGMAN_INPUT_POINTS }}
@@ -32,7 +30,7 @@
 			<dt><label for="hangman_quote_text">{{ lang('MOT_HANGMAN_QUOTE_INPUT') }}{{ lang('COLON') }}</label></dt>
 			<dd><textarea class="inputbox autowidth" id="hangman_quote_text" cols="50" rows="1" maxlength="255" name="hangman_quote_text">{{ HANGMAN_QUOTE_TEXT }}</textarea></dd>
 		</dl>
-		{% if SHOW_CATEGORY %}
+		{% if MOT_HANGMAN_SHOW_CATEGORY %}
 			<dl>
 				<dt><label for="hangman_quote_category">{{ lang('MOT_HANGMAN_CATEGORY') }}{{ lang('COLON') }}</label></dt>
 				<dd><input class="inputbox autowidth" id="hangman_quote_category" type="text" size="50" maxlength="255" name="hangman_quote_category" value="{{ HANGMAN_CATEGORY_TEXT }}"></dd>

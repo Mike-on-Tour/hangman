@@ -1,7 +1,7 @@
 /**
 *
-* package Hangman v0.5.0
-* copyright (c) 2021 - 2022 Mike-on-Tour
+* package Hangman v0.10.0
+* copyright (c) 2021 - 2024 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -11,8 +11,8 @@
 'use strict';
 
 // Define keyPressed values
-var ENTER = 13;
-var ESC = 27;
+let ENTER = 13;
+let ESC = 27;
 
 // Variable to indicate waiting for keyboard or mouse input to close modal window
 motHangman.waitForButton = true;
@@ -76,16 +76,16 @@ motHangman.waitToClose = function(backToPhp) {
 *
 */
 motHangman.fillLetterTable = function(letters) {
-	var letterTableWidth = $(".letter_table").width();
-	var letterCount = letters.length;
-	var rowCount = letterTableWidth > 451 ? 2 : 3;
+	let letterTableWidth = $(".letter_table").width();
+	let letterCount = letters.length;
+	let rowCount = letterTableWidth > 451 ? 2 : 3;
 
-	var letterRow = ((letterCount % rowCount) > 0) ? (Math.floor(letterCount / rowCount) + 1) : (letterCount / rowCount);
+	let letterRow = ((letterCount % rowCount) > 0) ? (Math.floor(letterCount / rowCount) + 1) : (letterCount / rowCount);
 
-	for (var i = 1; i <= rowCount; i++) {
-		var startLetter = letterRow * (i - 1);
-		var stopLetter = letterRow * i < letterCount ? letterRow : letterCount - (letterRow * (i - 1));
-		for (var j = 0; j < stopLetter; j++) {
+	for (let i = 1; i <= rowCount; i++) {
+		let startLetter = letterRow * (i - 1);
+		let stopLetter = letterRow * i < letterCount ? letterRow : letterCount - (letterRow * (i - 1));
+		for (let j = 0; j < stopLetter; j++) {
 			$("#row" + i).html($("#row" + i).html() + '<input type="button" class="button letter-button" id="' + letters[j + startLetter] + '" value=" ' + letters[j + startLetter] + ' "	onclick="motHangman.seek(\'' + letters[j + startLetter] + '\');">');
 		}
 	}
@@ -98,9 +98,9 @@ motHangman.fillLetterTable = function(letters) {
 */
 $("#start_button").click(function() {
 	function replaceChars(myString) {
-		var len = myString.length;
-		var tempString = ''
-		for (var i = 0; i < len; i++) {
+		let len = myString.length;
+		let tempString = ''
+		for (let i = 0; i < len; i++) {
 			if (!motHangman.jsAllowedPunctMarks.includes(myString[i]) && myString[i] != ' ') {
 				tempString += '_';
 			} else {
@@ -118,7 +118,7 @@ $("#start_button").click(function() {
 			motHangman.quoteId = motHangman.jsQuote['word_id'];
 			$("#word_id").val(motHangman.quoteId);
 
-			motHangman.quoteText = motHangman.jsQuote['hangman_word'];
+			motHangman.quoteText = motHangman.decrypt(motHangman.jsQuote['hangman_word'], motHangman.jsQuote['word_len']);
 			motHangman.showText = replaceChars(motHangman.quoteText);			// replace all characters with underscores for display
 			$("#hangman_word").val(motHangman.showText);
 			$("#hangman_word").css("letter-spacing", "5px");
@@ -142,12 +142,12 @@ $("#start_button").click(function() {
 });
 
 motHangman.seek = function(letter) {
-	var i = 0;
-	var len = 0;
-	var tempText = '';
-	var quoteLength = this.quoteText.length;
-	var showLength = this.showText.length;
-	var correctLetter = false;
+	let i = 0;
+	let len = 0;
+	let tempText = '';
+	let quoteLength = this.quoteText.length;
+	let showLength = this.showText.length;
+	let correctLetter = false;
 
 	if(!this.running) {
 //		phpbb.alert('', this.jsClickStart);
@@ -231,6 +231,24 @@ motHangman.seek = function(letter) {
 	}
 }
 
+motHangman.encrypt = function(str, key) {
+	let result = "";
+	for (let i = 0; i < str.length; i++) {
+		let charCode = (str.charCodeAt(i) + key) % 256;
+		result += String.fromCharCode(charCode);
+  }
+  return result;
+}
+
+motHangman.decrypt = function(str, key) {
+	let result = "";
+	for (let i = 0; i < str.length; i++) {
+		let charCode = (str.charCodeAt(i) - key + 256) % 256;
+		result += String.fromCharCode(charCode);
+	}
+	return result;
+}
+
 /* --------------------------------------------- Event handlers --------------------------------------------- */
 
 /*
@@ -239,7 +257,7 @@ motHangman.seek = function(letter) {
 * @params	event
 */
 $(document).keypress(function(event) {
-	var key = event.key;
+	let key = event.key;
 
 	key = key.toLocaleUpperCase();
 	if (key == 'SS') {
@@ -287,7 +305,7 @@ if (motHangman.jsPunishEvaders) {
 		if (motHangman.running) {
 			motHangman.points = motHangman.jsLoosePoints;
 			$("#score").val(motHangman.points);
-			var formData = new FormData();
+			let formData = new FormData();
 			formData.append('score', motHangman.points);
 			formData.append('word_id', motHangman.quoteId);
 			navigator.sendBeacon(motHangman.jsAjaxCall, formData);
