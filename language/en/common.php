@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.9.0
+* @package Hangman v0.11.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -36,7 +36,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ »« “ ” …
 //
 
 $lang = array_merge($lang, [
@@ -85,6 +85,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_YOU_LOSE'			=> '<strong>You lose!</strong><br>Points gained: ',
 	'MOT_HANGMAN_SHOW_TERM'			=> '<br><br>The term read:<br><i>',
 	'MOT_HANGMAN_POINTS_SAVED'		=> 'Your game account was credited with the points gained in this game turn.',
+	'MOT_HANGMAN_UP_ADDED'			=> 'Your UP account was credited with %1$s points.',
 	'MOT_HANGMAN_GAME_BLOCKED'		=> 'The administrator has defined a game points to term input points ratio which must not be exceeded.
 										You have earned so many game points that in your case this ratio is exceeded. You must enter new
 										terms prior to playing again.<br><br>
@@ -140,6 +141,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_CATEGORY'			=> 'Category',
 	'MOT_HANGMAN_DELETE_TERM_MSG'	=> 'Do you really want to delete the term »%1$s« from the database?',
 	'MOT_HANGMAN_TERM_DELETED'		=> 'The term »%1$s« successfully removed from the database.',
+	'MOT_HANGMAN_UP_SUBTRACTED'		=> '%1$s points have been deducted from your UP account.',
 
 	// Display players
 	'MOT_HANGMAN_PLAYERS'			=> 'Hangman players',
@@ -165,4 +167,37 @@ $lang = array_merge($lang, [
 	'OCTOBER'		=> 'October',
 	'NOVEMBER'		=> 'November',
 	'DECEMBER'		=> 'December',
+
+	// PM texts
+	'MOT_HANGMAN_WINNER_SUBJECT'		=> 'Reward for the top ranking Hangman player',
+	'MOT_HANGMAN_WINNER_MESSAGE_0'	=> 'Hello %1$s,
+you are yesterdays best player gaining %2$d points!
+Your UP account was credited with %3$s UP points for this achievement.
+
+Herzlichen Glückwunsch
+%4$s',
+	'MOT_HANGMAN_WINNER_MESSAGE_1'	=> 'Hello %1$s,
+you are last weeks best player gaining %2$d points!
+Your UP account was credited with %3$s UP points for this achievement.
+
+Herzlichen Glückwunsch
+%4$s',
+	'MOT_HANGMAN_WINNER_MESSAGE_2'	=> 'Hello %1$s,
+you are last months best player gaining %2$d points!
+Your UP account was credited with %3$s UP points for this achievement.
+
+Herzlichen Glückwunsch
+%4$s',
+	'MOT_HANGMAN_WINNER_MESSAGE_3'	=> 'Hello %1$s,
+you are last years best player gaining %2$d points!
+Your UP account was credited with %3$s UP points for this achievement.
+
+Herzlichen Glückwunsch
+%4$s',
+
+	'MOT_HANGMAN_ADMIN_SUBJECT_0'	=> 'Notification about daily Hangman rewards',
+	'MOT_HANGMAN_ADMIN_SUBJECT_1'	=> 'Notification about weekly Hangman rewards',
+	'MOT_HANGMAN_ADMIN_SUBJECT_2'	=> 'Notification about monthly Hangman rewards',
+	'MOT_HANGMAN_ADMIN_SUBJECT_3'	=> 'Notification about yearly Hangman rewards',
+	'MOT_HANGMAN_ADMIN_MESSAGE'		=> '%1$s was rewarded a bonus as best Hangman player gaining %2$d points (%3$s UP points).',
 ]);

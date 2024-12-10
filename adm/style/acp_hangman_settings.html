@@ -1,9 +1,17 @@
+{#
+*
+* @package Hangman v0.11.0
+* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+#}
+
 {% include 'overall_header.html' %}
 {% INCLUDEJS '@mot_hangman/admin_mot_hangman.js' %}
 {% INCLUDECSS '@mot_hangman/mot_hangman_acp.css' %}
 {% set switch_type = TOGGLECTRL_TYPE ?? 'toggle' %}
 
-<h1>{{ lang('ACP_MOT_HANGMAN_SETTINGS') }}</h1>
+<h1>{{ lang('ACP_MOT_HANGMAN') ~ ' - ' ~ lang('ACP_MOT_HANGMAN_SETTINGS') }}</h1>
 
 <form id="acp_hangman_settings" method="post" enctype="application/x-www-form-urlencoded" action="{{ U_ACTION_MOT_HANGMAN_SETTINGS }}">
 	<fieldset>
@@ -150,6 +158,95 @@
 		</dl>
 	</fieldset>
 
+	{% if ACP_MOT_HANGMAN_UP_ENABLED %}
+		<fieldset class="mot-up-set">
+			<legend>{{ lang('ACP_MOT_HANGMAN_UP_SETTINGS') }}</legend>
+			<dl>
+				<dt><label for="mot_hangman_points_enable">{{ lang('ACP_MOT_HANGMAN_POINTS_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_ENABLE_EXPL') }}</p></dt>
+				<dd>{{ _self.switch('mot_hangman_points_enable', ACP_MOT_HANGMAN_POINTS_ENABLE, switch_type) }}</dd>
+			</dl>
+			<div id="mot_hangman_show_point_ratio" hidden="true">
+				<hr>
+				<dl>
+					<dt><label for="mot_hangman_points_ratio">{{ lang('ACP_MOT_HANGMAN_POINTS_RATIO') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_RATIO_EXPL', ACP_MOT_HANGMAN_POINTS) }}</p></dt>
+					<dd>
+						{{ ACP_MOT_HANGMAN_POINTS ~ ' ' ~ lang ('ACP_MOT_HANGMAN') ~ '-' ~ lang('ACP_MOT_HANGMAN_POINTS_NAME') }} =
+						<input type="number" min="0.1" max="100" step="0.1" id="mot_hangman_points_ratio" name="mot_hangman_points_ratio" value="{{ ACP_MOT_HANGMAN_POINTS_RATIO }}">
+						{{ ACP_MOT_HANGMAN_UP_POINTS_NAME }}
+					</dd>
+				</dl>
+			</div>
+		</fieldset>
+
+		<div id="mot_hangman_show_reward_enable" hidden="true">
+			<fieldset class="mot-up-set">
+				<legend>{{ lang('ACP_MOT_HANGMAN_REWARD_SETTINGS') }}</legend>
+				<dl>
+					<dt><label for="mot_hangman_reward_enable">{{ lang('ACP_MOT_HANGMAN_REWARD_ON') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_REWARD_ON_EXPL') }}</p></dt>
+					<dd>{{ _self.switch('mot_hangman_reward_enable', ACP_MOT_HANGMAN_REWARD_ENABLE, switch_type) }}</dd>
+				</dl>
+
+				<div id="mot_hangman_show_reward_settings" hidden="true">
+					<hr>
+
+					<dl>
+						<dt><label for="mot_hangman_reward_time">{{ lang('ACP_MOT_HANGMAN_REWARD_TIME') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_REWARD_TIME_EXPL') }}</p></dt>
+						<dd>
+							{{ _self.select('mot_hangman_reward_time', ACP_MOT_HANGMAN_REWARD_TIME, ACP_MOT_HANGMAN_PERIOD_SELECT) }}
+						</dd>
+					</dl>
+
+					<div id="mot_hangman_weekday_select" hidden="true">
+						<dl>
+							<dt><label for="mot_hangman_week_start">{{ lang('ACP_MOT_HANGMAN_WEEK_START') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_WEEK_START_EXPL') }}</p></dt>
+							<dd>
+								{{ _self.select('mot_hangman_week_start', ACP_MOT_HANGMAN_WEEK_START, ACP_MOT_HANGMAN_WEEK_START_SELECT) }}
+							</dd>
+						</dl>
+					</div>
+
+					<dl>
+						<dt><label>{{ lang('ACP_MOT_HANGMAN_REWARD_LAST_GC') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_REWARD_LAST_GC_EXPL') }}</p></dt>
+						<dd>{{ ACP_MOT_HANGMAN_REWARD_LAST_GC }}</dd>
+					</dl>
+
+					<hr>
+
+					<dl>
+						<dt>
+							<label for="mot_hangman_points_price">{{ lang('ACP_MOT_HANGMAN_POINTS_PRICE') ~ lang('COLON') }}</label>
+							<p>{{ lang('ACP_MOT_HANGMAN_POINTS_PRICE_EXPL') }}</p>
+						</dt>
+						<dd>
+							<input type="number" min="1" max="500" id="mot_hangman_points_price" name="mot_hangman_points_price" value="{{ ACP_MOT_HANGMAN_POINTS_PRICE }}">
+							{{ lang ('ACP_MOT_HANGMAN') ~ '-' ~ lang('ACP_MOT_HANGMAN_POINTS_NAME') }}
+						</dd>
+					</dl>
+
+					<hr>
+
+					<dl>
+						<dt>
+							<label for="mot_hangman_pm_enable">{{ lang('ACP_MOT_HANGMAN_PM_ENABLE') ~ lang('COLON') }}</label>
+							<p>{{ lang('ACP_MOT_HANGMAN_PM_ENABLE_EXPL') }}</p>
+						</dt>
+						<dd>{{ _self.switch('mot_hangman_pm_enable', ACP_MOT_HANGMAN_PM_ENABLE, switch_type) }}</dd>
+					</dl>
+
+					<dl>
+						<dt>
+							<label for="mot_hangman_admin_id">{{ lang('ACP_MOT_HANGMAN_ADMIN_LIST') ~ lang('COLON') }}</label>
+							<p>{{ lang('ACP_MOT_HANGMAN_ADMIN_LIST_EXPL') }}</p>
+						</dt>
+						<dd>
+							{{ _self.select('mot_hangman_admin_id', ACP_MOT_HANGMAN_ADMIN_ID, ACP_MOT_HANGMAN_ADMIN_LIST) }}
+						</dd>
+					</dl>
+				</div>
+			</fieldset>
+		</div>
+	{% endif %}
+
 	<fieldset>
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}">&nbsp;
@@ -266,4 +363,12 @@
 		<label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
 		<label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
 	{%- endif %}
+{%- endmacro %}
+
+{% macro select(name, value, options) -%}
+	<select id="{{ name }}" name="{{ name }}">
+		{% for opt_lang_var, opt_value in options %}
+			<option value="{{ opt_value }}"{{ opt_value == value ? ' selected' }}>{{ lang(opt_lang_var) }}</option>
+		{% endfor %}
+	</select>
 {%- endmacro %}

@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.10.0
+* @package Hangman v0.11.0
 * @copyright (c) 2021 - 2024 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -137,6 +137,46 @@ $lang = array_merge($lang, [
 													ATTENTION: While importing terms from files or other database tables only these puncuation marks will be
 													regarded!',
 	'ACP_MOT_HANGMAN_SETTING_SAVED'				=> 'Settings for the Hangman Game successfully saved.',
+
+	// UP and rwards settings
+	'ACP_MOT_HANGMAN_UP_SETTINGS'				=> 'Points system settings',
+	'ACP_MOT_HANGMAN_POINTS_ENABLE'				=> 'Activate points system',
+	'ACP_MOT_HANGMAN_POINTS_ENABLE_EXPL'		=> 'If a points system (e.g. ´Ultimate Points´) is active on your board, Hangman game points will be added to or subtracted from
+													this points account of a Hangman player.<br>
+													After activating this setting more settings related to it will be displayed.',
+	'ACP_MOT_HANGMAN_POINTS_RATIO'				=> 'Ratio Hangman points to points system points',
+	'ACP_MOT_HANGMAN_POINTS_RATIO_EXPL'			=> 'Defines the amount of points system points to be credited per %1$d Hangman points.',
+	'ACP_MOT_HANGMAN_POINTS_NAME'				=> 'Points',
+	'ACP_MOT_HANGMAN_REWARD_SETTINGS'			=> 'Rewards settings',
+	'ACP_MOT_HANGMAN_REWARD_ON'					=> 'Activate Hangman rewards',
+	'ACP_MOT_HANGMAN_REWARD_ON_EXPL'			=> 'Activate the periodic calculation of the reward payments.<br>
+													After activating this setting more settings related to it will be displayed.',
+	'ACP_MOT_HANGMAN_REWARD_TIME'				=> 'Time period between two reward calculation runs',
+	'ACP_MOT_HANGMAN_REWARD_TIME_EXPL'			=> 'The time period between two runs to calculate the winners`s rewards.',
+	'ACP_MOT_HANGMAN_WEEK_START'				=> 'Auswahl Wochentag für wöchentliche Berechnung',
+	'ACP_MOT_HANGMAN_WEEK_START_EXPL'			=> 'Wähle hier bei wöchentlicher Berechnung der Bonuszahlung den Wochentag aus, an dem die Berechnung erfolgen soll.',
+	'ACP_MOT_HANGMAN_DAILY'						=> 'Daily',
+	'ACP_MOT_HANGMAN_WEEKLY'					=> 'Weekly',
+	'ACP_MOT_HANGMAN_MONTHLY'					=> 'Monthly',
+	'ACP_MOT_HANGMAN_YEARLY'					=> 'Yearly',
+	'ACP_MOT_HANGMAN_WEEK_START'				=> 'Select the day of the week for weekly calculation of rewards',
+	'ACP_MOT_HANGMAN_WEEK_START_EXPL'			=> 'For the weekly calculation of the rewards please choose here the day of the week for the calculation.',
+	'ACP_MOT_HANGMAN_SUNDAY'					=> 'Sunday',
+	'ACP_MOT_HANGMAN_MONDAY'					=> 'Monday',
+	'ACP_MOT_HANGMAN_TUESDAY'					=> 'Tuesday',
+	'ACP_MOT_HANGMAN_WEDNESDAY'					=> 'Wednesday',
+	'ACP_MOT_HANGMAN_THURSDAY'					=> 'Thursday',
+	'ACP_MOT_HANGMAN_FRIDAY'					=> 'Friday',
+	'ACP_MOT_HANGMAN_SATURDAY'					=> 'Saturday',
+	'ACP_MOT_HANGMAN_REWARD_LAST_GC'			=> 'Time of the last cron job run',
+	'ACP_MOT_HANGMAN_REWARD_LAST_GC_EXPL'		=> 'The time of the last cron job run to calculate the rewards. This just indicates the time of the last cron job run and does not
+													state anything about the last calculation of the rewards.',
+	'ACP_MOT_HANGMAN_POINTS_PRICE'				=> 'Bonus points for the top ranking player',
+	'ACP_MOT_HANGMAN_POINTS_PRICE_EXPL'			=> 'Bonus points for the top ranking player of the current period.',
+	'ACP_MOT_HANGMAN_PM_ENABLE'					=> 'Activate PMs',
+	'ACP_MOT_HANGMAN_PM_ENABLE_EXPL'			=> 'If activated bonus winners will be notified by PM. Simultaneously the selected administrator will receive a PM with the winner`s name.',
+	'ACP_MOT_HANGMAN_ADMIN_LIST'				=> 'Hangman reward system administrator',
+	'ACP_MOT_HANGMAN_ADMIN_LIST_EXPL'			=> 'A board administrator or moderator who will receive the report of periodic results and who will be the sender of PMs to the winner.',
 
 	// Data migration
 	'ACP_MOT_HANGMAN_MIGRATION_SETTINGS'		=> 'Data migration',

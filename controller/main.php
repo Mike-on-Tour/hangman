@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.10.0
+* @package Hangman v0.11.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -223,7 +223,7 @@ class main
 							$this->trigger_notification();
 
 							// Update hall of fame (we do this independantly from its enabling status)
-							$this->save_to_fame($game_points);
+							$up_points = $this->save_to_fame($game_points);
 
 							// All checks are done, now we can set the old ranks to the new ones
 							$this->set_ranks();
@@ -251,6 +251,7 @@ class main
 
 						// display message about successful operation
 						$message = $this->language->lang('MOT_HANGMAN_POINTS_SAVED');
+						$message .= $up_points > 0 ? '<br>' . $this->language->lang('MOT_HANGMAN_UP_ADDED', $up_points) : '';
 						meta_refresh(4, $this->game_action);
 						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('MOT_HANGMAN_TO_GAME'))
 												. $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT'))
@@ -311,8 +312,11 @@ class main
 					$quotes = $this->db->sql_fetchrowset($result);
 					$this->db->sql_freeresult($result);
 
+					// Select a random quote
 					$quote_count = count($quotes);
+					shuffle($quotes);		// Might this result in better randomly selecting a term?
 					$quote = $quote_count ? $quotes[array_rand($quotes)] : [];
+
 					if (!empty($quote))
 					{
 						$quote['word_len'] = mb_strlen($quote['hangman_word']);
@@ -430,7 +434,7 @@ class main
 							$this->trigger_notification();
 
 							// Update hall of fame (we do this independantly from its enabling status)
-							$this->save_to_fame($input_points);
+							$up_points = $this->save_to_fame($input_points);
 
 							// All checks are done, now we can set the old ranks to the new ones
 							$this->set_ranks();
@@ -457,8 +461,9 @@ class main
 						}
 
 						// display message about successful operation
-						meta_refresh(2, $this->word_action);
+						meta_refresh(4, $this->word_action);
 						$message = $this->language->lang('MOT_HANGMAN_WORD_SAVED', $input_points);
+						$message .= $up_points > 0 ? '<br>' . $this->language->lang('MOT_HANGMAN_UP_ADDED', $up_points) : '';
 						trigger_error($message	. $this->back_link($this->game_action, $this->language->lang('MOT_HANGMAN_TO_GAME'))
 												. $this->back_link($this->word_action, $this->language->lang('MOT_HANGMAN_TO_WORD_INPUT'))
 												. $this->back_link($this->rank_action, $this->language->lang('MOT_HANGMAN_TO_SCORE_TABLE'))
@@ -690,9 +695,11 @@ class main
 						$term = $this->request->variable('word', '', true);
 						if (confirm_box(true))
 						{
-							$this->delete_term($word_id);
+							$up_points = abs($this->delete_term($word_id));
 							meta_refresh(3, $this->summary_action);
-							trigger_error($this->language->lang('MOT_HANGMAN_TERM_DELETED', $term) . $this->back_link($this->summary_action, $this->language->lang('MOT_HANGMAN_TO_SUMMARY')));
+							$msg = $this->language->lang('MOT_HANGMAN_TERM_DELETED', $term);
+							$msg .= $up_points > 0 ? '<br>' . $this->language->lang('MOT_HANGMAN_UP_SUBTRACTED', $up_points) : '';
+							trigger_error($msg . $this->back_link($this->summary_action, $this->language->lang('MOT_HANGMAN_TO_SUMMARY')));
 						}
 						else
 						{
@@ -961,20 +968,28 @@ class main
 	/**
 	* Add points to the players account of the current month
 	*
-	* @param	integer	points to add
-	*		bool		add (default) or subtract
+	* @param	integer		points to add
+	*		bool			add (default) or subtract
+	*
+	* @return	boolean/float	either false = no UP points credited or float = amount of UP points credited
 	*/
 	private function save_to_fame($points, $add = true)
 	{
+		global $phpbb_container;
+
 		// Get local date variables and user id first
 		$date_arr = getdate();
+		$julian_day = gregoriantojd($date_arr['mon'], $date_arr['mday'], $date_arr['year']);
 		$user_id = $this->user->data['user_id'];
+
+		$return = 0;	// Set it to false initially, if points system is activated and UP enabled this will hold the UP points gathered
 
 		// Update or Insert this user's score
 		$sql_arr = [
-			'year'		=> $date_arr['year'],
-			'month'		=> $date_arr['mon'],
-			'user_id'	=> $user_id,
+			'year'			=> $date_arr['year'],
+			'month'			=> $date_arr['mon'],
+			'julian_day'	=> $julian_day,
+			'user_id'		=> $user_id,
 		];
 		$sql = 'SELECT fame_id, points FROM ' . $this->hangman_fame_table . '
 				WHERE ' . $this->db->sql_build_array('SELECT', $sql_arr);
@@ -982,10 +997,11 @@ class main
 		$row = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
 
+		$points = $add ? $points : $points * -1;
 		if (!empty ($row))
 		{
 			$sql_arr = [
-				'points'		=> $add ? $row['points'] + $points : $row['points'] - $points,
+				'points'		=> $row['points'] + $points,
 			];
 			$sql = 'UPDATE ' . $this->hangman_fame_table . ' SET ' . $this->db->sql_build_array('UPDATE', $sql_arr) . '
 					WHERE fame_id = ' . (int) $row['fame_id'];
@@ -993,14 +1009,26 @@ class main
 		else
 		{
 			$sql_arr = [
-				'year'		=> $date_arr['year'],
-				'month'		=> $date_arr['mon'],
-				'user_id'	=> $user_id,
-				'points'	=> $add ? $points : ($points * -1),
+				'year'			=> $date_arr['year'],
+				'month'			=> $date_arr['mon'],
+				'julian_day'	=> $julian_day,
+				'user_id'		=> $user_id,
+				'points'		=> $points,
 			];
 			$sql = 'INSERT INTO ' . $this->hangman_fame_table . ' ' . $this->db->sql_build_array('INSERT', $sql_arr);
 		}
 		$this->db->sql_query($sql);
+
+		// Check if points system is activated and UP enabled and if yes calculate awarded points into UP points and add to the users account
+		if ($this->config['mot_hangman_points_enable'] && $this->phpbb_extension_manager->is_enabled('dmzx/ultimatepoints'))
+		{
+			$this->functions_points = $phpbb_container->get('dmzx.ultimatepoints.core.functions.points');
+			$factor_points = round($this->config['mot_hangman_points_ratio'] * $points, 2);
+			$this->functions_points->add_points($user_id, $factor_points);
+			$return = $factor_points;
+		}
+
+		return $return;
 	}
 
 	/**
@@ -1014,6 +1042,11 @@ class main
 		$this->db->sql_query($sql);
 	}
 
+	/*
+	*
+	*
+	*
+	*/
 	private function delete_term($word_id)
 	{
 		// Remove the term from the HANGMAN_WORDS_TABLE
@@ -1028,7 +1061,7 @@ class main
 		$this->db->sql_query($sql);
 
 		// Subtract the word points from the HANGMAN_FAME_TABLE
-		$this->save_to_fame($points, false);
+		$up_points = $this->save_to_fame($points, false);
 
 		// Update the new rankings and get the new rank of current user (false if no better rank gained)
 		$user_rank_status = $this->calc_new_ranks($this->user->data['user_id']);
@@ -1039,7 +1072,7 @@ class main
 		// All checks are done, now we can set the old ranks to the new ones
 		$this->set_ranks();
 
-		return;
+		return $up_points;
 	}
 
 	private function charCodeAt($string, $offset)

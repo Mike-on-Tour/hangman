@@ -70,7 +70,7 @@ $("#hangman_quote_input").submit(function(e) {
 		elementValue = elementValue.replace(/ {2,}/g, ' ');
 
 		$("#hangman_quote_category").val(elementValue);
-alert(motHangman.jsEnforceCategory);
+
 		if (motHangman.jsEnforceCategory && elementValue == '') {
 			phpbb.alert(motHangman.jsErrorTitle, motHangman.jsCategoryMissing);
 			$("#hangman_quote_category").focus();

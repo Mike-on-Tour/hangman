@@ -1,7 +1,7 @@
 /**
 *
-* package Hangman v0.8.0
-* copyright (c) 2021 - 2023 Mike-on-Tour
+* package Hangman v0.11.0
+* copyright (c) 2021 - 2024 Mike-on-Tour
 * license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -190,5 +190,80 @@ $("#acp_mot_hangman_file_upload").on('submit', (function(evt) {
 		phpbb.alert(motHangman.acpError, motHangman.acpSelectFile);
 	}
 }));
+
+/*
+* Check the 'mot_hangman_points_enable' setting and hide or show the according settings
+*/
+$("input[name='mot_hangman_points_enable']").click(function() {
+// Check radio buttons
+	if ($(this).attr('type') == 'radio') {
+		if ($(this).val() == 1) {
+			$("#mot_hangman_show_point_ratio").show();
+			$("#mot_hangman_show_reward_enable").show();
+		} else {
+			$("#mot_hangman_show_point_ratio").hide();
+			$("#mot_hangman_show_reward_enable").hide();
+		}
+	}
+	// Check checkbox
+	if ($(this).attr('type') == 'checkbox') {
+		if ($(this).is(":checked")) {
+			$("#mot_hangman_show_point_ratio").show();
+			$("#mot_hangman_show_reward_enable").show();
+		} else {
+			$("#mot_hangman_show_point_ratio").hide();
+			$("#mot_hangman_show_reward_enable").hide();
+		}
+	}
+});
+
+// Show this div at the start if it is checked
+if ($("input[name='mot_hangman_points_enable']:checked").val() == 1) {
+	$("#mot_hangman_show_point_ratio").show();
+	$("#mot_hangman_show_reward_enable").show();
+}
+
+/*
+* Check the 'mot_hangman_reward_enable' setting and hide or show the according settings
+*/
+$("input[name='mot_hangman_reward_enable']").click(function() {
+	// Check radio buttons
+	if ($(this).attr('type') == 'radio') {
+		if ($(this).val() == 1) {
+			$("#mot_hangman_show_reward_settings").show();
+		} else {
+			$("#mot_hangman_show_reward_settings").hide();
+		}
+	}
+	// Check checkbox
+	if ($(this).attr('type') == 'checkbox') {
+		if ($(this).is(":checked")) {
+			$("#mot_hangman_show_reward_settings").show();
+		} else {
+			$("#mot_hangman_show_reward_settings").hide();
+		}
+	}
+});
+
+// Show this div at the start if it is checked
+if ($("input[name='mot_hangman_reward_enable']:checked").val() == 1) {
+	$("#mot_hangman_show_reward_settings").show();
+}
+
+/*
+* Check the 'mot_hangman_reward_time' setting for the value 1 (weekly) and hide or show the 'mot_hangman_weekday_select' selection
+*/
+$("#mot_hangman_reward_time").on('change', function() {
+	if ($(this).val() == 1) {
+		$("#mot_hangman_weekday_select").show();
+	} else {
+		$("#mot_hangman_weekday_select").hide();
+	}
+});
+
+// Show the day selection at start if period is set to weekly
+if ($("#mot_hangman_reward_time").val() == 1) {
+	$("#mot_hangman_weekday_select").show();
+}
 
 })(jQuery); // Avoid conflicts with other libraries

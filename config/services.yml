@@ -73,6 +73,20 @@ services:
         arguments:
             - '@config'
             - '@dbal.conn'
+            - '@language'
+            - '%core.root_path%'
+            - '%core.php_ext%'
             - '%mot.hangman.tables.mot_hangman_fame%'
             - '%mot.hangman.tables.mot_hangman_fame_month%'
             - '%mot.hangman.tables.mot_hangman_fame_year%'
+
+    mot.hangman.cron.task.mot_hangman_reward:
+        class: mot\hangman\cron\task\mot_hangman_reward
+        arguments:
+            - '@config'
+            - '@ext.manager'
+            - '@mot.hangman.functions'
+        calls:
+            - [set_name, [cron.task.mot_hangman_reward]]
+        tags:
+            - { name: cron.task }

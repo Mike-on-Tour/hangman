@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.9.0
+* @package Hangman v0.11.0
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2023 Mike-on-Tour
+* @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -36,7 +36,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ »« “ ” …
 //
 
 $lang = array_merge($lang, [
@@ -85,6 +85,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_YOU_LOSE'			=> '<strong>Sie haben leider verloren!</strong><br>Erreichte Punktzahl: ',
 	'MOT_HANGMAN_SHOW_TERM'			=> '<br><br>Der Suchbegriff lautete:<br><i>',
 	'MOT_HANGMAN_POINTS_SAVED'		=> 'Ihre im Spiel gewonnenen Punkte wurden deinem Konto gutgeschrieben.',
+	'MOT_HANGMAN_UP_ADDED'			=> 'Ihrem UP-Konto wurden %1$s Punkte gutgeschrieben.',
 	'MOT_HANGMAN_GAME_BLOCKED'		=> 'Der Administrator hat ein Verhältnis von Spielepunkten zu Begriffseingabepunkten festgelegt, das nicht
 										überschritten werden darf. Sie haben in den vergangenen Spielen so viele Spielepunkte erreicht, dass
 										dieses Verhältnis bei Ihnen überschritten ist. Bevor Sie wieder spielen können, müssen Sie erst neue
@@ -141,6 +142,7 @@ $lang = array_merge($lang, [
 	'MOT_HANGMAN_CATEGORY'			=> 'Kategorie',
 	'MOT_HANGMAN_DELETE_TERM_MSG'	=> 'Sind Sie sicher, dass Sie den Begriff »%1$s« löschen wollen?',
 	'MOT_HANGMAN_TERM_DELETED'		=> 'Der Begriff »%1$s« wurde aus der Datenbank gelöscht.',
+	'MOT_HANGMAN_UP_SUBTRACTED'		=> 'Von Ihrem UP-Konto wurden %1$s Punkte abgezogen.',
 
 	// Display players
 	'MOT_HANGMAN_PLAYERS'			=> 'Hangman-Spieler',
@@ -166,4 +168,37 @@ $lang = array_merge($lang, [
 	'OCTOBER'		=> 'Oktober',
 	'NOVEMBER'		=> 'November',
 	'DECEMBER'		=> 'Dezember',
+
+	// PM texts
+	'MOT_HANGMAN_WINNER_SUBJECT'		=> 'Bonuspunkte für den besten Hangman-Spieler',
+	'MOT_HANGMAN_WINNER_MESSAGE_0'	=> 'Hallo %1$s,
+Sie sind der beste Spieler des gestrigen Tages mit %2$d Punkten!
+Ihrem UP-Konto wurden dafür %3$s Punkte gutgeschrieben.
+
+Herzlichen Glückwunsch
+%4$s',
+	'MOT_HANGMAN_WINNER_MESSAGE_1'	=> 'Hallo %1$s,
+Sie sind der beste Spieler der vergangenen Woche mit %2$d Punkten!
+Ihrem UP-Konto wurden dafür %3$s Punkte gutgeschrieben.
+
+Herzlichen Glückwunsch
+%4$s',
+	'MOT_HANGMAN_WINNER_MESSAGE_2'	=> 'Hallo %1$s,
+Sie sind der beste Spieler des vergangenen Monats mit %2$d Punkten!
+Ihrem UP-Konto wurden dafür %3$s Punkte gutgeschrieben.
+
+Herzlichen Glückwunsch
+%4$s',
+	'MOT_HANGMAN_WINNER_MESSAGE_3'	=> 'Hallo %1$s,
+Sie sind der beste Spieler des vergangenen Jahres mit %2$d Punkten!
+Ihrem UP-Konto wurden dafür %3$s Punkte gutgeschrieben.
+
+Herzlichen Glückwunsch
+%4$s',
+
+	'MOT_HANGMAN_ADMIN_SUBJECT_0'	=> 'Benachrichtigung über tägliche Bonusberechnung für Hangman',
+	'MOT_HANGMAN_ADMIN_SUBJECT_1'	=> 'Benachrichtigung über wöchentliche Bonusberechnung für Hangman',
+	'MOT_HANGMAN_ADMIN_SUBJECT_2'	=> 'Benachrichtigung über monatliche Bonusberechnung für Hangman',
+	'MOT_HANGMAN_ADMIN_SUBJECT_3'	=> 'Benachrichtigung über jährliche Bonusberechnung für Hangman',
+	'MOT_HANGMAN_ADMIN_MESSAGE'		=> 'Beim Hangman erhielt %1$s den Bonus für den besten Spieler mit %2$d Punkten (%3$s UP-Punkte).',
 ]);

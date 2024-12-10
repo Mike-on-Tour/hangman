@@ -4,6 +4,22 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.11.0] - 2024-12-10
+
+### Added
+-	Implemented the necessary functionality to add points to the UP system including updating the congratulation message after successfully solving a riddle
+-	A cron task to do the periodic calculation of rewards
+-	A new function to the `includes/mot_hangman_functions.php` file to calculate rewards (called from the cron task)
+
+### Changed
+-	The maximum PHP version to 8.4.x
+-	Code improvement within the ACP HTML files including the `controller/hangman_acp.php` and `adm/style/admin_mot_hangman.js` files regarding the use of dropdown selections
+
+### Fixed
+
+### Removed
+  
+  
 ## [0.10.0] - 2024-03-21
 
 ### Added

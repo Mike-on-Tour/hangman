@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.10.0
+* @package Hangman v0.11.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -94,6 +94,8 @@ class hangman_acp
 		// Check first for a new month or year and update FAME_MONTH_TABLE  and FAME_YEAR_TABLE if applicable
 		$this->mot_hangman_functions->check_month_year();
 
+		$hangman_points = 100;	// The number of points we use to calculate in UP Points
+
 		$form_key = 'acp_hangman_settings';
 		add_form_key($form_key);
 
@@ -131,6 +133,14 @@ class hangman_acp
 				$this->config->set('mot_hangman_extra_points', $this->request->variable('mot_hangman_extra_points', 0));
 				$this->config->set('mot_hangman_term_length', $this->request->variable('acp_hangman_term_length', 0));
 				$this->config->set('mot_hangman_punctuation_marks', $this->request->variable('acp_hangman_punctuation_marks', ''));
+				$this->config->set('mot_hangman_points_enable', $this->request->variable('mot_hangman_points_enable', 0));
+				$this->config->set('mot_hangman_points_ratio', $this->request->variable('mot_hangman_points_ratio', 0.1) / $hangman_points);
+				$this->config->set('mot_hangman_reward_enable', $this->request->variable('mot_hangman_reward_enable', 0));
+				$this->config->set('mot_hangman_reward_time', $this->request->variable('mot_hangman_reward_time', 0));
+				$this->config->set('mot_hangman_week_start', $this->request->variable('mot_hangman_week_start', 0));
+				$this->config->set('mot_hangman_points_price', $this->request->variable('mot_hangman_points_price', 0));
+				$this->config->set('mot_hangman_pm_enable', $this->request->variable('mot_hangman_pm_enable', 0));
+				$this->config->set('mot_hangman_admin_id', $this->request->variable('mot_hangman_admin_id', 0));
 
 				trigger_error($this->language->lang('ACP_MOT_HANGMAN_SETTING_SAVED') . adm_back_link($this->u_action));
 
@@ -294,6 +304,7 @@ class hangman_acp
 
 				$dom = new \DOMDocument('1.0', 'utf-8');
 				$dom->formatOutput = true;
+				$dom->appendChild($dom->createProcessingInstruction('xml-stylesheet', 'href="mot_hangman_xml.css" type="text/css"'));
 				$root = $dom->createElement('hangdb');
 				$dom->appendChild($root);
 
@@ -380,6 +391,26 @@ class hangman_acp
 			$fame_years .= '<option value="' . $row['year'] . '">' . $row['year'] . '</option>';
 		}
 
+		//Build a list of users within admin and mod groups
+		$sql_ary = [
+			'SELECT'    => 'u.user_id, u.username',
+			'FROM'      => [USERS_TABLE  => 'u', USER_GROUP_TABLE  => 'ug', GROUPS_TABLE  => 'g',],
+			'WHERE'     => "u.user_id = ug.user_id
+					AND g.group_id = ug.group_id
+					AND (UPPER(g.group_name) LIKE 'ADMINISTRATORS' OR UPPER(g.group_name) LIKE '%MODERATOR%')",
+			'GROUP_BY'  => 'u.username, u.user_id',
+		];
+		$sql = $this->db->sql_build_query('SELECT', $sql_ary);
+		$result = $this->db->sql_query($sql);
+		$admins = $this->db->sql_fetchrowset($result);
+		$this->db->sql_freeresult($result);
+
+		$admin_list = [];
+		foreach ($admins as $row)
+		{
+			$admin_list = array_merge($admin_list, [$row['username'] => $row['user_id']]);
+		}
+
 		$this->template->assign_vars([
 			'ACP_MOT_HANGMAN_ENABLE'				=> $this->config['mot_hangman_enable'],
 			'ACP_MOT_HANGMAN_AUTODELETE'			=> $this->config['mot_hangman_autodelete'],
@@ -405,6 +436,36 @@ class hangman_acp
 			'ACP_MOT_HANGMAN_EXTRA_POINTS'			=> $this->config['mot_hangman_extra_points'],
 			'ACP_MOT_HANGMAN_TERM_LENGTH'			=> $this->config['mot_hangman_term_length'],
 			'ACP_MOT_HANGMAN_PUNCTUATION_MARKS'		=> $this->config['mot_hangman_punctuation_marks'],
+
+			'ACP_MOT_HANGMAN_UP_ENABLED'			=> $this->phpbb_extension_manager->is_enabled('dmzx/ultimatepoints'),
+			'ACP_MOT_HANGMAN_POINTS_ENABLE'			=> $this->config['mot_hangman_points_enable'],
+			'ACP_MOT_HANGMAN_POINTS'				=> $hangman_points,
+			'ACP_MOT_HANGMAN_POINTS_RATIO'			=> $hangman_points * $this->config['mot_hangman_points_ratio'],
+			'ACP_MOT_HANGMAN_UP_POINTS_NAME'		=> $this->config['points_name'] ?? $this->language->lang('ACP_MOT_HANGMAN_POINTS_NAME'),
+			'ACP_MOT_HANGMAN_REWARD_ENABLE'			=> $this->config['mot_hangman_reward_enable'],
+			'ACP_MOT_HANGMAN_REWARD_TIME'			=> $this->config['mot_hangman_reward_time'],
+			'ACP_MOT_HANGMAN_PERIOD_SELECT'			=> [
+				'ACP_MOT_HANGMAN_DAILY'			=> 0,
+				'ACP_MOT_HANGMAN_WEEKLY'		=> 1,
+				'ACP_MOT_HANGMAN_MONTHLY'		=> 2,
+				'ACP_MOT_HANGMAN_YEARLY'		=> 3,
+			],
+			'ACP_MOT_HANGMAN_WEEK_START'			=> $this->config['mot_hangman_week_start'],
+			'ACP_MOT_HANGMAN_WEEK_START_SELECT'		=> [
+				'ACP_MOT_HANGMAN_SUNDAY'		=> 0,
+				'ACP_MOT_HANGMAN_MONDAY'		=> 1,
+				'ACP_MOT_HANGMAN_TUESDAY'		=> 2,
+				'ACP_MOT_HANGMAN_WEDNESDAY'		=> 3,
+				'ACP_MOT_HANGMAN_THURSDAY'		=> 4,
+				'ACP_MOT_HANGMAN_FRIDAY'		=> 5,
+				'ACP_MOT_HANGMAN_SATURDAY'		=> 6,
+			],
+			'ACP_MOT_HANGMAN_REWARD_LAST_GC'		=> $this->config['mot_hangman_reward_last_gc'] ? $this->user->format_date($this->config['mot_hangman_reward_last_gc']) : '-',
+			'ACP_MOT_HANGMAN_POINTS_PRICE'			=> $this->config['mot_hangman_points_price'],
+			'ACP_MOT_HANGMAN_PM_ENABLE'				=> $this->config['mot_hangman_pm_enable'],
+			'ACP_MOT_HANGMAN_ADMIN_ID'				=> $this->config['mot_hangman_admin_id'],
+			'ACP_MOT_HANGMAN_ADMIN_LIST'			=> $admin_list,
+
 			'ACP_MOT_HANGMAN_IMPORT_OLD_TABLE'		=> $this->db_tools->sql_table_exists($this->old_hangman_words_table),
 			'ACP_HANGMAN_FAME_YEAR_COUNT'			=> count($years),
 			'ACP_HANGMAN_FAME_YEARS'				=> $fame_years,

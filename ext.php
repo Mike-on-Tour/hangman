@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.9.0
+* @package Hangman v0.11.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2023 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -17,7 +17,7 @@ class ext extends \phpbb\extension\base
 	protected $phpbb_min_ver = '3.2.11';
 	protected $phpbb_below_ver = '3.4.0@dev';
 	protected $php_min_ver = '7.2.0';
-	protected $php_below_ver = '8.4.0@dev';
+	protected $php_below_ver = '8.5.0@dev';
 
 	public function is_enableable()
 	{

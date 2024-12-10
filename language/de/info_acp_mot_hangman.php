@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.10.0
+* @package Hangman v0.11.0
 * @copyright (c) 2021 - 2024 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -139,6 +139,47 @@ $lang = array_merge($lang, [
 													ACHTUNG: Beim Import von Suchbegriffen aus Dateien oder anderen Tabellen werden ebenfalls nur diese
 													Satzzeichen übernommen!',
 	'ACP_MOT_HANGMAN_SETTING_SAVED'				=> 'Die Einstellungen für das Hangman Spiel wurden erfolgreich gesichert.',
+
+	// UP and rwards settings
+	'ACP_MOT_HANGMAN_UP_SETTINGS'				=> 'Einstellungen Punkte-System',
+	'ACP_MOT_HANGMAN_POINTS_ENABLE'				=> 'Punkte-System aktivieren',
+	'ACP_MOT_HANGMAN_POINTS_ENABLE_EXPL'		=> 'Wenn ein Punkte-System (z.B. ´Ultimate Points´) auf deinem Board installiert ist, werden die Punkte vom Hangman dem Spielekonto
+													hinzugefügt bzw. von dort auch abgezogen.<br>
+													Nach Aktivierung werden dafür weitere Einstellmöglichkeiten angezeigt.',
+	'ACP_MOT_HANGMAN_POINTS_RATIO'				=> 'Verhältnis Punkte Hangman zu Punkte-System',
+	'ACP_MOT_HANGMAN_POINTS_RATIO_EXPL'			=> 'Legt fest, wieviele Punkte dem Benutzerkonto des Punkte-Systems pro %1$d Hangman-Punkte gutgeschrieben werden sollen.',
+	'ACP_MOT_HANGMAN_POINTS_NAME'				=> 'Punkte',
+	'ACP_MOT_HANGMAN_REWARD_SETTINGS'			=> 'Einstellungen für Bonussystem',
+	'ACP_MOT_HANGMAN_REWARD_ON'					=> 'Hangman Bonussystem aktivieren',
+	'ACP_MOT_HANGMAN_REWARD_ON_EXPL'			=> 'Periodische Kalkulation der Bonuszahlungen aktivieren.<br>
+													Nach Aktivierung werden dafür weitere Einstellmöglichkeiten angezeigt.',
+	'ACP_MOT_HANGMAN_REWARD_TIME'				=> 'Zeitintervall zwischen zwei Bonusberechnungen',
+	'ACP_MOT_HANGMAN_REWARD_TIME_EXPL'			=> 'Der Abstand zwischen zwei Berechnungen zum Ermitteln des Gewinners für die Bonuszahlung.',
+	'ACP_MOT_HANGMAN_WEEK_START'				=> 'Auswahl Wochentag für wöchentliche Berechnung',
+	'ACP_MOT_HANGMAN_WEEK_START_EXPL'			=> 'Wähle hier bei wöchentlicher Berechnung der Bonuszahlung den Wochentag aus, an dem die Berechnung erfolgen soll.',
+	'ACP_MOT_HANGMAN_DAILY'						=> 'Täglich',
+	'ACP_MOT_HANGMAN_WEEKLY'					=> 'Wöchentlich',
+	'ACP_MOT_HANGMAN_MONTHLY'					=> 'Monatlich',
+	'ACP_MOT_HANGMAN_YEARLY'					=> 'Jährlich',
+	'ACP_MOT_HANGMAN_WEEK_START'				=> 'Auswahl Wochentag für wöchentliche Berechnung',
+	'ACP_MOT_HANGMAN_WEEK_START_EXPL'			=> 'Wähle hier bei wöchentlicher Berechnung der Bonuszahlung den Wochentag aus, an dem die Berechnung erfolgen soll.',
+	'ACP_MOT_HANGMAN_SUNDAY'					=> 'Sonntag',
+	'ACP_MOT_HANGMAN_MONDAY'					=> 'Montag',
+	'ACP_MOT_HANGMAN_TUESDAY'					=> 'Dienstag',
+	'ACP_MOT_HANGMAN_WEDNESDAY'					=> 'Mittwoch',
+	'ACP_MOT_HANGMAN_THURSDAY'					=> 'Donnerstag',
+	'ACP_MOT_HANGMAN_FRIDAY'					=> 'Freitag',
+	'ACP_MOT_HANGMAN_SATURDAY'					=> 'Samstag',
+	'ACP_MOT_HANGMAN_REWARD_LAST_GC'			=> 'Zeitpunkt der letzten Laufes des Cron-Tasks',
+	'ACP_MOT_HANGMAN_REWARD_LAST_GC_EXPL'		=> 'Zeitpunkt des letzten Laufes des Cron-Tasks zur Berechnung der Bonuszahlungen. Diese Angabe bezieht sich nur auf die Ausführung
+													des Cron-Tasks und sagt nichts über den Zeitpunkt der letzten Berechnung bzw. Gutschrift aus.',
+	'ACP_MOT_HANGMAN_POINTS_PRICE'				=> 'Bonus für den Spieler mit den meisten Punkten',
+	'ACP_MOT_HANGMAN_POINTS_PRICE_EXPL'			=> 'Bonuspunkte für den Spieler mit den meisten Punkten in der laufenden Periode.',
+	'ACP_MOT_HANGMAN_PM_ENABLE'					=> 'Persönliche Nachricht aktivieren',
+	'ACP_MOT_HANGMAN_PM_ENABLE_EXPL'			=> 'Der Gewinner wird per PN über seinen Gewinn informiert. Zeitgleich erhält der ausgewählte Administrator eine PN mit dem Namen des Gewinners.',
+	'ACP_MOT_HANGMAN_ADMIN_LIST'				=> 'Administrator für das Hangman Bonussystem',
+	'ACP_MOT_HANGMAN_ADMIN_LIST_EXPL'			=> 'Ein Board Administrator oder Moderator, der die regelmäßigen Reports erhält und dessen Name als Absender in der PN für den
+													Gewinner erscheint.',
 
 	// Data migration
 	'ACP_MOT_HANGMAN_MIGRATION_SETTINGS'		=> 'Daten importieren',
