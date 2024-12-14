@@ -4,6 +4,20 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.11.1] - 2024-12-11
+
+### Added
+
+### Changed
+-	The maximum value for the reward points from 500 to 2000 in `adm/style/acp_hangman_settings.html`, line 221
+
+### Fixed
+-	A bug within `controller/main.php` in connection with `styles/prosilver/template/hangman_congrat.html` which led to an "undefined variable" warning if the UP system is activated
+	and the user gains one or more ranks with entering a new search term
+
+### Removed
+  
+  
 ## [0.11.0] - 2024-12-10
 
 ### Added

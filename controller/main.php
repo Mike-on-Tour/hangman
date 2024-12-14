@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.11.0
+* @package Hangman v0.11.1
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -447,6 +447,7 @@ class main
 									'U_ACTION'				=> $this->word_action,
 									'MOT_HANGMAN_CONGR'		=> $this->language->lang('MOT_HANGMAN_RANK_GAINED', $user_rank_status['old_rank'], $user_rank_status['new_rank']),
 									'MOT_HANGMAN_ACTIVE'	=> true,
+									'MOT_HANGMAN_UP_POINTS'	=> $up_points,
 									'MOT_HANGMAN_COPYRIGHT'	=> $this->ext_data['extra']['display-name'] . ' ' . $this->ext_data['version'] . ' &copy; Mike-on-Tour (<a href="' . $this->ext_data['homepage'] . '" target="_blank" rel="noopener">' . $this->ext_data['homepage'] . '</a>)',
 								]);
 
@@ -458,6 +459,10 @@ class main
 
 								return $this->helper->render('@mot_hangman/hangman_congrat.html', $this->language->lang('MOT_HANGMAN'));
 							}
+						}
+						else
+						{
+							$up_points = $this->request->variable('up_points', 0);
 						}
 
 						// display message about successful operation

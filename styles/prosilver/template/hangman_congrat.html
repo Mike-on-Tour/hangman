@@ -1,3 +1,11 @@
+{#
+*
+* @package Hangman v0.11.1
+* @copyright (c) 2021 - 2024 Mike-on-Tour
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+#}
+
 {% include 'overall_header.html' %}
 {% INCLUDECSS '@mot_hangman/hangman.css' %}
 {% include '@mot_hangman/hangman_modal.html' %}
@@ -10,6 +18,7 @@
 <div hidden="true">
 	<form id="mot_hangman_congrat" name="mot_hangman_congrat" method="post" action="{{ U_ACTION }}">
 		<input type="hidden" id="congrat" name="congrat" value="true">
+		<input type="hidden" id="up_points" name="up_points" value="{{ MOT_HANGMAN_UP_POINTS }}">
 		<input type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" hidden="true">
 		{{ S_FORM_TOKEN }}
 	</form>
