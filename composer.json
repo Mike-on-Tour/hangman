@@ -2,15 +2,15 @@
 	"name": "mot/hangman",
 	"type": "phpbb-extension",
 	"description": "This extension will add a hangman game",
-	"homepage": "http://www.mike-on-tour.com",
-	"version": "0.11.1",
-	"time": "2024-12-11 12:11:57",
+	"homepage": "https://www.mike-on-tour.com",
+	"version": "0.11.2",
+	"time": "2024-12-17 12:11:57",
 	"keywords": ["phpbb", "extension", "hangman"],
 	"license": "GPL-2.0-only",
 	"authors": [
 		{
 			"name": "Michael Vormwald",
-			"homepage": "http://www.mike-on-tour.com",
+			"homepage": "https://www.mike-on-tour.com",
 			"email": "webmaster@mike-on-tour.de",
 			"role": "Developer"
 		},

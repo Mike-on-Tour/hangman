@@ -66,7 +66,7 @@ class ext extends \phpbb\extension\base
 
 	protected function php_requirement()
 	{
-		return phpbb_version_compare(PHP_VERSION, $this->php_min_ver, '>') && phpbb_version_compare(PHP_VERSION, $this->php_below_ver, '<');
+		return phpbb_version_compare(PHP_VERSION, $this->php_min_ver, '>=') && phpbb_version_compare(PHP_VERSION, $this->php_below_ver, '<');
 	}
 
 	public function enable_step($old_state)

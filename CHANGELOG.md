@@ -4,6 +4,18 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.11.2] - 2024-12-17
+
+### Added
+
+### Changed
+
+### Fixed
+-	A bug within `controller/main.php` which displayed the same user several times within the current month of the Hall of Fame
+
+### Removed
+  
+  
 ## [0.11.1] - 2024-12-11
 
 ### Added

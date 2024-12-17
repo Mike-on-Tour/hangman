@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.11.1
+* @package Hangman v0.11.2
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2024 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -544,7 +544,7 @@ class main
 
 					// Get best players of current month
 					$sql_arr = [
-						'SELECT'	=> 'f.user_id, f.points, u.username, u.user_colour',
+						'SELECT'	=> 'f.user_id, SUM(f.points) AS points, u.username, u.user_colour',
 						'FROM'		=> [$this->hangman_fame_table	=> 'f'],
 						'LEFT_JOIN'	=> [
 							[
@@ -554,7 +554,8 @@ class main
 						],
 						'WHERE'		=> 'f.year = ' . (int) $date_arr['year'] . '
 										AND f.month = ' . (int) $date_arr['mon'],
-						'ORDER_BY'	=> 'f.points DESC',
+						'GROUP_BY'	=> 'f.user_id',
+						'ORDER_BY'	=> 'points DESC',
 					];
 					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
 					$result = $this->db->sql_query($sql);
