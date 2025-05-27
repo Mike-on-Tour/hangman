@@ -304,7 +304,7 @@ class hangman_acp
 
 				$dom = new \DOMDocument('1.0', 'utf-8');
 				$dom->formatOutput = true;
-				$dom->appendChild($dom->createProcessingInstruction('xml-stylesheet', 'href="mot_hangman_xml.css" type="text/css"'));
+//				$dom->appendChild($dom->createProcessingInstruction('xml-stylesheet', 'href="mot_hangman_xml.css" type="text/css"'));
 				$root = $dom->createElement('hangdb');
 				$dom->appendChild($root);
 
@@ -324,6 +324,7 @@ class hangman_acp
 					header('Content-Type: text/xml');
 					header('Content-Disposition: attachment; filename="' . $filename . '";');
 					fpassthru($file);
+					// fclose($file);
 					exit;
 				}
 				else

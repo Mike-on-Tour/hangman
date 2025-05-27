@@ -1,9 +1,9 @@
 <?php
 /*
 *
-* @package Hangman v0.11.2
+* @package Hangman v0.11.3
 * @author Mike-on-Tour
-* @copyright (c) 2021 - 2024 Mike-on-Tour
+* @copyright (c) 2021 - 2025 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
 * @copyright (c) 2015 by dmzx (www.dmzx-web.net)
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -172,6 +172,8 @@ class main
 							trigger_error($this->language->lang('FORM_INVALID') . $this->back_link($this->game_action, $this->language->lang('BACK_TO_PREV')), E_USER_WARNING);
 						}
 
+						// Define the $up_points variable with a 0 value to indicate that no rank has been gained
+						$up_points = 0;
 						// Check first whether the page with congratulations for gaining one or more steps in the ranking has been displayed, if not we can do all the things following
 						if (!$congrat)
 						{
