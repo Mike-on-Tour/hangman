@@ -4,6 +4,18 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.11.3] - 2025-05-08
+
+### Added
+
+### Changed
+
+### Fixed
+-	A bug within `controller/main.php` which triggered a "Undefined variable" warning if no rank has been gained
+
+### Removed
+  
+  
 ## [0.11.2] - 2024-12-17
 
 ### Added
@@ -40,6 +52,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 -	The maximum PHP version to 8.4.x
 -	Code improvement within the ACP HTML files including the `controller/hangman_acp.php` and `adm/style/admin_mot_hangman.js` files regarding the use of dropdown selections
+	(many thanks to LukeWCS)
 
 ### Fixed
 
