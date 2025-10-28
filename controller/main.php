@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.11.3
+* @package Hangman v0.12.0
 * @author Mike-on-Tour
 * @copyright (c) 2021 - 2025 Mike-on-Tour
 * @former author dmzx (www.dmzx-web.net)
@@ -43,6 +43,9 @@ class main
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
+	/** @var ContainerInterface */
+	protected $phpbb_container;
+
 	/* @var \phpbb\template\template */
 	protected $template;
 
@@ -79,8 +82,8 @@ class main
 	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db,
 								\phpbb\extension\manager $phpbb_extension_manager, \phpbb\controller\helper $helper, \phpbb\language\language $language,
 								\phpbb\notification\manager $notification_manager, \phpbb\pagination $pagination, \phpbb\request\request_interface $request,
-								\phpbb\template\template $template, \phpbb\user $user, \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions, $root_path, $php_ext,
-								$mot_hangman_fame_table, $mot_hangman_fame_month_table, $mot_hangman_fame_year_table, $mot_hangman_score_table, $mot_hangman_words_table)
+								$phpbb_container, \phpbb\template\template $template, \phpbb\user $user, \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
+								$root_path, $php_ext, $mot_hangman_fame_table, $mot_hangman_fame_month_table, $mot_hangman_fame_year_table, $mot_hangman_score_table, $mot_hangman_words_table)
 	{
 		$this->auth = $auth;
 		$this->config = $config;
@@ -91,6 +94,7 @@ class main
 		$this->notification_manager = $notification_manager;
 		$this->pagination = $pagination;
 		$this->request = $request;
+		$this->phpbb_container = $phpbb_container;
 		$this->template = $template;
 		$this->user = $user;
 		$this->mot_hangman_functions = $mot_hangman_functions;
@@ -983,8 +987,6 @@ class main
 	*/
 	private function save_to_fame($points, $add = true)
 	{
-		global $phpbb_container;
-
 		// Get local date variables and user id first
 		$date_arr = getdate();
 		$julian_day = gregoriantojd($date_arr['mon'], $date_arr['mday'], $date_arr['year']);
@@ -1030,7 +1032,7 @@ class main
 		// Check if points system is activated and UP enabled and if yes calculate awarded points into UP points and add to the users account
 		if ($this->config['mot_hangman_points_enable'] && $this->phpbb_extension_manager->is_enabled('dmzx/ultimatepoints'))
 		{
-			$this->functions_points = $phpbb_container->get('dmzx.ultimatepoints.core.functions.points');
+			$this->functions_points = $this->phpbb_container->get('dmzx.ultimatepoints.core.functions.points');
 			$factor_points = round($this->config['mot_hangman_points_ratio'] * $points, 2);
 			$this->functions_points->add_points($user_id, $factor_points);
 			$return = $factor_points;

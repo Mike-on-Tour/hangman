@@ -4,6 +4,20 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.12.0] - 2025-10-28
+
+### Added
+
+### Changed
+-	Minimum versions for PHP to 8.0.30 and phpBB to 3.3.0
+-	The phpBB service container is now included with service injection instead of as global variable
+
+### Fixed
+
+### Removed
+-	Compatibility with phpBB 3.2.x
+  
+  
 ## [0.11.3] - 2025-05-08
 
 ### Added
