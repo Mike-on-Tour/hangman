@@ -1,13 +1,18 @@
 /*
 *
-* @package Hangman Game v0.9.1
-* @author Mike-on-Tour
-* @copyright (c) 2021 - 2023 Mike-on-Tour
-* @former author dmzx (www.dmzx-web.net)
-* @copyright (c) 2015 by dmzx (www.dmzx-web.net)
+* @package Hangman Game v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
+
+/*
+*	CSS variables for the number of rows of the grid tables
+*/
+:root {
+	--colNum1: 5;
+	--colNum2: 3;
+}
 
 /*
 * Formatting the content div holding the content boxes
@@ -45,8 +50,6 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgb(0, 0, 0);
-	background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* modal content  window */
@@ -243,33 +246,53 @@ p.submit-buttons input {
 	}
 }
 
+/*
+* Grid tables for Highscore, Hall of Fame and Summary tabs
+*/
+.grid-table-1 {
+	display: grid;
+	grid-template-columns: repeat(var(--colNum1), auto);
+}
+
+.grid-table-2 {
+	display: grid;
+	grid-template-columns: repeat(var(--colNum2), auto);
+}
+
+.grid-table-1, .grid-table-2 {
+	& .table-header, .table-row {
+		display: contents;
+
+		& .cell {
+			padding: 3px 6px;
+			font-size: 1.1em;
+			text-align: center;
+			align-content: center;
+		}
+	}
+
+	& .table-header > .cell {
+		border-bottom: 1px solid;
+		font-weight: bold;
+	}
+}
+
+.merged-columns {
+	grid-column: 1 / -1;
+}
 
 /*
 * Highscore table
 */
-table.table1 {
-	padding: 1px;
-	clear: both;
-}
-
-table.table1 thead th {
-	height: 1.5em;
-	padding: 3px 6px;
-	font-size: 1.2em;
-	font-weight: bold;
-}
-
-@media (max-width: 700px) {
-	table.responsive.show-header thead, table.responsive.show-header th:first-child {
-		display: block;
-		width: auto !important;
-		text-align: left !important;
-	}
-
-	table.responsive.show-header thead, table.responsive.show-header th {
-		display: block;
-		width: auto !important;
-		text-align: left !important;
+@media screen and (width < 561px) {
+	.highscore > .grid-table-1 {
+		& .table-header > .cell {
+			writing-mode: vertical-lr;
+			transform: rotate(180deg);
+			height: auto !important;
+			border-bottom: none;
+			border-top: 1px solid;
+		}
 	}
 }
 
@@ -288,13 +311,25 @@ table.table1 thead th {
 	margin: 20px;
 }
 
-.table-container table {
-	table-layout: fixed;
-}
-
-@media  only screen and (max-width: 500px), only screen and (max-device-width: 500px) {
+@media screen and (width < 651px) {
 	.flex-container {
 		flex-direction: column;
+	}
+
+	.table-container {
+		width: auto;
+	}
+}
+
+@media screen and (width < 391px) {
+	.fame > .grid-table-1, .grid-table-2 {
+		& .table-header > .cell {
+			writing-mode: vertical-lr;
+			transform: rotate(180deg);
+			height: auto !important;
+			border-bottom: none;
+			border-top: 1px solid;
+		}
 	}
 }
 
@@ -308,7 +343,6 @@ table.table1 thead th {
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 	border-left: 1px solid #D7D7D7;
-/*	background-color: #FFFFFF;*/
 	position: relative;
 	border-radius: 3px;
 }
@@ -325,7 +359,6 @@ table.table1 thead th {
 	font-family: Tahoma,arial,Verdana,Sans-serif;
 	font-size: 1.1em;
 	font-weight: bold;
-/*	color: #115098;*/
 	margin-top: -.4em;
 	position: relative;
 	text-transform: none;
@@ -357,4 +390,23 @@ table.table1 thead th {
 .summary_content fieldset dl:hover dt label {
 	color: inherit;
 	font-weight: none;
+}
+
+@media screen and (width < 701px) {
+	.summary_content dl {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+@media screen and (width < 501px) {
+	.summary > .grid-table-1 {
+		& .table-header > .cell {
+			writing-mode: vertical-lr;
+			transform: rotate(180deg);
+			height: auto !important;
+			border-bottom: none;
+			border-top: 1px solid;
+		}
+	}
 }

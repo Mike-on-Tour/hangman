@@ -1,3 +1,20 @@
+{#
+*
+* @package Hangman v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+#}
+
+<script>
+	// Set the proper number of columns
+	{% if MOT_HANGMAN_SHOW_CATEGORY %}
+		document.documentElement.style.setProperty("--colNum1", 3);
+	{% else %}
+		document.documentElement.style.setProperty("--colNum1", 2);
+	{% endif %}
+</script>
+
 <div class="centered_text">
 	<h2>{{ lang('MOT_HANGMAN_SUMMARY') }}</h2>
 </div>
@@ -5,32 +22,39 @@
 <div class="summary_content">
 	<fieldset>
 		<legend>{{ lang('ACP_MOT_HANGMAN_GAME_SETTINGS') }}</legend>
+
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_LIVES') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_LIVES }}</dd>
 		</dl>
+
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_WIN') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_POINTS_WIN }}</dd>
 		</dl>
+
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_LOOSE') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_POINTS_LOOSE }}</dd>
 		</dl>
+
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_LETTER') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_POINTS_LETTER }}</dd>
 		</dl>
+
 		{% if MOT_HANGMAN_EXTRA_POINTS %}
 			<dl>
 				<dt><label>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS') }}{{ lang('COLON') }}</label></dt>
 				<dd>{{ MOT_HANGMAN_EXTRA_POINTS }}</dd>
 			</dl>
 		{% endif %}
+
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_POINTS_WORD') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_POINTS_WORD }}</dd>
 		</dl>
+
 		<dl>
 			<dt><label>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_EVADE_ENABLE }}</dd>
@@ -39,14 +63,17 @@
 
 	<fieldset>
 		<legend>{{ lang('ACP_MOT_HANGMAN_TERMS') }}</legend>
+
 		<dl>
 			<dt><label>{{ lang('MOT_HANGMAN_TERMS_AVAILABLE') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_TERMS_AVAILABLE }}</dd>
 		</dl>
+
 		<dl>
 			<dt><label>{{ lang('MOT_HANGMAN_USER_TERMS_AVAILABLE') }}{{ lang('COLON') }}</label></dt>
 			<dd>{{ MOT_HANGMAN_USER_TERMS_AVAILABLE }}</dd>
 		</dl>
+
 		<dl>
 			<dt><label>{{ lang('MOT_HANGMAN_USER_TERMS') }}{{ lang('COLON') }}</label></dt>
 			<dd>
@@ -57,26 +84,27 @@
 					<div><p>&nbsp;</p></div>
 				{% endif %}
 
-				<table class="table1 zebra-list">
-					<tbody>
-						<tr>
-							<th style="text-align: center;">{{ lang('MOT_HANGMAN_TERM') }}</th>
-							{% if MOT_HANGMAN_SHOW_CATEGORY %}<th style="text-align: center;">{{ lang('MOT_HANGMAN_CATEGORY') }}</th>{% endif %}
-							<th style="text-align: center;">{{ lang('OPTIONS') }}</th>
-						</tr>
-					{% for term in terms %}
-						<tr>
-							<td style="text-align: center;">{{ term.MOT_HANGMAN_TERM }}</td>
-							{% if MOT_HANGMAN_SHOW_CATEGORY %}<td style="text-align: center;">{{ term.MOT_HANGMAN_CATEGORY}}</td>{% endif %}
-							<td style="text-align: center;"><a href="{{ term.U_DELETE }}">{{ ICON_DELETE }}</a></td>
-						</tr>
-					{% else %}
-					<tr>
-						<td {% if MOT_HANGMAN_SHOW_CATEGORY %}colspan="3"{% else %}colspan="2"{% endif %} style="text-align: center;">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</td>
-					</tr>
-					{% endfor %}
-					</tbody>
-				</table>
+				<div class="summary">
+					<div class="grid-table-1">
+						<span class="table-header">
+							<span class="cell">{{ lang('MOT_HANGMAN_TERM') }}</span>
+							{% if MOT_HANGMAN_SHOW_CATEGORY %}<span class="cell">{{ lang('MOT_HANGMAN_CATEGORY') }}</span>{% endif %}
+							<span class="cell">{{ lang('OPTIONS') }}</span>
+						</span>
+
+						{% for term in MOT_HANGMAN_USER_TERMS %}
+							<div class="table-row">
+								<div class="cell">{{ term.hangman_word }}</div>
+								{% if MOT_HANGMAN_SHOW_CATEGORY %}<div class="cell">{{ term.hangman_category }}</div>{% endif %}
+								<div class="cell"><a href="{{ U_DELETE ~ '&amp;id=' ~ term.word_id ~ '&amp;word=' ~ term.hangman_word }}">{{ ICON_DELETE }}</a></div>
+							</div>
+						{% else %}
+							<div class="table-row">
+								<div class="cell merged-columns">{{ lang('MOT_HANGMAN_NO_ENTRIES') }}</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
 
 				{% if pagination %}
 					<div>&nbsp;</div>

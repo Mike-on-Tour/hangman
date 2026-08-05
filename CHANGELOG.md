@@ -4,6 +4,33 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.13.0] - 2026-08-05
+
+### Added
+-	A function to the `ext.php` file to get the minimum and maximum versions and their respective conditions from the `require` section of the `composer.json` file in order to
+	prevent errors due to the duplicate entries in those two files
+-	A `styles/prosilver/theme/mot_hangman_colours.css` file to hold color declarations in order to ease color declarations with other styles
+
+### Changed
+-	Minimum versions for PHP to 8.1.33 and phpBB to 3.3.9
+-	Maximum version for PHP to 8.5.x
+-	The content boxes are only loaded if their respective tab is selected, this is supposed to minimize the data to be loaded
+-	Renamed the `styles/prosilver/theme/hangman.css` file into `styles/prosilver/theme/mot_hangman.css`
+-	Usage of CSS grid layout instead of HTML table tags with all frontend tables to enhance responsiveness
+-	All constructor declarations to [Constructor Property Promotion](https://www.php.net/releases/8.0/de.php#constructor-property-promotion) (a new PHP feature starting with PHP 8.0)
+-	All function declarations into parameters with type declarations
+-	The ACP page to the updated toggle control `lukewcs/togglectrl 1.3.x` where applicable
+-	Generally improved and optimized the code, e.g. for usage of TWIG array functions
+
+### Fixed
+-	The wrong sequence of first querying the DB and then validate the `$start` parameter which resulted in an empty table if a user manually selected a higher than the maximum
+	page number when pagination was active
+-	A missing limit to display best players of the last years in the hall-of-fame tab which led to displaying all years since installation of the extension
+-	The classes of the delete icon and its color in `styles/prosilver/template/hangman_summary.html`
+
+### Removed
+  
+  
 ## [0.12.0] - 2025-10-28
 
 ### Added

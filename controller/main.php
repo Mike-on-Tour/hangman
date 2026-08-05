@@ -1,11 +1,8 @@
 <?php
 /*
 *
-* @package Hangman v0.12.0
-* @author Mike-on-Tour
-* @copyright (c) 2021 - 2025 Mike-on-Tour
-* @former author dmzx (www.dmzx-web.net)
-* @copyright (c) 2015 by dmzx (www.dmzx-web.net)
+* @package Hangman v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -16,96 +13,13 @@ use phpbb\language\language_file_loader;
 
 class main
 {
-	/** @var \phpbb\auth\auth */
-	protected $auth;
-
-	/* @var \phpbb\config\config */
-	protected $config;
-
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
-
-	/** @var \phpbb\extension\manager */
-	protected $phpbb_extension_manager;
-
-	/* @var \phpbb\controller\helper */
-	protected $helper;
-
-	/** @var \phpbb\language\language $language Language object */
-	protected $language;
-
-	/** @var \phpbb\notification\manager */
-	protected $notification_manager;
-
-	/** @var \phpbb\pagination  */
-	protected $pagination;
-
-	/** @var \phpbb\request\request_interface */
-	protected $request;
-
-	/** @var ContainerInterface */
-	protected $phpbb_container;
-
-	/* @var \phpbb\template\template */
-	protected $template;
-
-	/* @var \phpbb\user */
-	protected $user;
-
-	/** @var \mot\hangman\includes\mot_hangman_functions */
-	protected $mot_hangman_functions;
-
-	/** @var string phpBB root path */
-	protected $root_path;
-
-	/** @var string PHP extension */
-	protected $php_ext;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_month_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_year_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_score */
-	protected $mot_hangman_score_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_words */
-	protected $mot_hangman_words_table;
-
-	/**
-	* Constructor
-	*/
-	public function __construct(\phpbb\auth\auth $auth, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db,
-								\phpbb\extension\manager $phpbb_extension_manager, \phpbb\controller\helper $helper, \phpbb\language\language $language,
-								\phpbb\notification\manager $notification_manager, \phpbb\pagination $pagination, \phpbb\request\request_interface $request,
-								$phpbb_container, \phpbb\template\template $template, \phpbb\user $user, \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
-								$root_path, $php_ext, $mot_hangman_fame_table, $mot_hangman_fame_month_table, $mot_hangman_fame_year_table, $mot_hangman_score_table, $mot_hangman_words_table)
+	public function __construct(protected \phpbb\auth\auth $auth, protected \phpbb\config\config $config, protected \phpbb\db\driver\driver_interface $db,
+								protected \phpbb\extension\manager $phpbb_extension_manager, protected \phpbb\controller\helper $helper, protected \phpbb\language\language $language,
+								protected \phpbb\notification\manager $notification_manager, protected \phpbb\pagination $pagination, protected \phpbb\request\request_interface $request,
+								protected $phpbb_container, protected \phpbb\template\template $template, protected \phpbb\user $user, protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
+								protected $root_path, protected $php_ext, protected $hangman_fame_table, protected $hangman_fame_month_table, protected $hangman_fame_year_table,
+								protected $hangman_score_table, protected $hangman_words_table)
 	{
-		$this->auth = $auth;
-		$this->config = $config;
-		$this->db = $db;
-		$this->phpbb_extension_manager 	= $phpbb_extension_manager;
-		$this->helper = $helper;
-		$this->language = $language;
-		$this->notification_manager = $notification_manager;
-		$this->pagination = $pagination;
-		$this->request = $request;
-		$this->phpbb_container = $phpbb_container;
-		$this->template = $template;
-		$this->user = $user;
-		$this->mot_hangman_functions = $mot_hangman_functions;
-		$this->root_path = $root_path;
-		$this->php_ext = $php_ext;
-		$this->hangman_fame_table = $mot_hangman_fame_table;
-		$this->hangman_fame_month_table = $mot_hangman_fame_month_table;
-		$this->hangman_fame_year_table = $mot_hangman_fame_year_table;
-		$this->hangman_score_table = $mot_hangman_score_table;
-		$this->hangman_words_table = $mot_hangman_words_table;
-
 		$this->ext_path = $this->phpbb_extension_manager->get_extension_path('mot/hangman', true);
 		$this->md_manager = $this->phpbb_extension_manager->create_extension_metadata_manager('mot/hangman');
 		$this->ext_data = $this->md_manager->get_metadata();
@@ -504,42 +418,34 @@ class main
 					$count_rankings = $row['user_count'];
 					$this->db->sql_freeresult($result);
 
-					// Get data from tables
-					$sql_arr = [
-						'SELECT'    => 'u.user_id, u.username, u.user_colour, h.user_id, h.solve_pts, h.total_pts, h.word_pts',
-						'FROM'		=> [
-							USERS_TABLE        	=> 'u',
-							$this->hangman_score_table	=> 'h',
-						],
-						'WHERE'		=> 'u.user_id = h.user_id',
-					];
-					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
-					$sql .= ' ORDER BY h.total_pts DESC';
-					$result = $this->db->sql_query_limit( $sql, $limit, $start );
-					$user_ranking = $this->db->sql_fetchrowset($result);
-					$this->db->sql_freeresult($result);
-
-					$i = $start;
-					foreach ($user_ranking as $row)
-					{
-						$i++;
-						$this->template->assign_block_vars('rankings', [
-							'RANK'						=> $i,
-							'USERNAME'					=> $row['username'],
-							'USER_ID'					=> $row['user_id'],
-							'USER_COLOUR'				=> $row['user_colour'],
-							'MOT_HANGMAN_TOTAL_POINTS'	=> $row['total_pts'],
-							'MOT_HANGMAN_GAME_POINTS'	=> $row['solve_pts'],
-							'MOT_HANGMAN_WORD_POINTS'	=> $row['word_pts'],
-						]);
-					}
-
 					//base url for pagination, filtering and sorting
 					$base_url = $this->rank_action;
 
 					// Load pagination
 					$start = $this->pagination->validate_start($start, $limit, $count_rankings);
 					$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $count_rankings, $limit, $start);
+
+					// Get data from tables
+					$sql_arr = [
+						'SELECT'    => 'u.username, u.user_colour, h.solve_pts, h.total_pts, h.word_pts',
+						'FROM'		=> [
+							USERS_TABLE        	=> 'u',
+							$this->hangman_score_table	=> 'h',
+						],
+						'WHERE'		=> 'u.user_id = h.user_id',
+						'ORDER_BY'	=> 'h.total_pts DESC',
+					];
+					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
+					$result = $this->db->sql_query_limit( $sql, $limit, $start );
+					$user_ranking = $this->db->sql_fetchrowset($result);
+					$this->db->sql_freeresult($result);
+
+					$i = $start;
+					foreach ($user_ranking as &$row)
+					{
+						$row['rank'] = ++$i;
+					}
+					$this->template->assign_var('MOT_HANGMAN_USER_RANKING', $user_ranking);
 					break;
 
 				case 'fame':
@@ -564,24 +470,9 @@ class main
 						'ORDER_BY'	=> 'points DESC',
 					];
 					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
-					$result = $this->db->sql_query($sql);
-					$players = $this->db->sql_fetchrowset($result);
+					$result = $this->db->sql_query_limit($sql, $number_of_rows);
+					$current_month_players = $this->db->sql_fetchrowset($result);
 					$this->db->sql_freeresult($result);
-
-					$i = 0;
-					foreach ($players as $row)
-					{
-						$this->template->assign_block_vars('current_months', [
-							'USERNAME'		=> $row['username'],
-							'USER_COLOUR'	=> $row['user_colour'],
-							'POINTS'		=> $row['points'],
-						]);
-						$i++;
-						if ($i == $number_of_rows)
-						{
-							break;
-						}
-					}
 
 					// Get best players of current year
 					$sql_arr = [
@@ -623,21 +514,6 @@ class main
 						}
 					);
 
-					$i = 0;
-					foreach ($year_arr as $row)
-					{
-						$this->template->assign_block_vars('current_years', [
-							'USERNAME'		=> $row['username'],
-							'USER_COLOUR'	=> $row['user_colour'],
-							'POINTS'		=> $row['points'],
-						]);
-						$i++;
-						if ($i == $number_of_rows)
-						{
-							break;
-						}
-					}
-
 					// Get the best payers of the last months
 					$sql_arr = [
 						'SELECT'	=> 'f.year, f.month, f.user_id, f.points, u.username, u.user_colour',
@@ -651,25 +527,13 @@ class main
 						'ORDER_BY'		=> 'f.month_id DESC',
 					];
 					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
-					$sql .= ' LIMIT ' . $number_of_rows;
-					$result = $this->db->sql_query($sql);
-					$months = $this->db->sql_fetchrowset($result);
+					$result = $this->db->sql_query_limit($sql, $number_of_rows);
+					$last_months = $this->db->sql_fetchrowset($result);
 					$this->db->sql_freeresult($result);
-
-					// Now we can loop through this array and get the player with the most points for the respective months
-					foreach ($months as $row)
-					{
-						$this->template->assign_block_vars('last_months', [
-							'MONTH'			=> $this->language->lang($months_arr[$row['month']]) . ' ' . $row['year'],
-							'USERNAME'		=> $row['username'],
-							'USER_COLOUR'	=> $row['user_colour'],
-							'POINTS'		=> $row['points'],
-						]);
-					}
 
 					// Get data for last years
 					$sql_arr = [
-						'SELECT'	=> 'f.year, f.user_id, f.points, u.username, u.user_colour',
+						'SELECT'	=> 'f.year, f.points, u.username, u.user_colour',
 						'FROM'		=> [$this->hangman_fame_year_table	=> 'f'],
 						'LEFT_JOIN'	=> [
 							[
@@ -680,23 +544,16 @@ class main
 						'ORDER_BY'		=> 'f.year DESC',
 					];
 					$sql = $this->db->sql_build_query('SELECT', $sql_arr);
-					$result = $this->db->sql_query($sql);
-					$years = $this->db->sql_fetchrowset($result);
+					$result = $this->db->sql_query_limit($sql, $number_of_rows);
+					$last_years = $this->db->sql_fetchrowset($result);
 					$this->db->sql_freeresult($result);
 
-					foreach ($years as $row)
-					{
-						$this->template->assign_block_vars('last_years', [
-							'YEAR'			=> $row['year'],
-							'USERNAME'		=> $row['username'],
-							'USER_COLOUR'	=> $row['user_colour'],
-							'POINTS'		=> $row['points'],
-						]);
-					}
-
 					$this->template->assign_vars([
-						'MOT_HANGMAN_NUMBER_MONTHS'	=> count($months),
-						'MOT_HANGMAN_NUMBER_YEARS'	=> count($years),
+						'MOT_HANGMAN_CURRENT_MONTH'		=> $current_month_players,
+						'MOT_HANGMAN_CURRENT_YEAR'		=> array_slice($year_arr, 0, $number_of_rows),
+						'MOT_HANGMAN_LAST_MONTHS'		=> $last_months,
+						'MOT_HANGMAN_MONTHS_ARR'		=> $months_arr,
+						'MOT_HANGMAN_LAST_YEARS'		=> $last_years,
 					]);
 					break;
 
@@ -739,27 +596,18 @@ class main
 					$user_term_count = $row['term_count'];
 					$this->db->sql_freeresult($result);
 
-					$sql = 'SELECT * FROM ' . $this->hangman_words_table . '
-							WHERE creator_id = ' . (int) $user_id;
-					$result = $this->db->sql_query_limit( $sql, $limit, $start );
-					$user_term = $this->db->sql_fetchrowset($result);
-					$this->db->sql_freeresult($result);
-
-					foreach ($user_term as $row)
-					{
-						$this->template->assign_block_vars('terms', [
-							'U_DELETE'				=> $this->summary_action . '&amp;action=delete&amp;id=' . $row['word_id'] . '&amp;word=' . $row['hangman_word'],
-							'MOT_HANGMAN_TERM'		=> $row['hangman_word'],
-							'MOT_HANGMAN_CATEGORY'	=> $row['hangman_category'],
-						]);
-					}
-
 					//base url for pagination, filtering and sorting
 					$base_url = $this->summary_action;
 
 					// Load pagination
 					$start = $this->pagination->validate_start($start, $limit, $user_term_count);
 					$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $user_term_count, $limit, $start);
+
+					$sql = 'SELECT word_id, hangman_word, hangman_category FROM ' . $this->hangman_words_table . '
+							WHERE creator_id = ' . (int) $user_id;
+					$result = $this->db->sql_query_limit( $sql, $limit, $start );
+					$user_terms = $this->db->sql_fetchrowset($result);
+					$this->db->sql_freeresult($result);
 
 					$this->template->assign_vars([
 						'MOT_HANGMAN_LIVES'					=> $this->config['mot_hangman_lives'],
@@ -771,7 +619,9 @@ class main
 						'MOT_HANGMAN_EVADE_ENABLE'			=> $this->config['mot_hangman_evade_enable'] ? $this->language->lang('YES') : $this->language->lang('NO'),
 						'MOT_HANGMAN_TERMS_AVAILABLE'		=> $term_count,
 						'MOT_HANGMAN_USER_TERMS_AVAILABLE'	=> $user_term_count,
-						'ICON_DELETE'						=> '<i class="icon acp-icon acp-icon-delete fa-times-circle fa-fw" title="' . $this->language->lang('DELETE') . '"></i>',
+						'MOT_HANGMAN_USER_TERMS'			=> $user_terms,
+						'U_DELETE'							=> $this->summary_action . '&amp;action=delete',
+						'ICON_DELETE'						=> '<i class="icon icon-delete fa-times-circle fa-fw" title="' . $this->language->lang('DELETE') . '"></i>',
 					]);
 
 					$this->language->add_lang('info_acp_mot_hangman', 'mot/hangman');
@@ -875,18 +725,18 @@ class main
 	 *
 	 * @return	string
 	 */
-	private function back_link($u_action, $lang_str)
+	private function back_link(string $u_action, string $lang_str) : string
 	{
 		return '<br><br><a href="' . $u_action . '">&laquo; ' . $lang_str . '</a>';
 	}
 
 	/**
 	* Generate a hash value to check for redundant quotes
-	* @param	string	original string to get the hash value from
+	* @param	original string to get the hash value from
 	*
-	* @return	integer	hash value with length of string as last digits
+	* @return	hash value with length of string as last digits
 	*/
-	private function get_hash($original_string)
+	private function get_hash(string $original_string) : int
 	{
 //		setlocale (LC_CTYPE, 'C');
 		return sprintf('%u', crc32(strtolower($original_string))) . strlen($original_string);
@@ -894,11 +744,11 @@ class main
 
 	/**
 	* Recalculate the ranks after a player finishes his game to enable comparison with old ranks
-	* @param	integer	user_id of the user to check
+	* @param	user_id of the user to check
 	*
-	* @return	array		array with old and new rank of checked user or empty if this user gained no rank
+	* @return	array with old and new rank of checked user or empty if this user gained no rank
 	*/
-	private function calc_new_ranks($user_id)
+	private function calc_new_ranks(int $user_id) : array
 	{
 		$sql = 'SELECT user_id, old_rank FROM ' . $this->hangman_score_table . '
 				ORDER BY total_pts DESC';
@@ -924,7 +774,7 @@ class main
 	* Collect the necessary data and start notifications
 	*
 	*/
-	private function trigger_notification()
+	private function trigger_notification() : void
 	{
 		// Check if notifications on loosing a rank is enabled
 		if ($this->config['mot_hangman_loose_rank'])
@@ -980,12 +830,12 @@ class main
 	/**
 	* Add points to the players account of the current month
 	*
-	* @param	integer		points to add
-	*		bool			add (default) or subtract
+	* @param	$points	points to add
+	*		$add		add (default) or subtract
 	*
-	* @return	boolean/float	either false = no UP points credited or float = amount of UP points credited
+	* @return	either false = no UP points credited or float = amount of UP points credited
 	*/
-	private function save_to_fame($points, $add = true)
+	private function save_to_fame(int $points, bool $add = true) : bool | float
 	{
 		// Get local date variables and user id first
 		$date_arr = getdate();
@@ -1057,7 +907,7 @@ class main
 	*
 	*
 	*/
-	private function delete_term($word_id)
+	private function delete_term(int $word_id) : float
 	{
 		// Remove the term from the HANGMAN_WORDS_TABLE
 		$sql = 'DELETE FROM ' . $this->hangman_words_table . ' WHERE word_id = ' . (int) $word_id;
@@ -1085,14 +935,14 @@ class main
 		return $up_points;
 	}
 
-	private function charCodeAt($string, $offset)
+	private function charCodeAt(string $string, int $offset) : string
 	{
 	  $string = mb_substr($string, $offset, 1);
 	  list(, $ret) = unpack('S', mb_convert_encoding($string, 'UTF-16LE'));
 	  return $ret;
 	}
 
-	private function encode($str, $key)
+	private function encode(string $str, int $key) : string
 	{
 		$result = '';
 		$len = mb_strlen($str);

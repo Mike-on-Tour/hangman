@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* @package Hangman v0.12.0
-* @copyright (c) 2021 - 2025 Mike-on-Tour
+* @package Hangman v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -11,48 +11,9 @@ namespace mot\hangman\includes;
 
 class mot_hangman_functions
 {
-	/** @var \phpbb\config\config */
-	protected $config;
-
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
-
-	/** @var \phpbb\language\language $language */
-	protected $language;
-
-	/** @var ContainerInterface */
-	protected $phpbb_container;
-
-	/** @var string phpBB root path */
-	protected $root_path;
-
-	/** @var string PHP extension */
-	protected $php_ext;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_month_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_year_table;
-
-	/**
-	* Constructor
-	*/
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\language\language $language, $phpbb_container, $root_path, $php_ext,
-								$mot_hangman_fame_table, $mot_hangman_fame_month_table, $mot_hangman_fame_year_table)
+	public function __construct(protected \phpbb\config\config $config, protected \phpbb\db\driver\driver_interface $db, protected \phpbb\language\language $language, protected $phpbb_container,
+								protected $root_path, protected $php_ext, protected $hangman_fame_table, protected $hangman_fame_month_table, protected $hangman_fame_year_table)
 	{
-		$this->config = $config;
-		$this->db = $db;
-		$this->language = $language;
-		$this->phpbb_container = $phpbb_container;
-		$this->root_path = $root_path;
-		$this->php_ext = $php_ext;
-		$this->hangman_fame_table = $mot_hangman_fame_table;
-		$this->hangman_fame_month_table = $mot_hangman_fame_month_table;
-		$this->hangman_fame_year_table = $mot_hangman_fame_year_table;
 	}
 
 	public function check_month_year()
@@ -333,12 +294,12 @@ class mot_hangman_functions
 	/*
 	* Function to send a PM
 	*
-	* @params	array		$recipient		the array holding the information about the recipient
-	*		string		$subject		string holding the PM subject
-	*		string		$message		string holding the PM message
-	*		array		$sender		the array holding the information about the sender
+	* @params	$recipient		the array holding the information about the recipient
+	*		$subject		string holding the PM subject
+	*		$message		string holding the PM message
+	*		$sender		the array holding the information about the sender
 	*/
-	private function send_pm($recipient, $subject, $message, $sender)
+	private function send_pm(array $recipient, string $subject, string $message, array $sender) : void
 	{
 		if (!function_exists('submit_pm'))
 		{
