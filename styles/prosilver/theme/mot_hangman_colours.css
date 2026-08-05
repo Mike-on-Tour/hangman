@@ -1,0 +1,46 @@
+/*
+*
+* @package Hangman Game v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
+
+/*
+* Modal window
+*/
+/* Background */
+.hangman_modal {
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*
+* Grid tables for Highscore, Hall of Fame and Summary tabs
+*/
+.grid-table-1, .grid-table-2 {
+	border: 1px solid #C2C3D0;
+
+	& .table-header > .cell {
+		border-color: black;
+		color: #333333;
+		background-color: white !important;
+	}
+
+	& .table-row {
+		& .cell {
+			border-top: 1px solid #FAFAFA;
+		}
+
+		&:nth-of-type(odd) > .cell {
+			background-color: #E1EBF2;
+		}
+
+		&:nth-of-type(even) > .cell {
+			background-color: #ECF3F7;
+		}
+	}
+}
+
+.icon-delete {
+	color: red;
+}

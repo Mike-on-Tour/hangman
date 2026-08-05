@@ -1,10 +1,10 @@
 # phpBB Hangman Game Extension
 
-![Version: 0.12.0](https://img.shields.io/badge/Version-0.12.0-green)  
+![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-green)  
   
-![phpBB 3.3.x Compatible](https://img.shields.io/badge/phpBB-3.3.x%20Compatible-009BDF)  
+![phpBB >= 3.3.9, < 3.4.0@dev](https://img.shields.io/badge/phpBB->=3.3.9,%20<3.4.0@dev-009BDF)  
 
-![PHP >= 8.0.30, < 8.5.0@dev](https://img.shields.io/badge/PHP->=8.0.30,%20<8.5.0@dev-blueviolet)
+![PHP >= 8.1.33, < 8.6.0@dev](https://img.shields.io/badge/PHP->=8.1.33,%20<8.6.0@dev-blueviolet)
 
 [![Build Status](https://github.com/Mike-on-Tour/hangman/workflows/Tests/badge.svg)](https://github.com/Mike-on-Tour/hangman/actions)
 

@@ -1,7 +1,7 @@
 {#
 *
-* @package Hangman v0.11.1
-* @copyright (c) 2021 - 2024 Mike-on-Tour
+* @package Hangman v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 #}
@@ -9,7 +9,6 @@
 {% include 'overall_header.html' %}
 {% INCLUDEJS '@mot_hangman/admin_mot_hangman.js' %}
 {% INCLUDECSS '@mot_hangman/mot_hangman_acp.css' %}
-{% set switch_type = TOGGLECTRL_TYPE ?? 'toggle' %}
 
 <h1>{{ lang('ACP_MOT_HANGMAN') ~ ' - ' ~ lang('ACP_MOT_HANGMAN_SETTINGS') }}</h1>
 
@@ -19,34 +18,34 @@
 
 		<dl>
 			<dt><label for="mot_hangman_enable">{{ lang('ACP_MOT_HANGMAN_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_enable', ACP_MOT_HANGMAN_ENABLE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_enable', ACP_MOT_HANGMAN_ENABLE) }}</dd>
 		</dl>
 
 		<dl>
 			<dt><label for="mot_hangman_autodelete">{{ lang('ACP_MOT_HANGMAN_AUTODELETE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_AUTODELETE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_autodelete', ACP_MOT_HANGMAN_AUTODELETE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_autodelete', ACP_MOT_HANGMAN_AUTODELETE) }}</dd>
 		</dl>
 
  		<dl>
 			<dt><label for="mot_hangman_category_enable">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_category_enable', ACP_MOT_HANGMAN_CATEGORY_ENABLE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_category_enable', ACP_MOT_HANGMAN_CATEGORY_ENABLE) }}</dd>
 		</dl>
 
 		<div id="mot_hangman_category_enforce_field" hidden="true">
 			<dl>
 				<dt><label for="mot_hangman_category_enforce">{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_CATEGORY_ENFORCE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_category_enforce', ACP_MOT_HANGMAN_CATEGORY_ENFORCE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_category_enforce', ACP_MOT_HANGMAN_CATEGORY_ENFORCE) }}</dd>
 			</dl>
 		</div>
 
 		<dl>
 			<dt><label for="mot_hangman_show_term">{{ lang('ACP_MOT_HANGMAN_SHOW_TERM') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_SHOW_TERM_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_show_term', ACP_MOT_HANGMAN_SHOW_TERM, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_show_term', ACP_MOT_HANGMAN_SHOW_TERM) }}</dd>
 		</dl>
 
 		<dl>
 			<dt><label for="mot_hangman_enforce_term">{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENFORCE_TERM_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_enforce_term', ACP_MOT_HANGMAN_ENFORCE_TERM, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_enforce_term', ACP_MOT_HANGMAN_ENFORCE_TERM) }}</dd>
 		</dl>
 
 		<div id="mot_hangman_enforce_term_ratio_field" hidden="true">
@@ -58,22 +57,22 @@
 
 		<dl>
 			<dt><label for="mot_hangman_gain_rank">{{ lang('ACP_MOT_HANGMAN_GAIN_RANK') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_GAIN_RANK_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_gain_rank', ACP_MOT_HANGMAN_GAIN_RANK, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_gain_rank', ACP_MOT_HANGMAN_GAIN_RANK) }}</dd>
 		</dl>
 
 		<dl>
 			<dt><label for="mot_hangman_loose_rank">{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_LOOSE_RANK_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_loose_rank', ACP_MOT_HANGMAN_LOOSE_RANK, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_loose_rank', ACP_MOT_HANGMAN_LOOSE_RANK) }}</dd>
 		</dl>
 
 		<dl>
 			<dt><label for="mot_hangman_enable_rank">{{ lang('ACP_MOT_HANGMAN_ENABLE_RANK') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENABLE_RANK_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_enable_rank', ACP_MOT_HANGMAN_ENABLE_RANK, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_enable_rank', ACP_MOT_HANGMAN_ENABLE_RANK) }}</dd>
 		</dl>
 
 		<dl>
 			<dt><label for="mot_hangman_enable_fame">{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_ENABLE_FAME_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_enable_fame', ACP_MOT_HANGMAN_ENABLE_FAME, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_enable_fame', ACP_MOT_HANGMAN_ENABLE_FAME) }}</dd>
 		</dl>
 
 		<div id="mot_hangman_rank_limit_field" hidden="true">
@@ -85,7 +84,7 @@
 
 		<dl>
 			<dt><label for="mot_hangman_display_online">{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_DISPLAY_ONLINE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_display_online', ACP_MOT_HANGMAN_DISPLAY_ONLINE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_display_online', ACP_MOT_HANGMAN_DISPLAY_ONLINE) }}</dd>
 		</dl>
 
 		<dl>
@@ -126,12 +125,12 @@
 
  		<dl>
 			<dt><label for="mot_hangman_evade_enable">{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EVADE_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_evade_enable', ACP_MOT_HANGMAN_EVADE_ENABLE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_evade_enable', ACP_MOT_HANGMAN_EVADE_ENABLE) }}</dd>
 		</dl>
 
 		<dl>
 			<dt><label for="mot_hangman_extra_points_enable">{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE_EXP') }}</p></dt>
-			<dd>{{ _self.switch('mot_hangman_extra_points_enable', ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE, switch_type) }}</dd>
+			<dd>{{ _self.switch('mot_hangman_extra_points_enable', ACP_MOT_HANGMAN_EXTRA_POINTS_ENABLE) }}</dd>
 		</dl>
 
 		<div id="mot_hangman_extra_points_field" hidden="true">
@@ -163,7 +162,7 @@
 			<legend>{{ lang('ACP_MOT_HANGMAN_UP_SETTINGS') }}</legend>
 			<dl>
 				<dt><label for="mot_hangman_points_enable">{{ lang('ACP_MOT_HANGMAN_POINTS_ENABLE') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_POINTS_ENABLE_EXPL') }}</p></dt>
-				<dd>{{ _self.switch('mot_hangman_points_enable', ACP_MOT_HANGMAN_POINTS_ENABLE, switch_type) }}</dd>
+				<dd>{{ _self.switch('mot_hangman_points_enable', ACP_MOT_HANGMAN_POINTS_ENABLE) }}</dd>
 			</dl>
 			<div id="mot_hangman_show_point_ratio" hidden="true">
 				<hr>
@@ -183,7 +182,7 @@
 				<legend>{{ lang('ACP_MOT_HANGMAN_REWARD_SETTINGS') }}</legend>
 				<dl>
 					<dt><label for="mot_hangman_reward_enable">{{ lang('ACP_MOT_HANGMAN_REWARD_ON') ~ lang('COLON') }}</label><p>{{ lang('ACP_MOT_HANGMAN_REWARD_ON_EXPL') }}</p></dt>
-					<dd>{{ _self.switch('mot_hangman_reward_enable', ACP_MOT_HANGMAN_REWARD_ENABLE, switch_type) }}</dd>
+					<dd>{{ _self.switch('mot_hangman_reward_enable', ACP_MOT_HANGMAN_REWARD_ENABLE) }}</dd>
 				</dl>
 
 				<div id="mot_hangman_show_reward_settings" hidden="true">
@@ -230,7 +229,7 @@
 							<label for="mot_hangman_pm_enable">{{ lang('ACP_MOT_HANGMAN_PM_ENABLE') ~ lang('COLON') }}</label>
 							<p>{{ lang('ACP_MOT_HANGMAN_PM_ENABLE_EXPL') }}</p>
 						</dt>
-						<dd>{{ _self.switch('mot_hangman_pm_enable', ACP_MOT_HANGMAN_PM_ENABLE, switch_type) }}</dd>
+						<dd>{{ _self.switch('mot_hangman_pm_enable', ACP_MOT_HANGMAN_PM_ENABLE) }}</dd>
 					</dl>
 
 					<dl>
@@ -356,13 +355,15 @@
 
 {% include 'overall_footer.html' %}
 
-{% macro switch(name, checked = false, type = 'toggle') -%}
-	{% if type == 'toggle' || type == 'checkbox' -%}
+{% macro switch(name, checked = false, type = null) -%}
+	{% set type = type ?? (TOGGLECTRL_TYPE in ['toggle', 'checkbox', 'radio'] ? TOGGLECTRL_TYPE : 'toggle') -%}
+	{% if type in ['toggle', 'checkbox'] -%}
 		<input type="checkbox" class="{{ type }}" name="{{ name }}" value="1"{{ checked ? ' checked' }}>
 	{%- elseif type == 'radio' -%}
 		<label><input type="radio" class="radio" name="{{ name }}" value="1"{{ checked ? ' checked' }}> {{ lang('YES') }}</label>
 		<label><input type="radio" class="radio" name="{{ name }}" value="0"{{ !checked ? ' checked' }}> {{ lang('NO') }}</label>
 	{%- endif %}
+	{#- v1.3.1 #}
 {%- endmacro %}
 
 {% macro select(name, value, options) -%}

@@ -1,11 +1,8 @@
 <?php
 /*
 *
-* @package Hangman v0.11.0
-* @author Mike-on-Tour
-* @copyright (c) 2021 - 2024 Mike-on-Tour
-* @former author dmzx (www.dmzx-web.net)
-* @copyright (c) 2015 by dmzx (www.dmzx-web.net)
+* @package Hangman v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -14,76 +11,12 @@ namespace mot\hangman\controller;
 
 class hangman_acp
 {
-	/** @var \phpbb\config\config */
-	protected $config;
-
-	/** @var \phpbb\db\driver\driver_interface */
-	protected $db;
-
-	/** @var \phpbb\db\tools\tools_interface */
-	protected $db_tools;
-
-	/** @var \phpbb\language\language $language Language object */
-	protected $language;
-
-	/** @var \phpbb\log\log $log */
-	protected $log;
-
-	/** @var \phpbb\extension\manager */
-	protected $phpbb_extension_manager;
-
-	/** @var \phpbb\request\request_interface */
-	protected $request;
-
-	/** @var \phpbb\template\template */
-	protected $template;
-
-	/** @var \phpbb\user */
-	protected $user;
-
-	/** @var \mot\hangman\includes\mot_hangman_functions */
-	protected $mot_hangman_functions;
-
-	/** @var string phpBB root path */
-	protected $root_path;
-
-	/** @var string mot.hangman.tables.mot_hangman_fame */
-	protected $mot_hangman_fame_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_score */
-	protected $mot_hangman_score_table;
-
-	/** @var string mot.hangman.tables.mot_hangman_words */
-	protected $mot_hangman_words_table;
-
-	/** @var string mot.hangman.tables.old_hangman_words */
-	protected $old_hangman_words_table;
-
-	/**
-	 * {@inheritdoc
-	 */
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\db\tools\tools_interface $db_tools,
-								\phpbb\language\language $language, \phpbb\log\log $log, \phpbb\extension\manager $phpbb_extension_manager,
-								\phpbb\request\request_interface $request, \phpbb\template\template $template, \phpbb\user $user,
-								\mot\hangman\includes\mot_hangman_functions $mot_hangman_functions, $root_path, $mot_hangman_fame_table,
-								$mot_hangman_score_table, $mot_hangman_words_table, $old_hangman_words_table)
+	public function __construct(protected \phpbb\config\config $config, protected \phpbb\db\driver\driver_interface $db, protected \phpbb\db\tools\tools_interface $db_tools,
+								protected \phpbb\language\language $language, protected \phpbb\log\log $log, protected \phpbb\extension\manager $phpbb_extension_manager,
+								protected \phpbb\request\request_interface $request, protected \phpbb\template\template $template, protected \phpbb\user $user,
+								protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions, protected $root_path, protected $hangman_fame_table,
+								protected $hangman_score_table, protected $hangman_words_table, protected $old_hangman_words_table)
 	{
-		$this->config = $config;
-		$this->db = $db;
-		$this->db_tools = $db_tools;
-		$this->language = $language;
-		$this->log = $log;
-		$this->phpbb_extension_manager = $phpbb_extension_manager;
-		$this->request = $request;
-		$this->template = $template;
-		$this->user = $user;
-		$this->mot_hangman_functions = $mot_hangman_functions;
-		$this->root_path = $root_path;
-		$this->hangman_fame_table = $mot_hangman_fame_table;
-		$this->hangman_score_table = $mot_hangman_score_table;
-		$this->hangman_words_table = $mot_hangman_words_table;
-		$this->old_hangman_words_table = $old_hangman_words_table;
-
 		$this->md_manager = $this->phpbb_extension_manager->create_extension_metadata_manager('mot/hangman');
 		$this->mot_hangman_version = $this->md_manager->get_metadata('version');
 	}
@@ -487,10 +420,10 @@ class hangman_acp
 	/**
 	 * Set custom form action.
 	 *
-	 * @param	string	$u_action	Custom form action
-	 * @return acp		$this		This controller for chaining calls
+	 * @param	$u_action	Custom form action
+	 * @return 	$this		This controller for chaining calls
 	 */
-	public function set_page_url($u_action)
+	public function set_page_url(string $u_action) : object
 	{
 		$this->u_action = $u_action;
 
@@ -499,11 +432,11 @@ class hangman_acp
 
 	/**
 	* Generate a hash value to check for redundant quotes
-	* @param	string	original string to get the hash value from
+	* @param	original string to get the hash value from
 	*
-	* @return	integer	hash value with length of string as last digits
+	* @return	hash value with length of string as last digits
 	*/
-	private function get_hash($original_string)
+	private function get_hash(string $original_string) : int
 	{
 //		setlocale (LC_CTYPE, 'C');
 		return sprintf('%u', crc32(strtolower($original_string))) . strlen($original_string);
@@ -511,11 +444,11 @@ class hangman_acp
 
 	/**
 	* Check whether the search term adheres to our rules (no digits, longer than the minimum, no unauthorized punctuation marks)
-	* @param	string	search term to be checked
+	* @param	search term to be checked
 	*
-	* @return	boolean	true if term adheres to rules, false if not
+	* @return	true if term adheres to rules, false if not
 	*/
-	private function is_valid_hangman_word($hangman_term)
+	private function is_valid_hangman_word(string $hangman_term) : bool
 	{
 		// check for digits
 		if (preg_match('/[0-9]/', $hangman_term, $matches))
@@ -547,8 +480,6 @@ class hangman_acp
 	/**
 	* Delete all data from the HANGMAN_SCORE_TABLE
 	*
-	* @param	none
-	* @return	none
 	*/
 	private function reset_highscore()
 	{

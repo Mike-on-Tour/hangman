@@ -1,5 +1,14 @@
+{#
+*
+* @package Hangman v0.13.0
+* @copyright (c) 2021 - 2026 Mike-on-Tour
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+#}
+
 {% include 'overall_header.html' %}
-{% INCLUDECSS '@mot_hangman/hangman.css' %}
+{% INCLUDECSS '@mot_hangman/mot_hangman.css' %}
+{% INCLUDECSS '@mot_hangman/mot_hangman_colours.css' %}
 {% INCLUDEJS '@mot_hangman/hangman.js' %}
 
 <script>
@@ -46,35 +55,39 @@
 				</div>
 
 				<div class="panel bg3">
-					<div id="hangman_box_game" class="inner" hidden="true">
-						{% if MOT_HANGMAN_ALLOW_USER %}
-							{% include 'hangman_game.html' %}
-						{% else %}
-							{% include 'hangman_no_game.html' %}
-						{% endif %}
-					</div>
+					{% if MOT_HANGMAN_SELECTED_TAB == 'game' %}
+						<div id="hangman_box_game" class="inner" hidden="true">
+							{% if MOT_HANGMAN_ALLOW_USER %}
+								{% include 'hangman_game.html' %}
+							{% else %}
+								{% include 'hangman_no_game.html' %}
+							{% endif %}
+						</div>
+					{% endif %}
 
-					{% if MOT_HANGMAN_ALLOW_TERM_INPUT %}
+					{% if MOT_HANGMAN_ALLOW_TERM_INPUT && MOT_HANGMAN_SELECTED_TAB == 'word' %}
 						<div id="hangman_box_word" class="inner" hidden="true">
 							{% include 'hangman_input_word.html' %}
 						</div>
 					{% endif %}
 
-					{% if MOT_HANGMAN_DISPLAY_RANK %}
+					{% if MOT_HANGMAN_DISPLAY_RANK && MOT_HANGMAN_SELECTED_TAB == 'rank' %}
 						<div id="hangman_box_rank" class="inner" hidden="true">
 							{% include 'hangman_score.html' %}
 						</div>
 					{% endif %}
 
-					{% if MOT_HANGMAN_DISPLAY_FAME %}
+					{% if MOT_HANGMAN_DISPLAY_FAME && MOT_HANGMAN_SELECTED_TAB == 'fame' %}
 						<div id="hangman_box_fame" class="inner" hidden="true">
 							{% include 'hangman_fame.html' %}
 						</div>
 					{% endif %}
 
-					<div id="hangman_box_summ" class="inner" hidden="true">
-						{% include 'hangman_summary.html' %}
-					</div>
+					{% if MOT_HANGMAN_SELECTED_TAB == 'summ' %}
+						<div id="hangman_box_summ" class="inner" hidden="true">
+							{% include 'hangman_summary.html' %}
+						</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
