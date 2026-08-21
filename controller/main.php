@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.13.0
+* @package Hangman v0.13.1
 * @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -13,12 +13,32 @@ use phpbb\language\language_file_loader;
 
 class main
 {
-	public function __construct(protected \phpbb\auth\auth $auth, protected \phpbb\config\config $config, protected \phpbb\db\driver\driver_interface $db,
-								protected \phpbb\extension\manager $phpbb_extension_manager, protected \phpbb\controller\helper $helper, protected \phpbb\language\language $language,
-								protected \phpbb\notification\manager $notification_manager, protected \phpbb\pagination $pagination, protected \phpbb\request\request_interface $request,
-								protected $phpbb_container, protected \phpbb\template\template $template, protected \phpbb\user $user, protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
-								protected $root_path, protected $php_ext, protected $hangman_fame_table, protected $hangman_fame_month_table, protected $hangman_fame_year_table,
-								protected $hangman_score_table, protected $hangman_words_table)
+	protected string $ext_path;
+	protected object $md_manager;
+	protected array $ext_data;
+
+	public function __construct(
+		protected \phpbb\auth\auth $auth,
+		protected \phpbb\config\config $config,
+		protected \phpbb\db\driver\driver_interface $db,
+		protected \phpbb\extension\manager $phpbb_extension_manager,
+		protected \phpbb\controller\helper $helper,
+		protected \phpbb\language\language $language,
+		protected \phpbb\notification\manager $notification_manager,
+		protected \phpbb\pagination $pagination,
+		protected \phpbb\request\request_interface $request,
+		protected $phpbb_container,
+		protected \phpbb\template\template $template,
+		protected \phpbb\user $user,
+		protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
+		protected $root_path,
+		protected $php_ext,
+		protected $hangman_fame_table,
+		protected $hangman_fame_month_table,
+		protected $hangman_fame_year_table,
+		protected $hangman_score_table,
+		protected $hangman_words_table,
+	)
 	{
 		$this->ext_path = $this->phpbb_extension_manager->get_extension_path('mot/hangman', true);
 		$this->md_manager = $this->phpbb_extension_manager->create_extension_metadata_manager('mot/hangman');
@@ -466,7 +486,7 @@ class main
 						],
 						'WHERE'		=> 'f.year = ' . (int) $date_arr['year'] . '
 										AND f.month = ' . (int) $date_arr['mon'],
-						'GROUP_BY'	=> 'f.user_id',
+						'GROUP_BY'	=> 'f.user_id, u.username, u.user_colour',
 						'ORDER_BY'	=> 'points DESC',
 					];
 					$sql = $this->db->sql_build_query('SELECT', $sql_arr);

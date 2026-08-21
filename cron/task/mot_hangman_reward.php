@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.13.0
+* @package Hangman v0.13.1
 * @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -11,7 +11,11 @@ namespace mot\hangman\cron\task;
 
 class mot_hangman_reward extends \phpbb\cron\task\base
 {
-	public function __construct(protected \phpbb\config\config $config, protected \phpbb\extension\manager $phpbb_extension_manager, protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions)
+	public function __construct(
+		protected \phpbb\config\config $config,
+		protected \phpbb\extension\manager $phpbb_extension_manager,
+		protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
+	)
 	{
 	}
 

@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Hangman v0.13.0
+* @package Hangman v0.13.1
 * @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
@@ -11,8 +11,17 @@ namespace mot\hangman\includes;
 
 class mot_hangman_functions
 {
-	public function __construct(protected \phpbb\config\config $config, protected \phpbb\db\driver\driver_interface $db, protected \phpbb\language\language $language, protected $phpbb_container,
-								protected $root_path, protected $php_ext, protected $hangman_fame_table, protected $hangman_fame_month_table, protected $hangman_fame_year_table)
+	public function __construct(
+		protected \phpbb\config\config $config,
+		protected \phpbb\db\driver\driver_interface $db,
+		protected \phpbb\language\language $language,
+		protected $phpbb_container,
+		protected $root_path,
+		protected $php_ext,
+		protected $hangman_fame_table,
+		protected $hangman_fame_month_table,
+		protected $hangman_fame_year_table,
+	)
 	{
 	}
 
