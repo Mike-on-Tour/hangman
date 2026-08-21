@@ -1,7 +1,7 @@
 <?php
 /*
 *
-* @package Hangman v0.13.0
+* @package Hangman v0.13.1
 * @copyright (c) 2021 - 2026 Mike-on-Tour
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -11,11 +11,26 @@ namespace mot\hangman\controller;
 
 class hangman_acp
 {
-	public function __construct(protected \phpbb\config\config $config, protected \phpbb\db\driver\driver_interface $db, protected \phpbb\db\tools\tools_interface $db_tools,
-								protected \phpbb\language\language $language, protected \phpbb\log\log $log, protected \phpbb\extension\manager $phpbb_extension_manager,
-								protected \phpbb\request\request_interface $request, protected \phpbb\template\template $template, protected \phpbb\user $user,
-								protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions, protected $root_path, protected $hangman_fame_table,
-								protected $hangman_score_table, protected $hangman_words_table, protected $old_hangman_words_table)
+	protected object $md_manager;
+	protected string $mot_hangman_version;
+
+	public function __construct(
+		protected \phpbb\config\config $config,
+		protected \phpbb\db\driver\driver_interface $db,
+		protected \phpbb\db\tools\tools_interface $db_tools,
+		protected \phpbb\language\language $language,
+		protected \phpbb\log\log $log,
+		protected \phpbb\extension\manager $phpbb_extension_manager,
+		protected \phpbb\request\request_interface $request,
+		protected \phpbb\template\template $template,
+		protected \phpbb\user $user,
+		protected \mot\hangman\includes\mot_hangman_functions $mot_hangman_functions,
+		protected $root_path,
+		protected $hangman_fame_table,
+		protected $hangman_score_table,
+		protected $hangman_words_table,
+		protected $old_hangman_words_table,
+	)
 	{
 		$this->md_manager = $this->phpbb_extension_manager->create_extension_metadata_manager('mot/hangman');
 		$this->mot_hangman_version = $this->md_manager->get_metadata('version');

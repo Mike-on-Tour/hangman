@@ -4,6 +4,18 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.13.1] - 2026-08-21
+
+### Added
+
+### Changed
+
+### Fixed
+-	A SQL query within the Hall of Fame which was not consistent with PostgreSQL and therefore caused a fatal error
+
+### Removed
+  
+  
 ## [0.13.0] - 2026-08-05
 
 ### Added
