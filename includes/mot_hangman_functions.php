@@ -37,7 +37,7 @@ class mot_hangman_functions
 			// Save the new current month to the CONFIG_TABLE (we do this as soon as possible to prevent a second call)
 			$this->config->set('mot_hangman_current_month', ($date_arr['year'] * 100 + $date_arr['mon']));
 
-			// Get year and month of last maonth
+			// Get year and month of last month
 			$year = intdiv($current_month, 100);
 			$month = ($current_month % 100);
 

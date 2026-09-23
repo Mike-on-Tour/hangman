@@ -329,7 +329,8 @@ class hangman_acp
 
 		// Get the past year(s) from the HANGMAN_FAME_TABLE which are eligible for deletion
 		$sql = 'SELECT DISTINCT year FROM ' . $this->hangman_fame_table . '
-				WHERE year < ' . (int) $this->config['mot_hangman_current_year'];
+				WHERE year < ' . (int) $this->config['mot_hangman_current_year'] . '
+				ORDER BY year ASC';
 		$result = $this->db->sql_query($sql);
 		$years = $this->db->sql_fetchrowset($result);
 		$this->db->sql_freeresult($result);

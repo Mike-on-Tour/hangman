@@ -4,6 +4,23 @@ All changes to `Hangman Game` will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
   
+## [0.13.2] - 2026-09-22
+
+### Added
+-	A `styles/dark_vision/theme/mot_hangman_colours.css` file for Kirk's Dark Vision style
+-	A `styles/aero/theme/mot_hangman_colours.css` file for the Aero style
+-	A `styles/greengolden/theme/mot_hangman_colours.css` file for Kirk's Green Golden style (many thanks to ScaniaLady for providing the file)
+
+### Changed
+-	Maximum PHP version to 8.6.x
+
+### Fixed
+-	A missing removal of deleted users from the monthly and yearly fame tables which resulted in lines with an empty username on the Hall of Fame tab; now the so far second placed
+	user will be displayed or if there is none the line will be deleted
+
+### Removed
+  
+  
 ## [0.13.1] - 2026-08-21
 
 ### Added
