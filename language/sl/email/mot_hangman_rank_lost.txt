@@ -1,0 +1,7 @@
+Zadeva: Izgubili ste svoj rank
+
+Zdravo {USERNAME},
+
+„{WINNER}“ vas je izpodrinil z vaše lestvice Vislice.
+
+{EMAIL_SIG}
